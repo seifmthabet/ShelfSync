@@ -9,23 +9,34 @@ jobs:
   lint-frontend:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x, 24.x]
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: ${{ matrix.node-version }}
 
       - name: Install tools
+        run: npm install --no-save htmlhint stylelint stylelint-config-standard eslint @eslint/js
+
+      - name: Create lint configs
         run: |
-          npm install -g htmlhint stylelint stylelint-config-standard eslint
+          echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
+          cat > eslint.config.mjs <<'EOF'
+          import js from "@eslint/js";
+          export default [js.configs.recommended];
+          EOF
 
       - name: Lint HTML
-        run: htmlhint "**/*.html"
+        run: npx htmlhint "**/*.html"
 
       - name: Lint CSS
-        run: stylelint "**/*.css"
+        run: npx stylelint "**/*.css" --allow-empty-input
 
       - name: Lint JS
-        run: eslint "**/*.js"
+        run: npx eslint "**/*.js" --no-error-on-unmatched-pattern

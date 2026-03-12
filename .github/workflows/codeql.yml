@@ -2,9 +2,9 @@ name: CodeQL
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   analyze:
@@ -14,21 +14,15 @@ jobs:
       security-events: write
       contents: read
 
-    strategy:
-      matrix:
-        language: [ 'python', 'javascript' ]
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: ${{ matrix.language }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python,javascript
+          build-mode: none
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
-
-    - name: Analyze
-      uses: github/codeql-action/analyze@v3
+      - name: Analyze
+        uses: github/codeql-action/analyze@v3
