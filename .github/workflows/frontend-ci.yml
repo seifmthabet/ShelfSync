@@ -1,0 +1,31 @@
+name: Frontend CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lint-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install tools
+        run: |
+          npm install -g htmlhint stylelint stylelint-config-standard eslint
+
+      - name: Lint HTML
+        run: htmlhint "**/*.html"
+
+      - name: Lint CSS
+        run: stylelint "**/*.css"
+
+      - name: Lint JS
+        run: eslint "**/*.js"
