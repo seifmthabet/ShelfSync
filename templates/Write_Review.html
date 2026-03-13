@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Write Review</title>
+    <meta name="author" content="Abdullah Basyouni">
+    <meta name="viewport" content="width=device-width ,initial-scale = 1.0" />
+
+</head>
+
+<body>
+    <div class="WriteReview">
+        <!--Header-->
+        <header class="Top_W">
+            <div class="Head_W">
+                <img src="" alt="Logo">
+                <h2>Review Center</h2>
+            </div>
+            <div class="ExitButton">
+                <a href="page.html"><button type="button">Exit</button></a>
+            </div>
+        </header><br>
+
+        <!--Content-->
+        <section class="Content_W">
+            <!--Product Card-->
+            <section class="product_Card">
+                <img src="" alt="Product_Image" width="96" height="96">
+                <div class="ProductName">
+                    <h3>Product Name</h3>
+                    <small>purchased Date</small>
+                </div>
+            </section>
+
+            <!--Form Section -->
+            <section class="ReviewForm">
+                <div class="HorizontalBorder">
+                    <h4>Write a Review</h4>
+                    <small>Share your experience with other customers</small>
+                </div>
+                <!--Rating Stars-->
+                <div class="FormRating">
+                    <form action="">
+                        <div class="Rating">
+                            <label>Overall Rating</label><br>
+                            <label>
+                                <input type="radio" name="star" value="1" required> 1
+                            </label>
+                            <label>
+                                <input type="radio" name="star" value="2"> 2
+                            </label>
+                            <label>
+                                <input type="radio" name="star" value="3"> 3
+                            </label>
+                            <label>
+                                <input type="radio" name="star" value="4"> 4
+                            </label>
+                            <label>
+                                <input type="radio" name="star" value="5"> 5
+                            </label>
+                        </div><br>
+
+                        <!--Text Area-->
+                        <div class="textArea">
+                            <label for="ReviewDetails">Review Details</label><br>
+                            <textarea name="Details" id="ReviewDetails"
+                                placeholder="What did you like or dislike? How was the quality?" rows="10" cols="100"
+                                required></textarea>
+
+                            <small>Minimum 20 characters</small>
+                            <small>0 / 2000</small>
+                        </div>
+
+                        <!--Upload Photo-->
+                        <div class="AddPhoto">
+                            <p>ADD PHOTOS</p>
+                            <label for="UploadPhoto">
+                                <span><img src="" alt="PhotoIcon"></span>
+                                Drag or click to upload
+                            </label>
+                            <input type="file" name="photo" id="UploadPhoto" accept="image/*"><br>
+                        </div><br>
+
+                        <!--Submit Button-->
+                        <div class="Submit">
+                            <button type="submit">
+                                Submit My Review
+                                <span><img src="" alt="SubmitIcon"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!--My Review-->
+            <section class="MyReview">
+                <h3>Your previous review for this category</h3>
+                <div class="MyReviewBox">
+                    <div class="StarBar">
+                        <span><img src="" alt="StarIcon"></span>
+                        <span><img src="" alt="StarIcon"></span>
+                        <span><img src="" alt="StarIcon"></span>
+                        <span><img src="" alt="StarIcon"></span>
+                        <span><img src="" alt="StarIcon"></span>
+                        <div class="ChangeButtons">
+                            <button type="button">
+                                Edit
+                                <span><img src="" alt="EditIcon"></span>
+                            </button>
+                            <button type="button">
+                                Delete
+                                <span><img src="" alt="DeleteIcon"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <h4>User Review</h4>
+                    <p>Review content will be displayed here after submission.</p>
+                    <div class="Date">
+                        <span><img src="" alt="DateIcon"></span>
+                        <small>Posted Date</small>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!--Footer-->
+        <footer class="Footer_W">
+            <p>By submitting, you agree to our <a href="Guidelines.html">Community Guidelines</a></p>
+        </footer>
+    </div>
+</body>
+
+</html>
