@@ -1,147 +1,144 @@
 <html>
+
 <head>
     <title>Admin Book Mangement</title>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <header>
-        <h1>Shelf Sync</h1>
-        <hr>
-
-        <div class="navbar">
-
-            <img src="Icon.png" width="15">
-            &nbsp;&nbsp; LibAdmin
-            &emsp;&emsp;
-
-            <a href="Dashboard.html">Dashboard</a>&emsp;
-            <a href="Inventory.html">Inventory</a>&emsp;
-            <a href="Members.html">Members</a>&emsp;
-            <a href="Reports.html">Reports</a>
-
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-
-            <input type="search" name="search" placeholder="Search collection...">
-
-            &emsp;&emsp;
-
-            <button type="button">🔔</button>
-
-            &emsp;&emsp;
-
-            <img src="Image+Border.png" width="30" >
-
+        <header>
+            <h1>Shelf Sync</h1>
             <hr>
 
+            <div class="navbar">
+
+                <img src="Icon.png" width="15">
+                &nbsp;&nbsp; LibAdmin
+                &emsp;&emsp;
+
+                <a href="userDashboard.html">Dashboard</a>&emsp;
+                <a href="Inventory.html">Inventory</a>&emsp;
+                <a href="Members.html">Members</a>&emsp;
+                <a href="Reports.html">Reports</a>
+
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+                <input type="search" name="search" placeholder="Search collection...">
+
+                &emsp;&emsp;
+
+                <button type="button">🔔</button>
+
+                &emsp;&emsp;
+
+                <img src="Image+Border.png" width="30">
+
+                <hr>
+
+            </div>
+        </header>
+
+        <div class="page-header">
+
+            <h1>Book Management</h1>
+
+            Catalog, edit, and track your library assets in real-time
+
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+            <button type="button">+ Add New Book</button>
+
         </div>
-    </header>
 
-    <div class="page-header">
+        <br>
 
-        <h1>Book Management</h1>
+        <div class="table-container">
 
-        Catalog, edit, and track your library assets in real-time
+            <table width="90%" cellpadding="5" cellspacing="0">
+                <tr>
+                    <td>
+                        <button type="button">All Collections</button>&emsp;
+                        <button type="button">Available</button>&emsp;
+                        <button type="button">On Loan</button>&emsp;
+                        <button type="button">Reserved</button>
+                    </td>
+                </tr>
+            </table>
 
-        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            <hr width="90%">
 
-        <button type="button">+ Add New Book</button>
+            <table width="90%" style="margin: auto;" cellpadding="10" cellspacing="0" rules="rows" frame="box">
 
-    </div>
+                <tr>
+                    <th>TITLE</th>
+                    <th>AUTHOR</th>
+                    <th>CATEGORY</th>
+                    <th>AVAILABILITY</th>
+                    <th>RATING</th>
+                    <th>ACTIONS</th>
+                </tr>
 
-    <br>
+                <tr>
+                    <td>The Great Gatsby</td>
+                    <td>F. Scott Fitzgerald</td>
+                    <td>Classic</td>
+                    <td>AVAILABLE</td>
+                    <td>4.8</td>
+                    <td>✏️ 🗑️</td>
+                </tr>
 
-    <div class="table-container">
+                <tr>
+                    <td>1984</td>
+                    <td>George Orwell</td>
+                    <td>Dystopian</td>
+                    <td>BORROWED</td>
+                    <td>4.2</td>
+                    <td>✏️ 🗑️</td>
+                </tr>
 
-        <table width="90%" cellpadding="5" cellspacing="0">
-            <tr>
-                <td>
-                    <button type="button">All Collections</button>&emsp;
-                    <button type="button">Available</button>&emsp;
-                    <button type="button">On Loan</button>&emsp;
-                    <button type="button">Reserved</button>
-                </td>
-            </tr>
-        </table>
+                <tr>
+                    <td>The Hobbit</td>
+                    <td>J.R.R. Tolkien</td>
+                    <td>Fantasy</td>
+                    <td>AVAILABLE</td>
+                    <td>4.9</td>
+                    <td>✏️ 🗑️</td>
+                </tr>
 
-        <hr width="90%">
+                <tr>
+                    <td>Clean Code</td>
+                    <td>Robert C. Martin</td>
+                    <td>Tech</td>
+                    <td>AVAILABLE</td>
+                    <td>4.5</td>
+                    <td>✏️ 🗑️</td>
+                </tr>
 
-        <table width="90%"
-               style="margin: auto;"
-               cellpadding="10"
-               cellspacing="0"
-               rules="rows"
-               frame="box">
+                <tr>
+                    <td colspan="6">
+                        Showing 1 to 4 of 24 entries
 
-            <tr>
-                <th>TITLE</th>
-                <th>AUTHOR</th>
-                <th>CATEGORY</th>
-                <th>AVAILABILITY</th>
-                <th>RATING</th>
-                <th>ACTIONS</th>
-            </tr>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
-            <tr>
-                <td>The Great Gatsby</td>
-                <td>F. Scott Fitzgerald</td>
-                <td>Classic</td>
-                <td>AVAILABLE</td>
-                <td>4.8</td>
-                <td>✏️ 🗑️</td>
-            </tr>
+                        <button>❮</button>
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>❯</button>
+                    </td>
+                </tr>
 
-            <tr>
-                <td>1984</td>
-                <td>George Orwell</td>
-                <td>Dystopian</td>
-                <td>BORROWED</td>
-                <td>4.2</td>
-                <td>✏️ 🗑️</td>
-            </tr>
+            </table>
 
-            <tr>
-                <td>The Hobbit</td>
-                <td>J.R.R. Tolkien</td>
-                <td>Fantasy</td>
-                <td>AVAILABLE</td>
-                <td>4.9</td>
-                <td>✏️ 🗑️</td>
-            </tr>
-
-            <tr>
-                <td>Clean Code</td>
-                <td>Robert C. Martin</td>
-                <td>Tech</td>
-                <td>AVAILABLE</td>
-                <td>4.5</td>
-                <td>✏️ 🗑️</td>
-            </tr>
-
-            <tr>
-                <td colspan="6">
-                    Showing 1 to 4 of 24 entries
-
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-
-                    <button>❮</button>
-                    <button>1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button>❯</button>
-                </td>
-            </tr>
-
-        </table>
+        </div>
 
     </div>
-
-</div>
 
 </body>
+
 </html>
