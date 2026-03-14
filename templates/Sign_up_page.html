@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign Up</title>
+    <meta name="author" content="Abdullah Basyouni">
+    <meta name="viewport" content="width=device-width ,initial-scale = 1.0" />
+
+</head>
+
+<body>
+    <!--Content -->
+    <div class="Content">
+        <!--Header -->
+        <header class="Header_Sign_Up">
+            <div class="rightContent_H">
+                <img src="" alt="Logo" width="32px" height="32px">
+                <h2>Shelf Sync</h2>
+            </div>
+            <div class="leftContent_H">
+                <p>Already have an account?</p>
+                <a href="login.html">
+                    <button type="button">Login</button>
+                </a>
+            </div>
+        </header>
+
+        <!--Main -->
+        <section class="Main_Sign">
+            <div class="container_Sign_H">
+                <h1>Create Account</h1>
+                <small>Join our community of readers today.</small>
+            </div><br>
+
+            <!--Form -->
+            <div class="Form_SignUp">
+                <form action="index.html">
+                    <div class="Form_Item">
+                        <label for="Full_Name"><b>Full Name</b></label><br>
+                        <input type="text" name="fullN" id="Full_Name" placeholder="Enter your full name" required>
+                    </div><br>
+
+                    <div class="Form_Item">
+                        <label for="Email_S"><b>Email Address</b></label><br>
+                        <input type="email" name="EmailAdd" id="Email_S" placeholder="name@example.com" required>
+                    </div><br>
+
+                    <div class="Form_Item">
+                        <label for="password_S"><b>Password</b></label><br>
+                        <input type="password" name="Pass" id="Password_S" placeholder="Create a password" required>
+                        <button type="button">Show</button>
+                    </div><br>
+
+                    <div class="Form_Item">
+                        <label for="ConfirmPassword"><b>Confirm Password</b></label><br>
+                        <input type="password" name="comfirmpass" id="ConfirmPassword"
+                            placeholder="Repeat your password" required>
+                        <button type="button">Show</button>
+                    </div><br>
+                    <div class="Form_Item">
+                        <label><b>Select Role : </b></label>
+                        <div class="role-options"><br>
+                            <label><input type="radio" name="role" value="user"> User</label>
+                            <label><input type="radio" name="role" value="admin"> Administrator</label>
+                        </div>
+                    </div><br>
+
+                    <div class="terms">
+                        <input type="checkbox" name="Agree" value="true" required>
+                        <span>I agree to the <a href="Terms.html">Terms of Service</a> and <a href="Policy.html">Privacy
+                                Policy</a>.</span>
+                    </div><br>
+
+                    <div class="register">
+                        <button type="submit">Register Account</button>
+                    </div><br>
+                    <div class="login_Sign">
+                        <p>Already a member?<a href="login.html"> Log in to your library</a></p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <!--Footer -->
+        <footer class="footer_sign">
+            <small>&copy; 2025 Shelf Sync . All rights reserved. </small>
+            <div class="Links_F">
+                <ul>
+                    <li><a href="help_Center.html" target="_blank">Help Center</a></li>
+                    <li><a href="https://www.google.com/maps/place/%D8%AC%D8%A7%D9%85%D8%B9%D8%A9+%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D9%87%E2%80%AD/@30.0239249,31.2100855,1742m/data=!3m1!1e3!4m6!3m5!1s0x145846dbabc27ebd:0xa8c3715257b6f3cb!8m2!3d30.0273652!4d31.2088085!16zL20vMDJ3NmJx?entry=ttu&g_ep=EgoyMDI2MDMwOS4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank">Library Location</a></li>
+                    <li><a href="mailto:bodybasuni2007@gmail.com" target="_blank">Contact Support</a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
