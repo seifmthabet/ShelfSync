@@ -4,86 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="stylesheet" href="../static/css/pages/landing.css">
     <title>ShelfSync</title>
 </head>
 
 <body>
     <!-- Navigation -->
     <nav>
-        <div>
-            <div>
-                <div>
-                    <span></span>
+        <div class="nav">
+            <div class="internal-container left-nav">
+                <div class="logo">
                     <span>ShelfSync</span>
                 </div>
-                <div>
-                    <ul>
+                <div class="">
+                    <ul class=" internal-container nav-links">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/">Books</a></li>
-                        <li><a href="/">Memeberships</a></li>
+                        <li><a href="/">About</a></li>
+                        <li><a href="/">Browse</a></li>
                     </ul>
                 </div>
             </div>
-            <div>
-                <div>
-                    <span></span>
-                    <input type="text" placeholder="Search books...">
-                </div>
-                <div>
-                    <span><a href="">Login</a></span>
-                    <span><a href=""></a>Sign Up</a></span>
-                </div>
+            <div class="internal-container right-nav">
+                <button class="btn btn-ghost">LOGIN</button>
+                <button class="btn btn-primary" >GET STARTED</button>
             </div>
         </div>
     </nav>
     <!-- End Navigation -->
 
-    <!-- Landing Section -->
+    <!-- Hero Section -->
 
     <section>
-        <div>
+        <div class="container hero">
             <div>
-                <div><span>NEW ARRIVALS WEEKLY</span></div>
+                <div><span class="hero-label">Established 1924</span></div>
                 <div>
-                    <h1>Borrow Books</h1>
-                    <h1>Anytime,</h1>
-                    <h1>Anywhere</h1>
+                    <h1 class="hero-title">Borrow Books <br><span>Anytime, Anywhere</span></h1>
                 </div>
-                <div>
-                    <p>Access thousands of titles from the comfort of your home.
-                        <br /> Start your reading journey today with our flexible
-                        <br />membership plans and door-to-door delivery.
-                    </p>
+                <div class="hero-desc">
+                    <p>Access a curated collection of classic literature, modern research, and rare manuscripts from the comfort of your digital study.</p>
                 </div>
-                <div>
-                    <button>Browse Books</button>
-                    <button>Learn More</button>
-                </div>
-                <div>
-                    <div>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <div>
-                        <p>Joined by 10k+ readers this month</p>
-                    </div>
+                <div class="hero-actions">
+                    <button class="btn btn-primary">Explore Catalog</button>
+                    <button class="btn hero-btn">How it works</button>
                 </div>
             </div>
             <div>
-                <div>
-                    <img src="" alt="">
+                <div class="hero-img" >
+                    <img src="../static/images/Classical Library Interior.png" alt="library image">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-card">
+                        <p>“The archive of human thought.”</p>
+                        <p>Featured Publication 2024</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- End Landing Section -->
+    <!-- End Hero Section -->
 
     <!-- Features Section -->
     <section>
-        <div>
-            <div>
+        <div class="container">
+            <div class="features-header" >
                 <h2>Why readers love us</h2>
                 <p>We've reimagined the library experience for the digital age.</p>
             </div>

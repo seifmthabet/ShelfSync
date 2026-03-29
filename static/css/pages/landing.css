@@ -1,0 +1,154 @@
+@import "../global.css";
+
+/* =========== Navigation Bar =========== */
+
+nav {
+	position: sticky;
+	top: 0;
+	backdrop-filter: blur(10px);
+	background: rgba(251, 249, 244, 0.8);
+	border-bottom: 1px solid #eee;
+	z-index: 100;
+
+}
+
+.nav {
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.left-nav {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+}
+
+.logo span {
+	color: var(--color-primary);
+	font: var(--font-serif);
+	font-size: var(--title-lg);
+}
+
+.nav-links {
+	gap: 24px;
+	list-style: none;
+}
+
+.nav-links a {
+	text-decoration: none;
+	color: var(--color-secondary);
+	font-size: var(--label-md);
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	transition: 0.3s;
+}
+
+.nav-links a:hover {
+	color: var(--color-primary);
+}
+
+.right-nav {
+	display: flex;
+	gap: 10px;
+}
+
+/* =========== hero section =========== */
+.hero {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 50px;
+	align-items: center;
+}
+
+.hero-label {
+	font-family: var(--font-sans);
+	font-size: var(--label-md);
+	color: var(--color-secondary);
+	padding-bottom: 2px;
+	border-bottom: 1px dotted var(--color-secondary);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.hero-title {
+	font-size: var(--display-lg);
+	line-height: 50px;
+}
+
+.hero-title span {
+	color: var(--color-primary);
+	font-style: italic;
+}
+
+.hero-desc {
+	font-size: var(--label-md);
+	color: var(--color-secondary);
+	margin-bottom: 50px;
+}
+
+.hero-actions {
+	margin-top: 20px;
+	display: flex;
+	gap: 20px;
+}
+
+.hero-btn {
+	color: var(--color-primary);
+	cursor: pointer;
+}
+
+.hero-img {
+	position: relative;
+	width: 100%;
+	border-radius: 12px;
+	transform: rotate(2deg) scale(0.95);
+	transition: 0.3s;
+}
+
+.hero-img:hover {
+	transform: rotate(0) scale(1);
+}
+
+.hero-img img {
+	width: 100%;
+	border-radius: 12px;
+}
+
+.hero-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+	border-radius: 12px;
+	transform: rotate(2deg);
+}
+
+.hero-card {
+	position: absolute;
+	bottom: -20px;
+	left:-20px;
+	background: white;
+	padding: 18px;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* =========== Features section =========== */
+.features-header {
+	
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.features-header h2{
+	font-size: 40px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.features-header p {
+	margin-top: 12px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--color-secondary);
+}

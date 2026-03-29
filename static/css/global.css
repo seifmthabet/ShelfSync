@@ -1,0 +1,227 @@
+/* font */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+
+/* Global Standards */
+:root {
+  /* Colors */
+  --color-surface: #fbf9f4;
+  --color-primary: #334f2b;
+  --color-primary-container: #4a6741;
+  --color-secondary: #555;
+
+  --color-surface-lowest: #ffffff;
+  --color-surface-low: #f5f3ee;
+  --color-surface-high: #eae8e3;
+  --color-surface-highest: #e4e2dd;
+
+  --color-outline-variant: rgba(195, 200, 189, 0.2);
+
+  --color-on-surface: #1b1c19;
+  --color-on-primary: #ffffff;
+
+  /* Fonts */
+
+  --font-serif: "Newsreader", serif;
+  --font-sans: "Inter", sans-serif;
+
+  --display-lg: 56px;
+  --headline-md: 28px;
+  --title-lg: 22px;
+  --body-lg: 16px;
+  --label-md: 12px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 36px;
+  --space-8: 44px;
+
+  --section-16: 88px;
+  --section-20: 112px;
+
+  /* Radius */
+  --radius-default: 4px;
+  --radius-md: 6px;
+
+  /* Shadow */
+  --shadow-ambient: 0 12px 32px -4px rgba(51, 79, 43, 0.06);
+}
+
+/* Defaults */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--body-lg);
+  line-height: 1.6;
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Typography */
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+}
+
+.display-lg {
+  font-family: var(--font-sans);
+  font-size: var(--display-lg);
+  font-weight: 500;
+}
+
+.headline-md {
+  font-family: var(--font-serif);
+  font-size: var(--headline-md);
+  font-weight: 600;
+}
+
+.title-lg {
+  font-family: var(--font-serif);
+  font-size: var(--title-lg);
+  font-weight: 500;
+}
+
+.body-lg {
+  font-family: var(--font-serif);
+  font-size: var(--body-lg);
+}
+
+.label-md {
+  font-family: var(--font-sans);
+  font-size: var(--label-md);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Sections */
+
+section {
+  padding: 100px 0;
+}
+
+.section-alt {
+  background: var(--color-surface-low);
+}
+
+/* container */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.internal-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Cards */
+.card {
+  background: var(--color-surface-lowest);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+}
+
+.card.ghost-border {
+  border: 1px solid var(--color-outline-variant);
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: 0.3s;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: 6px;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-container);
+  transform: scale(1.02);
+}
+
+.btn-ghost {
+  background: none;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.btn-ghost:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Inputs */
+.input-soft {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-lowest);
+  border: none;
+  border-bottom: 1px solid var(--color-outline-variant);
+  font-family: var(--font-serif);
+}
+
+.input-soft:focus {
+  outline: none;
+  background: var(--color-surface-low);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/* Nav bar */
+.nav-glass {
+  background: rgba(251, 249, 244, 0.8);
+  backdrop-filter: blur(12px);
+}
+
+/* Lists */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  padding: var(--space-3) 0;
+}
+
+.list-item:hover {
+  background: var(--color-surface-low);
+}
+
+/* Floating Element effect */
+.modal,
+.popover {
+  background: var(--color-surface-lowest);
+  box-shadow: var(--shadow-ambient);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
