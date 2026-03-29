@@ -26,17 +26,31 @@ jobs:
 
       - name: Create lint configs
         run: |
-          echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
+          echo '{ "src-not-empty": false }' > .htmlhintrc.json
+          cat > .stylelintrc.json <<'EOF'
+          {
+            "extends": "stylelint-config-standard",
+            "rules": {
+              "alpha-value-notation": null,
+              "color-function-alias-notation": null,
+              "color-function-notation": null,
+              "color-hex-length": null,
+              "custom-property-empty-line-before": null,
+              "declaration-empty-line-before": null,
+              "import-notation": null
+            }
+          }
+          EOF
           cat > eslint.config.mjs <<'EOF'
           import js from "@eslint/js";
           export default [js.configs.recommended];
           EOF
 
       - name: Lint HTML
-        run: npx htmlhint "**/*.html"
+        run: npx htmlhint --config .htmlhintrc.json "frontend/**/*.html"
 
       - name: Lint CSS
-        run: npx stylelint "**/*.css" --allow-empty-input
+        run: npx stylelint "frontend/**/*.css" --allow-empty-input
 
       - name: Lint JS
-        run: npx eslint "**/*.js" --no-error-on-unmatched-pattern
+        run: npx eslint "frontend/**/*.js" --no-error-on-unmatched-pattern

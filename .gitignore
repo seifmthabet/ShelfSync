@@ -5,9 +5,24 @@ build/
 dist/
 wheels/
 *.egg-info
+*.sqlite3
 
 # Virtual environments
 .venv
+
+# Environment files
+.env
+backend/.env
+frontend/.env
+
+# Frontend / Node artifacts
+node_modules/
+package-lock.json
+
+# Local lint configs (generated during local CI simulation)
+.htmlhintrc.json
+.stylelintrc.json
+eslint.config.mjs
 
 # VS Code
 .vscode
