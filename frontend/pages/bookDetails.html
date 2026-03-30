@@ -2,296 +2,198 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Details</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Details | ShelfSync</title>
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/pages/bookDetails.css">
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div>
-            <div>
-                <span></span>
-                <span>ShelfSync</span>
-            </div>
-            <div>
-                <div>
-                    <span></span>
-                    <input type="text" name="" id="" placeholder="Search titles, authors...">
-                </div>
-                <div>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div>
-                    <img src="#" alt="avatar">
-                </div>
-            </div>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav">
+      <div class="internal-container left-nav">
+        <div class="logo">
+          <span>ShelfSync</span>
         </div>
-    </nav>
-    <!-- End Navigation -->
-    <!-- Details section -->
-    <section>
-        <div>
-            <div>
-                <img src="#" alt="Book Cover">
-            </div>
-            <div>
-                <div>
-                    <p>
-                        <span>Home</span> / <span>Classic Literature</span> / <span>The Great Gatsby</span>
-                    </p>
-                    <h1>The Great Gatsby</h1>
-                    <p>F. Scott Fitzgerald</p>
-                </div>
-                <div>
-                    <div>
-                        <span>
-                            <!-- icon -->
-                            4.8
-                        </span>
-                        <span>(2,450 reviews)</span>
-                    </div>
-                    <div>
-                        <span>
-                            <!-- icon -->
-                        </span>
-                        <span>
-                            Available to Borrow
-                        </span>
-                    </div>
-                    <div>
-                        <span>
-                            <span>Fiction</span> • <span>1925</span> • <span>208</span> pages
-                        </span>
-                    </div>
-                </div>
-                <div>
-                    <h3>Description</h3>
-                    <p>Set in the Jazz Age on Long Island, near New York City, the novel depicts first-
-                        person narrator Nick Carraway's interactions with mysterious millionaire Jay
-                        Gatsby and Gatsby's obsession to reunite with his former lover, Daisy
-                        Buchanan.</p>
-                </div>
-                <div>
-                    <button>Borrow Now</button>
-                    <button>
-                        <!-- icon -->
-                    </button>
-                    <button>
-                        <!-- icon -->
-                    </button>
-                </div>
-            </div>
+        <div class="">
+          <ul class=" internal-container nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/">About</a></li>
+            <li><a href="/">Browse</a></li>
+          </ul>
         </div>
+      </div>
+      <div class="internal-container right-nav">
+        <a href="./loginPage.html">Login</a>
+        <span class="avatar-pill" aria-hidden="true"></span>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navigation -->
+
+  <!-- Hero Section -->
+  <main class="container">
+    <section class="hero-wrap">
+      <div class="book-cover" role="img" aria-label="Book cover art for The Great Gatsby">
+        <div class="cover-frame"></div>
+        <div class="shelf-tag">Availability<span>On Shelf</span></div>
+      </div>
+
+      <div>
+        <div class="book-kicker">
+          <span class="chip cat-chip">classic literature</span>
+          <span class="chip yr-chip">1925</span>
+        </div>
+        <h1 class="book-title">The Great Gatsby</h1>
+        <p class="book-author">F. Scott Fitzgerald</p>
+        <p class="book-summary">
+          An exquisite portrait of the Roaring Twenties, Fitzgerald's mastery explores the
+          American Dream through the eyes of Nick Carraway as he becomes entangled in the
+          mysterious life of Jay Gatsby and his unrequited love for Daisy Buchanan.
+        </p>
+
+        <div class="action-row">
+          <button class="btn btn-primary borrow-btn" type="button">Borrow Book</button>
+          <button class="btn btn-ghost save-btn" type="button">Save to list</button>
+        </div>
+      </div>
     </section>
+    <!-- End Hero Section -->
 
-    <!-- End Deatails section -->
-    <!-- Reviews section -->
+    <!-- Rating Section -->
 
-    <section>
+    <section class="rating-box">
+      <div class="rating-grid">
         <div>
-            <div>
-                <div>
-                    <h2>Reader Reviews</h2>
-                    <p>What the community thinks about this classic.</p>
-                </div>
-                <div>
-                    <button>
-                        <!-- icon -->
-                        Write a Review
-                    </button>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <div>
-                        <h4>4.8</h4>
-                        <span>
-                            <!-- star icons -->
-                        </span>
-                        <p>Based on <span>2.4k</span> reviews</p>
-                    </div>
-                    <div>
-                        <div>
-                            <span>5</span>
-                            <span>
-                                <!-- progress bar -->
-                            </span>
-                            <span>84%</span>
-                        </div>
-                        <div>
-                            <span>4</span>
-                            <span>
-                                <!-- progress bar -->
-                            </span>
-                            <span>12%</span>
-                        </div>
-                        <div>
-                            <span>3</span>
-                            <span>
-                                <!-- progress bar -->
-                            </span>
-                            <span>14%</span>
-                        </div>
-                        <div>
-                            <span>2</span>
-                            <span>
-                                <!-- progress bar -->
-                            </span>
-                            <span>1%</span>
-                        </div>
-                        <div>
-                            <span>1</span>
-                            <span>
-                                <!-- progress bar -->
-                            </span>
-                            <span>1%</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <div>
-                            <div>
-                                <img src="#" alt="">
-                                <div>
-                                    <h6>Elena Rodriguez</h6>
-                                    <p>2 days ago</p>
-                                </div>
-                            </div>
-                            <div>
-                                <span>
-                                    <!-- icons -->
-                                </span>
-                            </div>
-                        </div>
-                        <div>
-                            <p>
-                                A masterpiece that perfectly captures the hollowness of the American Dream.
-                                Fitzgerald's prose is poetic and haunting. I've read this three times and discover
-                                something new every time.
-                            </p>
-                        </div>
-                        <div>
-                            <button>
-                                <!-- icon -->
-                                <span>42</span>
-                            </button>
-                            <button>
-                                <!-- icon -->
-                                Reply
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <div>
-                                <img src="#" alt="">
-                                <div>
-                                    <h6>Elena Rodriguez</h6>
-                                    <p>2 days ago</p>
-                                </div>
-                            </div>
-                            <div>
-                                <span>
-                                    <!-- icons -->
-                                </span>
-                            </div>
-                        </div>
-                        <div>
-                            <p>
-                                A masterpiece that perfectly captures the hollowness of the American Dream.
-                                Fitzgerald's prose is poetic and haunting. I've read this three times and discover
-                                something new every time.
-                            </p>
-                        </div>
-                        <div>
-                            <button>
-                                <!-- icon -->
-                                <span>42</span>
-                            </button>
-                            <button>
-                                <!-- icon -->
-                                Reply
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <button>View More Reviews</button>
-                    </div>
-                </div>
-            </div>
+          <h2 class="rating-title">Reader Consensus</h2>
+          <p class="rating-value">4.8</p>
+          <p class="rating-stars">★ ★ ★ ★ ★</p>
+          <p class="rating-note">Based on 1,240 reviews</p>
         </div>
+
+        <div class="bars">
+          <div class="bar-row">
+            <span>5 star</span>
+            <span class="track"><span class="fill" style="width: 82%;"></span></span>
+            <span>82%</span>
+          </div>
+          <div class="bar-row">
+            <span>4 star</span>
+            <span class="track"><span class="fill" style="width: 12%;"></span></span>
+            <span>12%</span>
+          </div>
+          <div class="bar-row">
+            <span>3 star</span>
+            <span class="track"><span class="fill" style="width: 4%;"></span></span>
+            <span>4%</span>
+          </div>
+          <div class="bar-row">
+            <span>2 star</span>
+            <span class="track"><span class="fill" style="width: 1%;"></span></span>
+            <span>1%</span>
+          </div>
+          <div class="bar-row">
+            <span>1 star</span>
+            <span class="track"><span class="fill" style="width: 1%;"></span></span>
+            <span>1%</span>
+          </div>
+        </div>
+      </div>
     </section>
-    <!-- End Reviews -->
+    <!-- End Rating Section -->
 
-    <!-- Footer -->
-    <footer>
-        <div>
-            <div>
-                <div>
-                    <span>ShelfSync</span>
-                    <p>Making knowledge accessible through a seamless physical and digital library experience.</p>
-                    <div>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-                <div>
-                    <h4>Platform</h4>
-                    <ul>
-                        <li><a href="/">How it Works</a></li>
-                        <li><a href="/">Book List</a></li>
-                        <li><a href="/">Memberships</a></li>
-                        <li><a href="/">Gift Cards</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="/">Help Center</a></li>
-                        <li><a href="/">Shipping Info</a></li>
-                        <li><a href="/">Returns</a></li>
-                        <li><a href="/">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="/">About Us</a></li>
-                        <li><a href="/">Careers</a></li>
-                        <li><a href="/">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="/">Privacy</a></li>
-                        <li><a href="/">Terms</a></li>
-                        <li><a href="/">Cookies</a></li>
-                    </ul>
-                </div>
+    <!-- Review Section -->
+    <section>
+      <div class="archives-head">
+        <h2>From the Archives</h2>
+        <a href="./writeReview.html">write a review</a>
+      </div>
+
+      <div class="review-grid">
+        <article class="review-card">
+          <div class="reviewer">
+            <span class="review-avatar">EV</span>
+            <div class="review-meta">
+              <strong>Eleanor Vance</strong>
+              <span>October 14, 2025</span>
             </div>
-            <div>
-                <div>
-                    <p>&copy; 2026 ShelfSync. All rights reserved.</p>
-                </div>
-                <div>
-                    <div>
-                        <p>Safe & Secure Payments</p>
-                    </div>
-                    <div>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
+          </div>
+          <p class="review-stars">★ ★ ★ ★ ★</p>
+          <p class="review-text">
+            "Fitzgerald's prose is like drinking champagne under the stars - fizzy, beautiful,
+            and slightly tragic. A definitive masterpiece."
+          </p>
+          <span class="review-like">♡ 32</span>
+        </article>
+
+        <article class="review-card">
+          <div class="reviewer">
+            <span class="review-avatar">JM</span>
+            <div class="review-meta">
+              <strong>Julian Morrow</strong>
+              <span>January 8, 2026</span>
             </div>
-        </div>
-    </footer>
-    <!-- End Footer -->
+          </div>
+          <p class="review-stars">★ ★ ★ ★ ★</p>
+          <p class="review-text">
+            "The ultimate commentary on the hollowness of the American upper class. Every
+            sentence is crafted with terrifying precision."
+          </p>
+          <span class="review-like">♡ 41</span>
+        </article>
+
+        <article class="review-card">
+          <div class="reviewer">
+            <span class="review-avatar">CB</span>
+            <div class="review-meta">
+              <strong>Clara Beau</strong>
+              <span>March 2, 2026</span>
+            </div>
+          </div>
+          <p class="review-stars">★ ★ ★ ★ ★</p>
+          <p class="review-text">
+            "A haunting reminder that we can never truly repeat the past, no matter how much we
+            stretch our arms toward the green light."
+          </p>
+          <span class="review-like">♡ 29</span>
+        </article>
+      </div>
+
+      <button class="btn btn-ghost load-btn" type="button">Load more archives</button>
+    </section>
+    <!-- End Review Section -->
+
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="page-footer container">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand">ShelfSync</p>
+        <p class="footer-copy">
+          Dedicated to the preservation and democratization of
+          historical literature, academic papers, and cultural
+          artifacts since 1924. </p>
+      </div>
+      <div>
+        <p class="footer-kicker">Sections</p>
+        <a href="#">Collections</a>
+        <a href="#">Archives</a>
+        <a href="#">New Arrivals</a>
+      </div>
+      <div>
+        <p class="footer-kicker">The Library</p>
+        <a href="#">Calendar</a>
+        <a href="#">Services</a>
+        <a href="#">Membership</a>
+      </div>
+    </div>
+    <p class="footer-end">© 2026 ShelfSync. All rights reserved.</p>
+  </footer>
+  <!-- End Footer Section -->
+
 </body>
 
 </html>
