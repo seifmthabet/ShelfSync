@@ -5,6 +5,9 @@
     <title>Sign Up</title>
     <meta name="author" content="Abdullah Basyouni">
     <meta name="viewport" content="width=device-width ,initial-scale = 1.0" />
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="stylesheet" href="../static/css/pages/signUp.css">
+    </link>
 
 </head>
 
@@ -12,83 +15,113 @@
     <!--Content -->
     <div class="Content">
         <!--Header -->
-        <header class="Header_Sign_Up">
-            <div class="rightContent_H">
-                <img src="" alt="Logo" width="32px" height="32px">
+        <div class="rightContent_H">
+
+            <div class="row1">
+                <img class="logo-1" src="../static/images/covers/Background.png" alt="Logo" width="40px" height="40px">
                 <h2>Shelf Sync</h2>
             </div>
-            <div class="leftContent_H">
-                <p>Already have an account?</p>
-                <a href="login.html">
-                    <button type="button">Login</button>
-                </a>
+
+            <div class="row2">
+                <p class="display-lg" style="margin: bottom 10px">Create your <span class="Break">personal
+                        archive</span></p>
+                <p class="body-lg">Join a community dedicated to the preservation of knowledge and the art of
+                    intentional reading.</p>
             </div>
-        </header>
+            <div class="row3">
+                <img class="logo-1" src="../static/images/covers/icon2.png" alt="Logo" width="32px" height="32px">
+                <div class="over">
+                    <p style="margin-bottom:5px ;">Refined Cataloging</p>
+                    <small>Organize collections with tactile digital precision.</small>
+                </div>
+                <img class="logo-1" src="../static/images/covers/icon1.png" alt="Logo" width="32px" height="32px">
+                <div class="over">
+                    <p style="margin-bottom:5px ;">Refined Cataloging</p>
+                    <small>Organize collections with tactile digital precision.</small>
+                </div>
+            </div>
+        </div>
 
         <!--Main -->
-        <section class="Main_Sign">
-            <div class="container_Sign_H">
-                <h1>Create Account</h1>
-                <small>Join our community of readers today.</small>
+        <section class="Main-Sign">
+            <div class="container-Sign-H">
+                <h1 class="tittle-sign-up">Create Account</h1>
+                <small class="small-tittle"> Begin your journey today</small>
             </div>
             <!--Form -->
-            <div class="Form_SignUp">
+            <div class="Form-Sign-up">
                 <form action="../index.html">
-                    <div class="Form_Item">
-                        <label for="Full_Name"><b>Full Name</b></label>
-                        <input type="text" name="fullN" id="Full_Name" placeholder="Enter your full name" required>
+
+                    <div class="input-2">
+                        <label class="label-md" for="Full_Name"><b>Full Name</b></label>
+                        <input class="input-soft" type="text" name="fullN" id="Full_Name"
+                            placeholder="Enter your full name" required>
                     </div>
 
-                    <div class="Form_Item">
-                        <label for="Email_S"><b>Email Address</b></label>
-                        <input type="email" name="EmailAdd" id="Email_S" placeholder="name@example.com" required>
+                    <div class="input-3">
+                        <label class="label-md" for="Email_S"><b>Email Address</b></label>
+                        <input class="input-soft" type="email" name="EmailAdd" id="Email_S"
+                            placeholder="name@example.com" required>
                     </div>
 
-                    <div class="Form_Item">
-                        <label for="password_S"><b>Password</b></label>
-                        <input type="password" name="Pass" id="Password_S" placeholder="Create a password" required>
-                        <button type="button">Show</button>
+                    <div class="input-4">
+                        <label class="label-md" for="password_S"><b>Password</b></label>
+                        <input class="input-soft" type="password" name="Pass" id="Password_S"
+                            placeholder="Create a password" required>
                     </div>
 
-                    <div class="Form_Item">
-                        <label for="ConfirmPassword"><b>Confirm Password</b></label>
-                        <input type="password" name="comfirmpass" id="ConfirmPassword"
+
+                    <div class="input-5">
+                        <label class="label-md" for="ConfirmPassword"><b>Confirm Password</b></label>
+                        <input class="input-soft" type="password" name="comfirmpass" id="ConfirmPassword"
                             placeholder="Repeat your password" required>
-                        <button type="button">Show</button>
-                    </div>
-                    <div class="Form_Item">
-                        <label><b>Select Role</b></label>
-                        <div class="role-options">
-                            <label><input type="radio" name="role" value="user"> User</label>
-                            <label><input type="radio" name="role" value="admin"> Administrator</label>
-                        </div>
                     </div>
 
-                    <div class="terms">
-                        <input type="checkbox" name="Agree" value="true" required>
-                        <span>I agree to the <a href="Terms.html">Terms of Service</a> and <a href="Policy.html">Privacy
-                                Policy</a>.</span>
+                    <div class="input-1">
+                        <label class="label-md"><b>Select your Role</b></label>
+                        <div class="choosing">
+                            <div class="role-user">
+                                <img src="../static/images/covers/user.png" alt="" width="15px" height="14px">
+                                <label class="label-md">
+                                    <input type="radio" name="role" value="user">
+                                    User
+                                </label>
+                            </div>
+
+                            <div class="role-admin">
+                                <img src="../static/images/covers/admin-panel.png" alt="" width="15px" height="14px">
+                                <label class="label-md">
+                                    <input type="radio" name="role" value="admin">
+                                    Administrator
+
+                                </label>
+                            </div>
+
+                        </div>
+
                     </div>
+
+
 
                     <div class="register">
-                        <button type="submit">Register Account</button>
+                        <button class="btn-primary" type="submit">Create Account</button>
                     </div>
-                    <div class="login_Sign">
-                        <p>Already a member?<a href="login.html"> Log in to your library</a></p>
+                    <div class="text-sign-in">
+                        <p>Already a member?</p>
+
+                    </div>
+                    <div class="sign-in-btn"><button class="btn-primary" type="button">Sign In to ShelfSync</button>
                     </div>
                 </form>
             </div>
         </section>
-
         <!--Footer -->
         <footer class="footer_sign">
-            <small>&copy; 2025 Shelf Sync . All rights reserved. </small>
+            <small>&copy; 2026 Shelf Sync . All rights reserved. </small>
             <div class="Links_F">
-                <ul>
-                    <li><a href="help_Center.html" target="_blank">Help Center</a></li>
-                    <li><a href="https://www.google.com/maps/place/%D8%AC%D8%A7%D9%85%D8%B9%D8%A9+%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D9%87%E2%80%AD/@30.0239249,31.2100855,1742m/data=!3m1!1e3!4m6!3m5!1s0x145846dbabc27ebd:0xa8c3715257b6f3cb!8m2!3d30.0273652!4d31.2088085!16zL20vMDJ3NmJx?entry=ttu&g_ep=EgoyMDI2MDMwOS4wIKXMDSoASAFQAw%3D%3D"
-                            target="_blank">Library Location</a></li>
-                    <li><a href="mailto:bodybasuni2007@gmail.com" target="_blank">Contact Support</a></li>
+                <ul class="list-items">
+                    <li class="legal"><a href="" target="_blank">LEGAL</a></li>
+                    <li class="support"><a href="mailto:bodybasuni2007@gmail.com" target="_blank"> SUPPORT</a></li>
                 </ul>
             </div>
         </footer>
