@@ -30,7 +30,7 @@ ShelfSync/
 cd backend
 python -m venv .venv
 source .venv/bin/activate
-pip install -e .
+uv sync
 python manage.py migrate
 python manage.py runserver
 ```
