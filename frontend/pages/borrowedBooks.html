@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borrowed Books | ShelfSync</title>
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/pages/borrowedBooks.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar__inner">
+      <span class="navbar__brand" id="navbar__brand">ShelfSync</span>
+      <div class="navbar__links">
+        <a href="../index.html">Home</a>
+        <a href="searchBooks.html">Browse</a>
+        <a href="userDashboard.html">Dashboard</a>
+        <a href="borrowedBooks.html" style="color: var(--ink);">Borrowed</a>
+      </div>
+      <div class="navbar__actions">
+        <button class="btn-login" id="btn-nav">Profile</button>
+        <div class="navbar__avatar"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container">
+    <section class="hero">
+      <h1 class="hero__title">Currently Reading</h1>
+      <p class="hero__subtitle">Manage your borrowed books and loan details</p>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filters">
+      <div class="filters__inner">
+        <div class="filter-group">
+          <label class="filter-label">Status</label>
+          <div class="select-wrap">
+            <select id="statusFilter">
+              <option value="">All Status</option>
+              <option value="active">Active</option>
+              <option value="due-soon">Due Soon</option>
+              <option value="overdue">Overdue</option>
+            </select>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Sort By</label>
+          <div class="select-wrap">
+            <select id="sortFilter">
+              <option value="due-date">Due Date</option>
+              <option value="title">Title</option>
+              <option value="date-borrowed">Date Borrowed</option>
+            </select>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <button class="btn-refine" id="applyFilters">Apply Filters</button>
+      </div>
+    </section>
+
+    <!-- Borrowed Books Grid -->
+    <section class="borrowed-books">
+      <div id="borrowedBooksContainer" class="books-grid">
+        <!-- Books will be loaded here -->
+      </div>
+      
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <p class="empty-state__text">No borrowed books at the moment.</p>
+        <a href="searchBooks.html" class="btn btn-primary">Browse Books</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="footer__brand">ShelfSync</span>
+        <p class="footer__copy">&copy; 2026 ShelfSync. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../static/js/pages/borrowedBooks.js"></script>
+</body>
+
+</html>

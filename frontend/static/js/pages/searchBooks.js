@@ -10,6 +10,13 @@ loginButton.addEventListener("click", () => {
     window.location.href = "loginPage.html";
 });
 
+const profileButton = document.getElementById("btn-nav");
+if (profileButton) {
+    profileButton.addEventListener("click", () => {
+        window.location.href = "myProfile.html";
+    });
+}
+
 const state = {
   books: [],
   filtered: [],

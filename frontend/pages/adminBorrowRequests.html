@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borrow Requests | ShelfSync Admin</title>
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/pages/adminBorrowRequests.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar__inner">
+      <span class="navbar__brand" id="navbar__brand">ShelfSync Admin</span>
+      <div class="navbar__links">
+        <a href="adminDashboard.html">Dashboard</a>
+        <a href="adminManageUsers.html">Users</a>
+        <a href="adminBookMangement.html">Books</a>
+        <a href="adminBorrowRequests.html" style="color: var(--ink);">Borrow Requests</a>
+        <a href="adminReviewManagement.html">Reviews</a>
+      </div>
+      <div class="navbar__actions">
+        <button class="btn-login" id="btn-logout">Logout</button>
+        <div class="navbar__avatar"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container">
+    <section class="hero">
+      <h1 class="hero__title">Borrow Requests</h1>
+      <p class="hero__subtitle">Review and approve/reject borrowing requests</p>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="statistics">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card__value" id="totalRequests">0</div>
+          <div class="stat-card__label">Total Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="pendingRequests">0</div>
+          <div class="stat-card__label">Pending</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="approvedRequests">0</div>
+          <div class="stat-card__label">Approved</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="rejectedRequests">0</div>
+          <div class="stat-card__label">Rejected</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filters">
+      <div class="filters__inner">
+        <div class="filter-group">
+          <label class="filter-label">Status</label>
+          <div class="select-wrap">
+            <select id="statusFilter">
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Sort By</label>
+          <div class="select-wrap">
+            <select id="sortFilter">
+              <option value="date-requested">Most Recent</option>
+              <option value="oldest">Oldest First</option>
+              <option value="risk-score">Risk Score</option>
+            </select>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <button class="btn-refine" id="applyFilters">Apply Filters</button>
+      </div>
+    </section>
+
+    <!-- Borrow Requests Cards -->
+    <section class="requests-grid">
+      <div id="requestsContainer" class="cards-container">
+        <!-- Request cards will be loaded here -->
+      </div>
+
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <p class="empty-state__text">No borrow requests to review.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="footer__brand">ShelfSync</span>
+        <p class="footer__copy">&copy; 2026 ShelfSync. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../static/js/pages/adminBorrowRequests.js"></script>
+</body>
+
+</html>
