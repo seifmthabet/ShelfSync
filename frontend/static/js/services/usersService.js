@@ -21,7 +21,7 @@ export const usersService = {
   refresh: async () => {
     const refresh = Storage.getRefreshToken();
     const data = await apiClient.post(
-      "/auth/refresh/",
+      "/auth/token/refresh/",
       { refresh },
       { authRequired: false }
     );
