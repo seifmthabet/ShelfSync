@@ -1,145 +1,260 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Admin Book Mangement</title>
+  <title>
+    Management Books
+  </title>
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="Manage Books.css">
 </head>
-
 <body>
+ <aside class="sidebar">
 
-    <div class="container">
+  <div class="sidebar-logo">
+    <img src="Icon.png" alt="logo">
 
-        <header>
-            <h1>Shelf Sync</h1>
-            <hr>
+    <div>
+      <h3>ShelfSync</h3>
+      <p class="paragraph">LIBRARY MANAGEMENT</p>
+    </div>
+  </div>
 
-            <div class="navbar">
 
-                <img src="Icon.png" width="15">
-                &nbsp;&nbsp; LibAdmin
-                &emsp;&emsp;
+  <div class="sidebar-body">
 
-                <a href="userDashboard.html">Dashboard</a>&emsp;
-                <a href="Inventory.html">Inventory</a>&emsp;
-                <a href="Members.html">Members</a>&emsp;
-                <a href="Reports.html">Reports</a>
+    <nav class="sidebar-menu">
 
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+      <button class="sidebar-btn">
+        <img src="Icon 3.png">
+        Dashboard
+      </button>
 
-                <input type="search" name="search" placeholder="Search collection...">
+      <button class="sidebar-btn">
+        <img src="Icon 4.png">
+        My Books
+      </button>
 
-                &emsp;&emsp;
+      <button class="sidebar-btn">
+        <img src="Icon 5.png">
+        Reviews
+      </button>
 
-                <button type="button">🔔</button>
+      <button class="sidebar-btn">
+        <img src="Icon 6.png">
+        History
+      </button>
 
-                &emsp;&emsp;
+      <button class="sidebar-btn">
+        <img src="Icon 7.png">
+        Profile
+      </button>
 
-                <img src="Image+Border.png" width="30">
+    </nav>
 
-                <hr>
+  </div>
 
-            </div>
-        </header>
+  <div class="sidebar-footer">
 
-        <div class="page-header">
+    <button class="sidebar-btn">
+      <img src="Icon 1.png">
+      Settings
+    </button>
 
-            <h1>Book Management</h1>
+    <button class="sidebar-btn">
+      <img src="Icon 2.png">
+      Help
+    </button>
 
-            Catalog, edit, and track your library assets in real-time
+  </div>
 
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+</aside>
+  <main class="main">
+    <header class="header">
 
-            <button type="button">+ Add New Book</button>
+    <div class="header-left">
+      <h1 class="header-title">
+        <em>Inventory Archive</em>
+      </h1>
+    </div>
 
-        </div>
+    <input type="search" class="header-search" placeholder="🔍 Search the archives...">
 
-        <br>
+    <div class="header-actions">
+      <button type="button" class="header-btn">🔔</button>
+      <button type="button" class="header-btn">⚙️</button>
+      <img src="User Profile.png" alt="user-profile">
+    </div>
 
-        <div class="table-container">
+  </header>
+    <div class="dashboard-header">
+      
+<section class="first-section">
 
-            <table width="90%" cellpadding="5" cellspacing="0">
-                <tr>
-                    <td>
-                        <button type="button">All Collections</button>&emsp;
-                        <button type="button">Available</button>&emsp;
-                        <button type="button">On Loan</button>&emsp;
-                        <button type="button">Reserved</button>
-                    </td>
-                </tr>
-            </table>
+  <div class="stats-card">
+    <h3>COLLECTION OVERVIEW</h3>
+    <p>Curating the world's most distinguished libraries.</p>
 
-            <hr width="90%">
+    <div class="stats-group">
+      <div>
+        <em>12,482</em>
+        <p>TOTAL VOLUMES</p>
+      </div>
 
-            <table width="90%" style="margin: auto;" cellpadding="10" cellspacing="0" rules="rows" frame="box">
+      <div>
+        <em>1.2k</em>
+        <p>ACTIVE LOANS</p>
+      </div>
+    </div>
+  </div>
 
-                <tr>
-                    <th>TITLE</th>
-                    <th>AUTHOR</th>
-                    <th>CATEGORY</th>
-                    <th>AVAILABILITY</th>
-                    <th>RATING</th>
-                    <th>ACTIONS</th>
-                </tr>
+  <div class="right-column">
 
-                <tr>
-                    <td>The Great Gatsby</td>
-                    <td>F. Scott Fitzgerald</td>
-                    <td>Classic</td>
-                    <td>AVAILABLE</td>
-                    <td>4.8</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
+    <div class="category-card">
+      <h4>TOP CATEGORY</h4>
+      <p>Philosophy & Ethics</p>
+      <p>Growth of 12% this quarter</p>
+    </div>
 
-                <tr>
-                    <td>1984</td>
-                    <td>George Orwell</td>
-                    <td>Dystopian</td>
-                    <td>BORROWED</td>
-                    <td>4.2</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
-
-                <tr>
-                    <td>The Hobbit</td>
-                    <td>J.R.R. Tolkien</td>
-                    <td>Fantasy</td>
-                    <td>AVAILABLE</td>
-                    <td>4.9</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
-
-                <tr>
-                    <td>Clean Code</td>
-                    <td>Robert C. Martin</td>
-                    <td>Tech</td>
-                    <td>AVAILABLE</td>
-                    <td>4.5</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
-
-                <tr>
-                    <td colspan="6">
-                        Showing 1 to 4 of 24 entries
-
-                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-
-                        <button>❮</button>
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <button>❯</button>
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
+    <div class="actions-card">
+      <h4>ACTIONS</h4>
+      <div class="actions-row">
+      <button type="button" class="btn-add">+ ADD NEW VOLUME</button>
+      <img src="icon.png">
+      </div>
+  </div>
 
     </div>
 
-</body>
+  </section>
+    <div class="table-wrapper">
 
+  <div class="table-header">
+    <h2>Archive Inventory</h2>
+
+    <div class="table-actions">
+      <button class="btn-filter">
+        <img src="Icon8.png">
+        FILTER
+      </button>
+
+      <button class="btn-export">
+        <img src="Icon9.png">
+        EXPORT
+      </button>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <table>
+
+      <thead>
+        <tr>
+          <th>VOLUME TITLE</th>
+          <th>AUTHOR</th>
+          <th>CATEGORY</th>
+          <th>AVAILABILITY</th>
+          <th>RATING</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td class="book-cell">
+            <div class="book-info">
+              <div class="book-cover"></div>
+              <div>
+                <h4>The Meditations</h4>
+                <p>ISBN: 978-0140449334</p>
+              </div>
+            </div>
+          </td>
+          <td>Marcus Aurelius</td>
+          <td><span class="badge">PHILOSOPHY</span></td>
+          <td><span class="status available">● AVAILABLE</span></td>
+          <td class="rating">★ 4.9</td>
+          <td class="actions">
+            <button>✏️</button>
+            <button>🗑️</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="book-cell">
+            <div class="book-info">
+              <div class="book-cover"></div>
+              <div>
+                <h4>Beyond Good and Evil</h4>
+                <p>ISBN: 978-0140445138</p>
+              </div>
+            </div>
+          </td>
+          <td>Friedrich Nietzsche</td>
+          <td><span class="badge">PHILOSOPHY</span></td>
+          <td><span class="status loaned">● LOANED</span></td>
+          <td class="rating">★ 4.7</td>
+          <td class="actions">
+            <button>✏️</button>
+            <button>🗑️</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="book-cell">
+            <div class="book-info">
+              <div class="book-cover"></div>
+              <div>
+                <h4>The Odyssey</h4>
+                <p>ISBN: 978-0140268867</p>
+              </div>
+            </div>
+          </td>
+          <td>Homer</td>
+          <td><span class="badge">CLASSICS</span></td>
+          <td><span class="status available">● AVAILABLE</span></td>
+          <td class="rating">★ 4.8</td>
+          <td class="actions">
+            <button>✏️</button>
+            <button>🗑️</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+    <div class="table-footer">
+      <p>SHOWING 3 OF 12,482 ENTRIES</p>
+
+      <div class="pagination">
+        <button>PREVIOUS</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>NEXT</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="main">
+
+  
+  <footer class="footer">
+    <div class="footer-container">
+      <p>© 2024 SHELFSYNC. ALL RIGHTS RESERVED</p>
+
+      <div>
+        <a href="#">LEGAL</a>
+        <a href="#">PRIVACY POLICY</a>
+        <a href="#">HELP CENTER</a>
+        <a href="#">CONTACT SUPPORT</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</main>
+
+</body>
 </html>
