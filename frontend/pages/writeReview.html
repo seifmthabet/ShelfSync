@@ -24,6 +24,8 @@
                 <img src="../static/images/covers/SearchIcon.png" alt="search icon" class="search-icon">
                 <input type="search" name="value" class="search-input" placeholder="Search your library...">
             </div>
+
+            <button class="nav-right"><img src="../static/images/covers/bill.png" alt=""></button>
         </nav>
 
         <!-- ================= MAIN LAYOUT ================= -->
@@ -38,9 +40,8 @@
 
                         <li>
                             <a href="#">
-                                <div class="btn-list1">
-                                    <img src="../static/images/covers/Dahsboard.png" alt="Dashboard icon"
-                                        class="menu-icon" width="17px" height="17px">
+                                <div class="nav-item">
+                                    <img src="../static/images/covers/Dahsboard.png" class="menu-icon">
                                     <span>Dashboard</span>
                                 </div>
                             </a>
@@ -48,33 +49,40 @@
 
                         <li>
                             <a href="#">
-                                <div class="btn-list2">
-                                    <img src="../static/images/covers/MyBooks.png" alt="My Books icon" class="menu-icon"
-                                        width="20px" height="14.9px">
+                                <div class="nav-item">
+                                    <img src="../static/images/covers/MyBooks.png" class="menu-icon">
                                     <span>My Books</span>
                                 </div>
                             </a>
-
                         </li>
 
                         <li>
-                            <a href="#">
-                                <div class="btn-list3">
-                                    <img src="../static/images/covers/review.png" alt="Reviews icon" class="menu-icon"
-                                        width="20px" height="20px">
+                            <a href="#" class="active">
+                                <div class="nav-item">
+                                    <img src="../static/images/covers/review.png" class="menu-icon">
                                     <span>Reviews</span>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href="#">
-                                <div class="btn-list4">
-                                    <img src="../static/images/covers/Icon.png" alt="Reviews icon" class="menu-icon"
-                                        width="20px" height="20px">
+                                <div class="nav-item">
+                                    <img src="../static/images/covers/History.png" class="menu-icon">
+                                    <span>History</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <div class="nav-item">
+                                    <img src="../static/images/covers/Icon.png" class="menu-icon">
                                     <span>Profile</span>
                                 </div>
                             </a>
                         </li>
+
                     </ul>
                 </nav>
             </aside>
@@ -124,13 +132,14 @@
                                 <span class="side-note">RATE THIS VOLUME</span>
                             </div>
 
-                            <div class="rating-stars">
-                                <button class="Button-star" type="button">★</button>
-                                <button class="Button-star" type="button">★</button>
-                                <button class="Button-star" type="button">★</button>
-                                <button class="Button-star" type="button">☆</button>
-                                <button class="Button-star" type="button">☆</button>
+                            <div class="rating">
+                                <span data-value="1">&#9733;</span>
+                                <span data-value="2">&#9733;</span>
+                                <span data-value="3">&#9733;</span>
+                                <span data-value="4">&#9733;</span>
+                                <span data-value="5">&#9733;</span>
                             </div>
+
 
                             <div class="rating-labels">
                                 <span class="star-label">Poised</span>
@@ -154,6 +163,8 @@
                                 <input type="text" id="headline" name="headline"
                                     placeholder="Summary of your experience...">
                             </div>
+
+
                             <div class="form-group">
                                 <label for="critique">CRITIQUE</label>
 
@@ -165,6 +176,20 @@
                                         <span id="counter">0 / 2000 words</span>
                                     </div>
                                 </div>
+                            </div>
+                            <!-- Checkboxes -->
+                            <div class="form-options">
+
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="spoiler">
+                                    <span>Contains spoilers for future readers</span>
+                                </label>
+
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="publish" checked>
+                                    <span>Publish to Public Library Archive</span>
+                                </label>
+
                             </div>
                             <!-- Actions -->
                             <div class="form-actions">
@@ -196,6 +221,7 @@
         </footer>
 
     </div>
+    <script type="module" src="../static/js/pages/Writing-Review.js"></script>
 </body>
 
 </html>
