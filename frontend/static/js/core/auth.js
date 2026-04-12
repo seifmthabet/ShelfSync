@@ -1,5 +1,5 @@
-import { ROUTES } from "./config";
-import { Storage } from "./storage";
+import { ROUTES } from "./config.js";
+import { Storage } from "./storage.js";
 
 export const Auth = {
   isAuthenticated: () => {

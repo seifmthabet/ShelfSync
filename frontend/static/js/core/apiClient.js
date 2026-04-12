@@ -68,7 +68,7 @@ export const request = async (path, { method = "GET", body, query, headers = {},
   const token = Storage.getAccessToken();
 
   const makeFetch = () => {
-    withTimeout(
+    return withTimeout(
       fetch(buildUrl(path, query), {
         method,
         headers: {
@@ -98,16 +98,16 @@ export const request = async (path, { method = "GET", body, query, headers = {},
         method,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${storage.getAccessToken()}`,
+          Authorization: `Bearer ${Storage.getAccessToken()}`,
           ...headers,
         },
         body: body ? JSON.stringify(body) : undefined,
         ...option,
       }),
-        CONFIG.requestTimeoutMs
+        config.requestTimeoute
       );
 
-      return await parseResponse(retryRes);
+      return await parseResponse(retryResponse);
     }
     throw error;
   }

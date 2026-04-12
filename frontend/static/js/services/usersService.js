@@ -11,8 +11,8 @@ export const usersService = {
     const data = await apiClient.post("/auth/login/", payload, { authRequired: false });
 
     Auth.saveSession({
-      access: data?.access,
-      refresh: data?.refresh,
+      accessToken: data?.access,
+      refreshToken: data?.refresh,
       user: data?.user || null,
     });
 
