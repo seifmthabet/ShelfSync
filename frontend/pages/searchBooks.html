@@ -12,14 +12,14 @@
     <!-- ── NAVBAR ── -->
     <header class="navbar">
         <div class="navbar__inner">
-            <a href="#" class="navbar__brand">Search Library</a>
+            <a href="#" id="navbar__brand">Search Library</a>
             <nav class="navbar__links">
-                <a href="#">Browse</a>
+                <a href="#" id="browse">Browse</a>
                 <a href="#">Collections</a>
                 <a href="#">About</a>
             </nav>
             <div class="navbar__actions">
-                <a href="#" class="btn-login">Login</a>
+                <a href="#" id="btn-login">Login</a>
                 <div class="navbar__avatar"></div>
             </div>
         </div>
@@ -203,21 +203,6 @@
             <span class="footer__copy">&copy; 2024 Search Library. All rights reserved.</span>
         </div>
     </footer>
-
-    <script>
-        // Filter tab interactions
-        document.querySelectorAll('.page-num').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.page-num').forEach(b => b.classList.remove('page-num--active'));
-                btn.classList.add('page-num--active');
-            });
-        });
-
-        // Book card hover lift
-        document.querySelectorAll('.book-card').forEach((card, i) => {
-            card.style.animationDelay = `${i * 0.07}s`;
-            card.classList.add('book-card--animate');
-        });
-    </script>
+    <script type="module" src="../static/js/pages/searchBooks.js"></script>
 </body>
 </html>

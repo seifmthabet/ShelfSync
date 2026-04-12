@@ -1,0 +1,297 @@
+import { domHelper } from "../utils/domHelper.js";
+import { Auth } from "../core/auth.js";
+
+// Navigation
+const homeButton = document.getElementById("navbar__brand");
+homeButton.addEventListener("click", () => {
+    window.location.href = "adminDashboard.html";
+});
+
+const logoutButton = document.getElementById("btn-logout");
+logoutButton.addEventListener("click", () => {
+    Auth.logout();
+    window.location.href = "loginPage.html";
+});
+
+const state = {
+    borrowRequests: [],
+    filtered: [],
+    stats: {
+        totalRequests: 0,
+        pendingRequests: 0,
+        approvedRequests: 0,
+        rejectedRequests: 0,
+    },
+    statusFilter: "",
+    sortFilter: "date-requested",
+};
+
+const ui = {
+    statusFilter: domHelper.query("#statusFilter"),
+    sortFilter: domHelper.query("#sortFilter"),
+    applyFiltersBtn: domHelper.query("#applyFilters"),
+    requestsContainer: domHelper.query("#requestsContainer"),
+    emptyState: domHelper.query("#emptyState"),
+    totalRequests: domHelper.query("#totalRequests"),
+    pendingRequests: domHelper.query("#pendingRequests"),
+    approvedRequests: domHelper.query("#approvedRequests"),
+    rejectedRequests: domHelper.query("#rejectedRequests"),
+};
+
+// Initialize
+document.addEventListener("DOMContentLoaded", async () => {
+    if (!Auth.isAuthenticated() || !Auth.isAdmin()) {
+        window.location.href = "loginPage.html";
+        return;
+    }
+    await loadBorrowRequests();
+    setupEventListeners();
+});
+
+// Setup event listeners
+function setupEventListeners() {
+    ui.applyFiltersBtn?.addEventListener("click", () => {
+        state.statusFilter = ui.statusFilter?.value || "";
+        state.sortFilter = ui.sortFilter?.value || "date-requested";
+        filterAndRender();
+    });
+}
+
+// Load borrow requests
+async function loadBorrowRequests() {
+    try {
+        // Mock data for now - replace with API call
+        const mockRequests = [
+            {
+                id: "1",
+                user_name: "John Doe",
+                user_email: "john@example.com",
+                book_title: "The Great Gatsby",
+                book_author: "F. Scott Fitzgerald",
+                status: "pending",
+                requested_date: "2026-04-10",
+                user_loans_count: 2,
+                review_count: 5,
+                risk_score: "low",
+            },
+            {
+                id: "2",
+                user_name: "Jane Smith",
+                user_email: "jane@example.com",
+                book_title: "1984",
+                book_author: "George Orwell",
+                status: "pending",
+                requested_date: "2026-04-08",
+                user_loans_count: 5,
+                review_count: 12,
+                risk_score: "high",
+            },
+            {
+                id: "3",
+                user_name: "Bob Johnson",
+                user_email: "bob@example.com",
+                book_title: "To Kill a Mockingbird",
+                book_author: "Harper Lee",
+                status: "approved",
+                requested_date: "2026-04-05",
+                user_loans_count: 1,
+                review_count: 3,
+                risk_score: "low",
+            },
+            {
+                id: "4",
+                user_name: "Alice Williams",
+                user_email: "alice@example.com",
+                book_title: "Pride and Prejudice",
+                book_author: "Jane Austen",
+                status: "rejected",
+                requested_date: "2026-04-01",
+                user_loans_count: 8,
+                review_count: 15,
+                risk_score: "high",
+            },
+        ];
+
+        state.borrowRequests = mockRequests;
+        calculateStatistics();
+        filterAndRender();
+    } catch (error) {
+        console.error("Error loading borrow requests:", error);
+    }
+}
+
+// Calculate statistics
+function calculateStatistics() {
+    const requests = state.borrowRequests;
+    state.stats.totalRequests = requests.length;
+    state.stats.pendingRequests = requests.filter(r => r.status === "pending").length;
+    state.stats.approvedRequests = requests.filter(r => r.status === "approved").length;
+    state.stats.rejectedRequests = requests.filter(r => r.status === "rejected").length;
+
+    updateStatistics();
+}
+
+// Update statistics UI
+function updateStatistics() {
+    if (ui.totalRequests) ui.totalRequests.textContent = state.stats.totalRequests;
+    if (ui.pendingRequests) ui.pendingRequests.textContent = state.stats.pendingRequests;
+    if (ui.approvedRequests) ui.approvedRequests.textContent = state.stats.approvedRequests;
+    if (ui.rejectedRequests) ui.rejectedRequests.textContent = state.stats.rejectedRequests;
+}
+
+// Filter and render
+function filterAndRender() {
+    let filtered = state.borrowRequests.filter(request => {
+        if (!state.statusFilter) return true;
+        return request.status.toLowerCase() === state.statusFilter.toLowerCase();
+    });
+
+    // Sort
+    filtered = sortRequests(filtered, state.sortFilter);
+    state.filtered = filtered;
+
+    if (filtered.length === 0) {
+        showEmptyState();
+    } else {
+        renderCards(filtered);
+    }
+}
+
+// Sort requests
+function sortRequests(requests, sortBy) {
+    const sorted = [...requests];
+
+    switch (sortBy) {
+        case "date-requested":
+            sorted.sort((a, b) => new Date(b.requested_date) - new Date(a.requested_date));
+            break;
+        case "oldest":
+            sorted.sort((a, b) => new Date(a.requested_date) - new Date(b.requested_date));
+            break;
+        case "risk-score":
+            const riskOrder = { high: 0, medium: 1, low: 2 };
+            sorted.sort((a, b) => riskOrder[a.risk_score] - riskOrder[b.risk_score]);
+            break;
+    }
+
+    return sorted;
+}
+
+// Render cards
+function renderCards(requests) {
+    ui.requestsContainer.innerHTML = requests.map(request => createRequestCard(request)).join("");
+    ui.emptyState.style.display = "none";
+
+    // Add event listeners
+    document.querySelectorAll(".btn-approve").forEach(btn => {
+        btn.addEventListener("click", (e) => approveRequest(e.target.dataset.id));
+    });
+
+    document.querySelectorAll(".btn-reject").forEach(btn => {
+        btn.addEventListener("click", (e) => rejectRequest(e.target.dataset.id));
+    });
+}
+
+// Create request card
+function createRequestCard(request) {
+    const riskClass = `risk-${request.risk_score}`;
+
+    return `
+        <div class="request-card">
+            <div class="request-card__header">
+                <div>
+                    <h3 class="request-title">${request.book_title}</h3>
+                    <p style="font-size: 12px; color: var(--ink-muted); margin-top: 4px;">${request.book_author}</p>
+                </div>
+                <div>
+                    <span class="request-status status--${request.status}">${request.status.toUpperCase()}</span>
+                    <span class="risk-score risk-${request.risk_score}">Risk: ${request.risk_score.toUpperCase()}</span>
+                </div>
+            </div>
+
+            <div class="request-info">
+                <div class="info-group">
+                    <span class="info-label">Requester</span>
+                    <span class="info-value">${request.user_name}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Email</span>
+                    <span class="info-value">${request.user_email}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">User History</span>
+                    <span class="info-value">${request.user_loans_count} loans, ${request.review_count} reviews</span>
+                </div>
+            </div>
+
+            <div class="request-dates">
+                Requested: ${formatDate(request.requested_date)}
+            </div>
+
+            ${request.status === "pending" ? `
+                <div class="card-actions">
+                    <button class="btn btn-approve" data-id="${request.id}">Approve</button>
+                    <button class="btn btn-reject" data-id="${request.id}">Reject</button>
+                </div>
+            ` : ""}
+        </div>
+    `;
+}
+
+// Approve request
+async function approveRequest(requestId) {
+    try {
+        if (confirm("Are you sure you want to approve this borrow request?")) {
+            // TODO: Make API call
+            const request = state.borrowRequests.find(r => r.id === requestId);
+            if (request) {
+                request.status = "approved";
+                filterAndRender();
+                calculateStatistics();
+                alert("Request approved successfully!");
+            }
+        }
+    } catch (error) {
+        console.error("Error approving request:", error);
+        alert("Failed to approve request");
+    }
+}
+
+// Reject request
+async function rejectRequest(requestId) {
+    try {
+        if (confirm("Are you sure you want to reject this borrow request?")) {
+            // TODO: Make API call
+            const request = state.borrowRequests.find(r => r.id === requestId);
+            if (request) {
+                request.status = "rejected";
+                filterAndRender();
+                calculateStatistics();
+                alert("Request rejected successfully!");
+            }
+        }
+    } catch (error) {
+        console.error("Error rejecting request:", error);
+        alert("Failed to reject request");
+    }
+}
+
+// Show empty state
+function showEmptyState() {
+    ui.requestsContainer.innerHTML = "";
+    ui.emptyState.style.display = "block";
+}
+
+// Format date
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", { 
+        year: "numeric", 
+        month: "short", 
+        day: "numeric" 
+    });
+}
+
+// Make functions globally accessible
+window.approveRequest = approveRequest;
+window.rejectRequest = rejectRequest;
