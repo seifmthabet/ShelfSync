@@ -1,131 +1,158 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Sign Up</title>
-    <meta name="author" content="Abdullah Basyouni">
-    <meta name="viewport" content="width=device-width ,initial-scale = 1.0" />
-    <link rel="stylesheet" href="../static/css/global.css">
-    <link rel="stylesheet" href="../static/css/pages/signUp.css">
-    </link>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - ShelfSync</title>
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/pages/signUp.css">
 </head>
 
 <body>
-    <!--Content -->
-    <div class="Content">
-        <!--Header -->
-        <div class="rightContent_H">
+  <section class="signup-container">
+    
+    <!-- Left Section: Branding -->
+    <div class="signup-left">
+      <div class="branding">
+        <div class="logo-section">
+          <div class="logo-box">📚</div>
+          <span class="logo-text">SHELFSYNC</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Curate your
+          <em>personal archive.</em>
+        </h1>
+        
+        <p class="hero-description">
+          Join a community dedicated to the preservation of knowledge and the art of intentional reading.
+        </p>
+        
+        <div class="features">
+          <div class="feature-item">
+            <div class="feature-icon">📋</div>
+            <div class="feature-content">
+              <p class="feature-title">Refined Cataloging</p>
+              <small>Organize collections with tactile digital precision.</small>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">✍️</div>
+            <div class="feature-content">
+              <p class="feature-title">Deep Reviews</p>
+              <small>Write critiques that honor the medium of the book.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="row1">
-                <img class="logo-1" src="../static/images/covers/Background.png" alt="Logo" width="40px" height="40px">
-                <h2>Shelf Sync</h2>
-            </div>
-
-            <div class="row2">
-                <p class="display-lg" style="margin: bottom 10px">Create your <span class="Break">personal
-                        archive</span></p>
-                <p class="body-lg">Join a community dedicated to the preservation of knowledge and the art of
-                    intentional reading.</p>
-            </div>
-            <div class="row3">
-                <img class="logo-1" src="../static/images/covers/icon2.png" alt="Logo" width="32px" height="32px">
-                <div class="over">
-                    <p style="margin-bottom:5px ;">Refined Cataloging</p>
-                    <small>Organize collections with tactile digital precision.</small>
-                </div>
-                <img class="logo-1" src="../static/images/covers/icon1.png" alt="Logo" width="32px" height="32px">
-                <div class="over">
-                    <p style="margin-bottom:5px ;">Refined Cataloging</p>
-                    <small>Organize collections with tactile digital precision.</small>
-                </div>
-            </div>
+    <!-- Right Section: Form -->
+    <div class="signup-right">
+      <div class="form-card">
+        <div class="form-header">
+          <h2 class="form-title">Create Account</h2>
+          <p class="form-subtitle">Begin your journey today</p>
         </div>
 
-        <!--Main -->
-        <section class="Main-Sign">
-            <div class="container-Sign-H">
-                <h1 class="tittle-sign-up">Create Account</h1>
-                <small class="small-tittle"> Begin your journey today</small>
+        <!-- Role Selection -->
+        <div class="role-selection">
+          <label class="role-label">SELECT YOUR ROLE</label>
+          <div class="role-buttons">
+            <button type="button" class="role-btn user-btn" data-role="user">
+              <span class="role-icon">👤</span>
+              <span class="role-name">USER</span>
+            </button>
+            <button type="button" class="role-btn admin-btn" data-role="admin">
+              <span class="role-icon">⚙️</span>
+              <span class="role-name">ADMIN</span>
+            </button>
+            <input type="hidden" id="selectedRole" name="role" value="">
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form id="signUpForm" class="signup-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fullName" class="label-md">FULL NAME</label>
+              <input 
+                type="text" 
+                id="fullName" 
+                name="fullName" 
+                class="input-soft" 
+                placeholder="Alexander Sterling"
+                required
+              >
             </div>
-            <!--Form -->
-            <div class="Form-Sign-up">
-                <form action="../index.html">
 
-                    <div class="input-2">
-                        <label class="label-md" for="Full_Name"><b>Full Name</b></label>
-                        <input class="input-soft" type="text" name="fullN" id="Full_Name"
-                            placeholder="Enter your full name" required>
-                    </div>
-
-                    <div class="input-3">
-                        <label class="label-md" for="Email_S"><b>Email Address</b></label>
-                        <input class="input-soft" type="email" name="EmailAdd" id="Email_S"
-                            placeholder="name@example.com" required>
-                    </div>
-
-                    <div class="input-4">
-                        <label class="label-md" for="password_S"><b>Password</b></label>
-                        <input class="input-soft" type="password" name="Pass" id="Password_S"
-                            placeholder="Create a password" required>
-                    </div>
-
-
-                    <div class="input-5">
-                        <label class="label-md" for="ConfirmPassword"><b>Confirm Password</b></label>
-                        <input class="input-soft" type="password" name="comfirmpass" id="ConfirmPassword"
-                            placeholder="Repeat your password" required>
-                    </div>
-
-                    <div class="input-1">
-                        <label class="label-md"><b>Select your Role</b></label>
-                        <div class="choosing">
-                            <div class="role-user">
-                                <img src="../static/images/covers/user.png" alt="" width="15px" height="14px">
-                                <label class="label-md">
-                                    <input type="radio" name="role" value="user">
-                                    User
-                                </label>
-                            </div>
-
-                            <div class="role-admin">
-                                <img src="../static/images/covers/admin-panel.png" alt="" width="15px" height="14px">
-                                <label class="label-md">
-                                    <input type="radio" name="role" value="admin">
-                                    Administrator
-
-                                </label>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="register">
-                        <button class="btn-primary" type="submit">Create Account</button>
-                    </div>
-                    <div class="text-sign-in">
-                        <p>Already a member?</p>
-
-                    </div>
-                    <div class="sign-in-btn"><button class="btn-primary" type="button">Sign In to ShelfSync</button>
-                    </div>
-                </form>
+            <div class="form-group">
+              <label for="email" class="label-md">EMAIL ADDRESS</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="input-soft" 
+                placeholder="user@example.com"
+                required
+              >
             </div>
-        </section>
-        <!--Footer -->
-        <footer class="footer_sign">
-            <small>&copy; 2026 Shelf Sync . All rights reserved. </small>
-            <div class="Links_F">
-                <ul class="list-items">
-                    <li class="legal"><a href="" target="_blank">LEGAL</a></li>
-                    <li class="support"><a href="mailto:bodybasuni2007@gmail.com" target="_blank"> SUPPORT</a></li>
-                </ul>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="password" class="label-md">PASSWORD</label>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="input-soft" 
+                placeholder="••••••••"
+                required
+              >
             </div>
-        </footer>
+
+            <div class="form-group">
+              <label for="confirmPassword" class="label-md">CONFIRM PASSWORD</label>
+              <input 
+                type="password" 
+                id="confirmPassword" 
+                name="confirmPassword" 
+                class="input-soft" 
+                placeholder="••••••••"
+                required
+              >
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary full">CREATE ACCOUNT</button>
+
+          <p id="signupMessage" class="form-message" aria-live="polite"></p>
+        </form>
+
+        <div class="divider">Already a member?</div>
+
+        <button id="signInButton" type="button" class="btn btn-ghost full">SIGN IN TO SHELFSYNC</button>
+
+        <p class="terms-text">
+          By signing you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
+        </p>
+      </div>
     </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <p class="footer-copyright">© 2024 SHELFSYNC</p>
+    <div class="footer-links">
+      <a href="#">LEGAL</a>
+      <a href="#">SUPPORT</a>
+    </div>
+  </footer>
+
+  <script type="module" src="../static/js/pages/signupPage.js"></script>
 </body>
 
 </html>

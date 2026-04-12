@@ -65,7 +65,7 @@ export const validators = {
       validators.rule(`${fieldName} must not exceed ${max} characters`, (v) => validators.maxLength(v, max)),
 
     password: () =>
-      validators.rule('Password must be at least 8 characters', (v) => validators.password(v)),
+      validators.rule('Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, and one digit', (v) => validators.password(v)),
 
     rating: () =>
       validators.rule('Rating must be between 1 and 5', (v) => validators.rating(v)),
