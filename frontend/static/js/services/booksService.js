@@ -19,7 +19,7 @@ export const booksService = {
       return apiClient.patch(`/books/${id}`, payload, { authRequired: true });
     }
   }, 
-  deleteBook : () => {
+  deleteBook : (id) => {
     if (Auth.isAdmin()) {
       return apiClient.delete(`/books/${id}`, {}, { authRequired: true });
     }
