@@ -1,132 +1,200 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Write Review</title>
-    <meta name="author" content="Abdullah Basyouni">
-    <meta name="viewport" content="width=device-width ,initial-scale = 1.0" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Craft a Review - ShelfSync</title>
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="stylesheet" href="../static/css/pages/writeReview.css">
 </head>
 
 <body>
-    <div class="WriteReview">
-        <!--Header-->
-        <header class="Top_W">
-            <div class="Head_W">
-                <img src="" alt="Logo">
-                <h2>Review Center</h2>
+    <div class="page">
+
+        <!-- ================= NAV BAR ================= -->
+        <nav class="top-nav">
+            <!-- Logo -->
+            <div class="nav-left">
+                <h1 class="logo">ShelfSync</h1>
             </div>
-            <div class="ExitButton">
-                <a href="page.html"><button type="button">Exit</button></a>
+
+            <!-- Search -->
+            <div class="nav-center">
+                <img src="../static/images/covers/SearchIcon.png" alt="search icon" class="search-icon">
+                <input type="search" name="value" class="search-input" placeholder="Search your library...">
             </div>
-        </header><br>
+        </nav>
 
-        <!--Content-->
-        <section class="Content_W">
-            <!--Product Card-->
-            <section class="product_Card">
-                <img src="" alt="Product_Image" width="96" height="96">
-                <div class="ProductName">
-                    <h3>Product Name</h3>
-                    <small>purchased Date</small>
-                </div>
-            </section>
+        <!-- ================= MAIN LAYOUT ================= -->
+        <div class="main-layout">
 
-            <!--Form Section -->
-            <section class="ReviewForm">
-                <div class="HorizontalBorder">
-                    <h4>Write a Review</h4>
-                    <small>Share your experience with other customers</small>
-                </div>
-                <!--Rating Stars-->
-                <div class="FormRating">
-                    <form action="">
-                        <div class="Rating">
-                            <label>Overall Rating</label><br>
-                            <label>
-                                <input type="radio" name="star" value="1" required> 1
-                            </label>
-                            <label>
-                                <input type="radio" name="star" value="2"> 2
-                            </label>
-                            <label>
-                                <input type="radio" name="star" value="3"> 3
-                            </label>
-                            <label>
-                                <input type="radio" name="star" value="4"> 4
-                            </label>
-                            <label>
-                                <input type="radio" name="star" value="5"> 5
-                            </label>
-                        </div><br>
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav class="side-nav">
+                    <p class="nav-title">MAIN COLLECTION</p>
 
-                        <!--Text Area-->
-                        <div class="textArea">
-                            <label for="ReviewDetails">Review Details</label><br>
-                            <textarea name="Details" id="ReviewDetails"
-                                placeholder="What did you like or dislike? How was the quality?" rows="10" cols="100"
-                                required></textarea>
+                    <ul class="nav-list">
 
-                            <small>Minimum 20 characters</small>
-                            <small>0 / 2000</small>
+                        <li>
+                            <a href="#">
+                                <div class="btn-list1">
+                                    <img src="../static/images/covers/Dahsboard.png" alt="Dashboard icon"
+                                        class="menu-icon" width="17px" height="17px">
+                                    <span>Dashboard</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <div class="btn-list2">
+                                    <img src="../static/images/covers/MyBooks.png" alt="My Books icon" class="menu-icon"
+                                        width="20px" height="14.9px">
+                                    <span>My Books</span>
+                                </div>
+                            </a>
+
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                <div class="btn-list3">
+                                    <img src="../static/images/covers/review.png" alt="Reviews icon" class="menu-icon"
+                                        width="20px" height="20px">
+                                    <span>Reviews</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="btn-list4">
+                                    <img src="../static/images/covers/Icon.png" alt="Reviews icon" class="menu-icon"
+                                        width="20px" height="20px">
+                                    <span>Profile</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="content">
+
+                <!-- Page Heading -->
+                <section class="page-heading">
+                    <p class="section-label">JOURNAL ENTRY</p>
+                    <h2>Craft a Review</h2>
+                    <p class="quote">"A room without books is like a body without a soul." – Cicero</p>
+                </section>
+
+                <!-- Review Layout -->
+                <section class="review-layout">
+
+                    <aside class="book-panel">
+                        <div class="book-card">
+
+                            <div class="book-cover">
+                                <div class="book-spine"></div>
+
+                                <img src="../static/images/covers/Book1.png" alt="Book Cover" class="book-image">
+                            </div>
+
+                            <div class="book-info">
+                                <h3>The Midnight Library</h3>
+                                <p class="author-year">ELEANOR VANDERBILT • 2023</p>
+                            </div>
+
+                            <div class="book-tags">
+                                <span>HARDCOVER</span>
+                                <span>PHILOSOPHY</span>
+                            </div>
+
+                        </div>
+                    </aside>
+
+                    <!-- Right Review Form -->
+                    <section class="review-form-section">
+
+                        <!-- Rating Block -->
+                        <div class="rating-block">
+                            <div class="block-header">
+                                <h3>Critical Appreciation</h3>
+                                <span class="side-note">RATE THIS VOLUME</span>
+                            </div>
+
+                            <div class="rating-stars">
+                                <button class="Button-star" type="button">★</button>
+                                <button class="Button-star" type="button">★</button>
+                                <button class="Button-star" type="button">★</button>
+                                <button class="Button-star" type="button">☆</button>
+                                <button class="Button-star" type="button">☆</button>
+                            </div>
+
+                            <div class="rating-labels">
+                                <span class="star-label">Poised</span>
+                                <span class="star-label">Fair</span>
+                                <span class="star-label">Worthy</span>
+                                <span class="star4">Exceptional</span>
+                                <span class="star5">Masterpiece</span>
+                            </div>
                         </div>
 
-                        <!--Upload Photo-->
-                        <div class="AddPhoto">
-                            <p>ADD PHOTOS</p>
-                            <label for="UploadPhoto">
-                                <span><img src="" alt="PhotoIcon"></span>
-                                Drag or click to upload
-                            </label>
-                            <input type="file" name="photo" id="UploadPhoto" accept="image/*"><br>
-                        </div><br>
+                        <!-- Review Form -->
+                        <form class="review-form" action="#">
+                            <div class="block-header">
+                                <h3>The Archivist’s Perspective</h3>
+                                <span class="side-note">SHARE YOUR THOUGHTS</span>
+                            </div>
 
-                        <!--Submit Button-->
-                        <div class="Submit">
-                            <button type="submit">
-                                Submit My Review
-                                <span><img src="" alt="SubmitIcon"></span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </section>
+                            <!-- Headline -->
+                            <div class="form-group">
+                                <label for="headline">HEADLINE</label>
+                                <input type="text" id="headline" name="headline"
+                                    placeholder="Summary of your experience...">
+                            </div>
+                            <div class="form-group">
+                                <label for="critique">CRITIQUE</label>
 
-            <!--My Review-->
-            <section class="MyReview">
-                <h3>Your previous review for this category</h3>
-                <div class="MyReviewBox">
-                    <div class="StarBar">
-                        <span><img src="" alt="StarIcon"></span>
-                        <span><img src="" alt="StarIcon"></span>
-                        <span><img src="" alt="StarIcon"></span>
-                        <span><img src="" alt="StarIcon"></span>
-                        <span><img src="" alt="StarIcon"></span>
-                        <div class="ChangeButtons">
-                            <button type="button">
-                                Edit
-                                <span><img src="" alt="EditIcon"></span>
-                            </button>
-                            <button type="button">
-                                Delete
-                                <span><img src="" alt="DeleteIcon"></span>
-                            </button>
-                        </div>
-                    </div>
-                    <h4>User Review</h4>
-                    <p>Review content will be displayed here after submission.</p>
-                    <div class="Date">
-                        <span><img src="" alt="DateIcon"></span>
-                        <small>Posted Date</small>
-                    </div>
-                </div>
-            </section>
-        </section>
+                                <div class="textarea-wrapper">
+                                    <textarea id="critique" name="critique"
+                                        placeholder="Delve into the prose, the structure, and the impact..."></textarea>
 
-        <!--Footer-->
-        <footer class="Footer_W">
-            <p>By submitting, you agree to our <a href="Guidelines.html">Community Guidelines</a></p>
+                                    <div class="word-count">
+                                        <span id="counter">0 / 2000 words</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Actions -->
+                            <div class="form-actions">
+                                <button type="submit" class="primary-btn">ARCHIVE REVIEW <img class="img-btn"
+                                        src="../static/images/covers/icon2.png" alt="" width="12.25px"
+                                        height="10.71px"></button>
+                                <button type="button" class="secondary-btn">SAVE AS DRAFT</button>
+                            </div>
+                        </form>
+                    </section>
+
+                </section>
+            </main>
+        </div>
+
+        <!-- ================= FOOTER ================= -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <h3>ShelfSync</h3>
+                <p>© 2024 SHELFSYNC. ALL RIGHTS RESERVED.</p>
+            </div>
+
+            <div class="footer-right">
+                <a href="#">Legal</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Support</a>
+            </div>
         </footer>
+
     </div>
 </body>
 
