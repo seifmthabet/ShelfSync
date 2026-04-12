@@ -1,107 +1,126 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Login Page</title>
+
+  <title>Login Page</title>
+
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="login page.css">
 </head>
 
 <body>
 
-    <header>
-        <h1>Shelf Sync</h1>
-        <hr>
-        <table width="100%">
-            <tr>
-                <td>
-                    <img src="Container.png" width="15" height="15">
-                    Athenaeum
-                </td>
-                <td style="text-align:right;">
-                    <button type="button">❔</button>
-                </td>
-            </tr>
-        </table>
-        <hr>
-    </header>
+<section class="hero">
+  <div class="container internal-container">
 
-    <table cellspacing="40">
-        <tr>
+    <div class="hero-text">
 
-            <td>
-                <img src="Libirary.png" width="500" height="500">
-                <h2>Your gateway to infinite knowledge</h2>
-                <p>
-                    access over 2 million digital books,
-                    research papers and journals from anywhere in the world.
-                </p>
-            </td>
+      <p class="label-md hero-label">
+        <span class="logo-wrapper">
+          <img src="Icon.png" alt="ShelfSync logo">
+        </span>
+        <span>ShelfSync</span>
+      </p>
 
-            <td>
-                <h1>Welcome back</h1>
-                <p>please enter your details to access your collection</p>
+      <h1 class="hero-title">
+        The Digital <em>Archivist</em><br>
+        for Modern Libraries.
+      </h1>
 
-                <form class="login-form" action="../index.html">
+      <p class="hero-desc">
+        Preserving the tacitle essene of literature through<br>
+        refined digital curation and elegant management
+      </p>
 
-                    <div class="email">
-                        <label>Email Address</label> <br>
-                        <span class="email_icon"></span>
-                        <input type="email" name="email" required placeholder="name@company.com">
-                    </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <p class="label-md">Collection</p>
+          <span>Over 2.4m Titles</span>
+        </div>
 
-                    <br>
+        <div class="stat">
+          <p class="label-md">Network</p>
+          <span>Global Repository</span>
+        </div>
+      </div>
 
-                    <div class="password">
-                        <label>Password &emsp; &emsp; &nbsp;
-                            <a href="forgot_password.html">Forgot?</a></label> <br>
-                        <span class="lock_icon"></span>
-                        <input type="password" name="password" required placeholder="•••••••••••••••">
-                        <span class="eye_icon"></span>
-                    </div>
+    </div>
 
-                    <br>
+    <div class="card ghost-border login-card">
 
-                    <div class="remember">
-                        <input id="R1" type="checkbox" name="remember">
-                        <label for="R1">Remember me for 30 days</label>
-                    </div>
+      <h2 class="title-lg">Welcome Back</h2>
+      <p class="login-sub">Sign in to access your archives</p>
 
-                    <br>
+      <form id="loginForm" class="login-form">
 
-                    <button type="submit" class="loginButton">Sign in
-                        <span class="Signin-icon"> </span>
-                    </button>
+        <label for="email" class="label-md">Electronic Mail</label>
+        <input 
+          id="email"
+          name="email"
+          class="input-soft"
+          type="email"
+          required
+          placeholder="archivist@shelfsync.com"
+        >
 
+        <div class="password-label">
+          <label for="password" class="label-md">Access Key</label>
+          <a href="#">Forgot password?</a>
+        </div>
 
-                    <p>Or continue with</p>
+        <input 
+          id="password"
+          name="password"
+          class="input-soft"
+          type="password"
+          required
+          placeholder="•••••••••••••••"
+        >
 
-                    <button type="button" class="googleButton">Google
-                        <span class="google_icon"></span>
-                    </button>
+        <button type="submit" class="btn btn-primary full">
+          Authenticate Entry →
+        </button>
 
-                    <button type="button" class="appleButton">Apple
-                        <span class="apple_icon"></span>
-                    </button>
+      </form>
 
-                </form>
+      <div class="divider">Or continue with</div>
 
-                <p>Don't have an account? <a href="signup.html">Create an account</a></p>
+      <div class="social-buttons">
 
-            </td>
+        <button type="button" class="social">
+          <img src="Icon2.png" alt="SSO icon">
+          SSO
+        </button>
 
-        </tr>
-    </table>
+        <button type="button" class="social">
+          <img src="Icon1.png" alt="Biometric icon">
+          BIOMETRIC
+        </button>
 
-    <hr>
+      </div>
 
-    <footer style="text-align:center;">
-        <p>
-            <a href="Privacy-Policy.html">Privacy Policy</a>&emsp;
-            <a href="Terms-of-Service.html">Terms of Service</a>&emsp;
-            <a href="Cookie-Settings.html">Cookie Settings</a>
-        </p>
-        <p>© 2024 Athenaeum Digital Library. All rights reserved</p>
-    </footer>
+      <p class="signup">
+        New to the library?
+        <a href="#">Request Membership</a>
+      </p>
 
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-container">
+
+    <p>© 2024 SHELFSYNC. ALL RIGHTS RESERVED</p>
+
+    <div>
+      <a href="#">LEGAL</a>
+      <a href="#">PRIVACY POLICY</a>
+      <a href="#">HELP CENTER</a>
+    </div>
+
+  </div>
+</footer>
 </body>
-
 </html>
