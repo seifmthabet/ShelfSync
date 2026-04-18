@@ -3,12 +3,12 @@ import { Auth } from "../core/auth.js";
 
 // Navigation
 const homeButton = document.getElementById("navbar__brand");
-homeButton.addEventListener("click", () => {
+homeButton?.addEventListener("click", () => {
     window.location.href = "adminDashboard.html";
 });
 
 const logoutButton = document.getElementById("btn-logout");
-logoutButton.addEventListener("click", () => {
+logoutButton?.addEventListener("click", () => {
     Auth.logout();
     window.location.href = "loginPage.html";
 });

@@ -13,7 +13,7 @@ export const Auth = {
     return user && user.role ? user.role : null;
   },
   isAdmin: () => {
-    return this.getRole() === "admin";
+    return Auth.getRole() === "admin";
   },
   saveSession: (payload) => {
     if (!payload) return;
@@ -28,18 +28,18 @@ export const Auth = {
     }
   },
   requireAuth: () => {
-    if (!this.isAuthenticated()) {
+    if (!Auth.isAuthenticated()) {
       window.location.href = ROUTES.login;
       return false;
     }
     return true;
   },
   requireAdmin: () => {
-    if (!this.isAuthenticated()) {
+    if (!Auth.isAuthenticated()) {
       window.location.href = ROUTES.login;
       return false;
     }
-    if (!this.isAdmin()) {
+    if (!Auth.isAdmin()) {
       window.location.href = ROUTES.userDashboard;
       return false;
     }
