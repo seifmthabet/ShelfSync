@@ -1,109 +1,144 @@
-# Database Design
+# Database Design - Production Schema
 
-## Storage Engine
+This schema supports all current frontend workflows.
 
-- Primary database: PostgreSQL
-- ORM: Django ORM
-- ID strategy: UUID for public-facing entities
+## Engine and conventions
 
-## Core Entities
+1. Database: PostgreSQL.
+2. Primary keys: UUID.
+3. Time fields: timezone-aware UTC.
+4. Soft delete for mutable domain objects where useful.
 
-### User
+## accounts_user
 
-- `id` (UUID, PK)
-- `name` (varchar)
-- `email` (varchar, unique, indexed)
-- `password` (hashed)
-- `role` (`USER`, `ADMIN`)
-- `is_active` (bool)
-- `created_at`, `updated_at`
+Required fields:
+1. id UUID PK
+2. name varchar(255)
+3. email unique indexed
+4. password hash
+5. role enum USER/ADMIN
+6. is_active bool
+7. is_staff bool
+8. date_joined datetime
+9. updated_at datetime
 
-### Book
+Optional profile fields:
+1. avatar_url text
+2. favorite_genres jsonb
+3. reading_goal_per_year int
+4. email_notifications bool
 
-- `id` (UUID, PK)
-- `isbn` (varchar, unique, nullable during migration)
-- `title` (varchar, indexed)
-- `author` (varchar, indexed)
-- `category` (varchar, indexed)
-- `description` (text)
-- `published_year` (int)
-- `cover_image` (string/file path)
-- `total_copies` (int)
-- `available_copies` (int)
-- `created_at`, `updated_at`
+## books_category
 
-Rules:
+1. id UUID PK
+2. name unique indexed
+3. slug unique indexed
+4. created_at, updated_at
 
-- `available_copies <= total_copies`
-- `available_copies >= 0`
+## books_book
 
-### BorrowRequest
+1. id UUID PK
+2. isbn unique nullable
+3. title indexed
+4. author indexed
+5. category FK books_category nullable
+6. description text
+7. publication_year int nullable
+8. cover_url text nullable
+9. total_copies int default 1
+10. available_copies int default 1
+11. average_rating decimal(3,2) cached
+12. reviews_count int cached
+13. is_active bool
+14. created_at, updated_at
 
-- `id` (UUID, PK)
-- `user_id` (FK -> User, indexed)
-- `book_id` (FK -> Book, indexed)
-- `status` (`PENDING`, `APPROVED`, `REJECTED`)
-- `reviewed_by_id` (FK -> User, nullable)
-- `review_note` (text, nullable)
-- `created_at`, `updated_at`
+Constraints:
+1. available_copies >= 0
+2. available_copies <= total_copies
 
-Constraint suggestion:
+## borrowing_borrowrequest
 
-- One active pending request per `(user_id, book_id)`
+1. id UUID PK
+2. user FK accounts_user
+3. book FK books_book
+4. status enum pending/approved/rejected/cancelled
+5. risk_score enum low/medium/high
+6. requested_at datetime
+7. processed_at datetime nullable
+8. processed_by FK accounts_user nullable
+9. rejection_reason text nullable
 
-### Loan
+Indexes:
+1. (status, requested_at desc)
+2. (user_id, status)
+3. (book_id, status)
 
-- `id` (UUID, PK)
-- `user_id` (FK -> User, indexed)
-- `book_id` (FK -> Book, indexed)
-- `borrow_request_id` (FK -> BorrowRequest, nullable)
-- `status` (`ACTIVE`, `RETURNED`, `OVERDUE`)
-- `issued_at`
-- `due_date` (indexed)
-- `returned_at` (nullable)
-- `renewal_count` (int, default 0)
-- `created_at`, `updated_at`
+Unique rule:
+1. one pending request per user/book.
 
-### Review
+## borrowing_loan
 
-- `id` (UUID, PK)
-- `user_id` (FK -> User, indexed)
-- `book_id` (FK -> Book, indexed)
-- `rating` (int, 1..5)
-- `headline` (varchar)
-- `content` (text)
-- `status` (`PENDING`, `APPROVED`, `REJECTED`)
-- `moderated_by_id` (FK -> User, nullable)
-- `created_at`, `updated_at`
+1. id UUID PK
+2. user FK accounts_user
+3. book FK books_book
+4. borrow_request FK borrowing_borrowrequest nullable
+5. status enum active/returned/overdue
+6. borrowed_date datetime
+7. due_date datetime
+8. returned_date datetime nullable
+9. renew_count int default 0
+10. max_renewals int default 2
+11. created_at, updated_at
 
-Constraint suggestion:
+Indexes:
+1. (user_id, status)
+2. (due_date, status)
+3. (book_id, status)
 
-- One review per user per book (if business rules require)
+Business constraints:
+1. returned_date required when status=returned.
+2. renew_count <= max_renewals.
 
-## Relationship Summary
+## reviews_review
 
-- User 1:N BorrowRequest
-- User 1:N Loan
-- User 1:N Review
-- Book 1:N BorrowRequest
-- Book 1:N Loan
-- Book 1:N Review
+1. id UUID PK
+2. user FK accounts_user
+3. book FK books_book
+4. rating int 1..5
+5. headline varchar(255)
+6. comment text
+7. status enum pending/approved/rejected
+8. created_at, updated_at
+9. moderated_by FK accounts_user nullable
+10. moderated_at datetime nullable
+11. moderation_note text nullable
 
-## Indexing Plan
+Indexes:
+1. (book_id, status, created_at desc)
+2. (user_id, created_at desc)
 
-- User: `email`
-- Book: `title`, `author`, `category`, `isbn`
-- BorrowRequest: `(status, created_at)`
-- Loan: `(user_id, status)`, `(due_date, status)`
-- Review: `(book_id, status)`, `(user_id, book_id)`
+Unique rule:
+1. unique (user_id, book_id) if product wants one review per book per user.
 
-## Audit and Soft Delete Strategy
+## Derived metrics (dashboard)
 
-- Keep `created_at` and `updated_at` on all tables.
-- Optional future enhancement: add soft-delete fields (`deleted_at`) for books/reviews.
+Computed from domain tables:
+1. catalog_size -> count of active books
+2. active_users -> count of active users with recent activity
+3. total_reviews -> reviews count
+4. borrowed_books -> active loans count
+5. retention_rate -> cohort/rolling metric
+6. average_rating -> mean approved rating
 
-## Migration Strategy
+## Data lifecycle
 
-1. Create initial models with required constraints.
-2. Add indexes based on query patterns from API endpoints.
-3. Add data migrations for any field normalization (for example, category cleanup).
+1. Book delete should be soft delete while historical loans/reviews exist.
+2. User delete should deactivate account and preserve audit references.
+3. Moderation decisions must keep audit fields (moderated_by/at).
+
+## Migration plan
+
+1. Create tables with minimal required fields.
+2. Add constraints and indexes.
+3. Add caching fields for book aggregates.
+4. Backfill aggregates with data migration.

@@ -1,72 +1,96 @@
-# Setup and Roadmap
+# Setup and Roadmap - Full Build Plan
 
-This document closes the implementation gaps between current repository state and the target REST API architecture.
+This is the implementation playbook to make the current frontend fully functional with Django REST Framework.
 
-## Current Gaps
+## Phase 0 - Foundation
 
-1. Backend is still baseline Django, not DRF API modules.
-2. Frontend pages are mostly static and not connected to API responses.
-3. Auth strategy (JWT + refresh) is designed but not yet implemented.
-4. API schema/docs endpoint is not yet exposed.
-5. Production deployment and environment conventions are not yet documented in one place.
-
-## Backend Implementation Checklist
-
-1. Add REST dependencies:
+1. Confirm Python version and virtual environment.
+2. Install dependencies:
    - djangorestframework
    - djangorestframework-simplejwt
+   - django-filter
    - django-cors-headers
-2. Create domain apps:
-   - accounts
-   - books
-   - borrowing
-   - reviews
-3. Add `/api/v1/` router and module URL includes.
-4. Implement serializers, permissions, and viewsets.
-5. Add admin moderation actions for reviews and borrow requests.
-6. Add tests for key flows:
-   - login/register
-   - borrow request approval path
-   - review moderation path
+   - drf-spectacular
+   - psycopg2-binary
+3. Configure settings modules and env files.
+4. Switch DB to PostgreSQL for non-trivial testing.
 
-## Frontend Integration Checklist
+## Phase 1 - Auth stabilization
 
-1. Add a shared API client with base URL from environment.
-2. Add token storage and refresh flow.
-3. Replace static placeholders in pages with API calls.
-4. Add loading, empty, and error states on key screens.
-5. Add route guards for admin-only screens.
+1. Finalize custom user model fields and serializer alignment.
+2. Implement/register/login/refresh/logout.
+3. Implement users/me read-update.
+4. Add users/me change-password.
+5. Add admin users list/detail endpoints.
+6. Add tests for auth lifecycle.
 
-## Environment Variables
+## Phase 2 - Catalog (books)
 
-### Backend
+1. Create books models and migrations.
+2. Build serializers and viewsets with pagination/filter/search/order.
+3. Add admin CRUD permissions.
+4. Ensure output field names match frontend usage.
+5. Add tests for list/detail/filter/order and admin CRUD.
 
-- `SECRET_KEY`
-- `DEBUG`
-- `ALLOWED_HOSTS`
-- `DATABASE_URL`
-- `CORS_ALLOWED_ORIGINS`
-- `JWT_ACCESS_MINUTES`
-- `JWT_REFRESH_DAYS`
+## Phase 3 - Borrowing workflow
 
-### Frontend
+1. Add BorrowRequest and Loan models.
+2. Implement request creation with policy validations.
+3. Implement approve/reject actions with transactions.
+4. Implement loans/me, renew, return.
+5. Add admin borrow queue endpoint.
+6. Add tests for all state transitions.
 
-- `VITE_API_BASE_URL` (or equivalent)
+## Phase 4 - Reviews workflow
 
-## Suggested Delivery Sequence
+1. Add Review model with moderation status.
+2. Implement submit/edit/delete user actions.
+3. Implement books/{id}/reviews list endpoint.
+4. Implement admin pending list and approve/reject actions.
+5. Recalculate book aggregates after moderation decisions.
+6. Add tests for ownership and moderation rules.
 
-1. Auth module and JWT setup
-2. Books list/details endpoints
-3. Borrow request and loan lifecycle endpoints
-4. Reviews create/list/moderation endpoints
-5. Frontend wiring screen-by-screen
-6. Final cleanup and remove obsolete static-only data assumptions
+## Phase 5 - Dashboard endpoints
 
-## Verification Matrix
+1. Implement admin dashboard metrics endpoint.
+2. Implement user dashboard summary endpoint.
+3. Add date-range query support if needed.
+4. Add performance tests for aggregation queries.
 
-1. User can sign up and log in from frontend.
-2. User can browse books from API data.
-3. User can submit borrow request.
-4. Admin can approve/reject request.
-5. User can submit review and admin can moderate it.
-6. API docs are reachable and accurate.
+## Phase 6 - Integration and hardening
+
+1. Align frontend config base URL to /api/v1.
+2. Fix frontend service typos and mismatched paths.
+3. Verify all screens consume real API data.
+4. Add consistent error handling and user feedback.
+5. Add API schema and Swagger docs.
+
+## Environment variables (required)
+
+1. SECRET_KEY
+2. DEBUG
+3. ALLOWED_HOSTS
+4. DATABASE_URL
+5. CORS_ALLOWED_ORIGINS
+6. CSRF_TRUSTED_ORIGINS
+7. ACCESS_TOKEN_LIFETIME_MINUTES
+8. REFRESH_TOKEN_LIFETIME_DAYS
+
+## CI/CD checklist
+
+1. lint + format
+2. unit tests + API tests
+3. migration check
+4. schema generation check
+5. deploy to staging
+6. smoke tests against frontend flows
+
+## Acceptance criteria
+
+1. Login/signup works from frontend pages.
+2. Search/list/book details are real API data.
+3. Borrow request end-to-end works.
+4. Loan renew/return works.
+5. Review submit and admin moderation works.
+6. Admin dashboard shows live metrics.
+7. No page depends on local mock objects.

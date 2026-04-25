@@ -1,39 +1,48 @@
-# API Design (REST)
+# API Design - Complete Endpoint Contract
 
-## Base and Versioning
+Base URL:
+1. /api/v1/
 
-- Base prefix: `/api/v1/`
-- Content type: `application/json`
-- Time format: ISO 8601 UTC
+Auth mechanism:
+1. Bearer JWT access token
+2. Refresh token rotation with blacklist
 
-## Authentication
+## Global conventions
 
-- JWT Bearer token for protected endpoints
-- Refresh token endpoint to rotate access tokens
+1. Content-Type: application/json
+2. Date format: ISO8601 UTC
+3. Pagination: DRF page-number for list endpoints
+4. Ordering query param: ordering
+5. Search query param: search
 
-### Auth Endpoints
+Error response shape:
+```json
+{
+  "code": "validation_error",
+  "detail": "Validation failed.",
+  "field_errors": {
+    "email": ["This field is required."]
+  }
+}
+```
 
-- `POST /api/v1/auth/register/`
-- `POST /api/v1/auth/login/`
-- `POST /api/v1/auth/refresh/`
-- `POST /api/v1/auth/logout/`
+## Auth and account endpoints
 
-Example register request:
-
+1. POST /auth/register/
+Request:
 ```json
 {
   "name": "John Reader",
   "email": "john@example.com",
-  "password": "StrongPassword123!"
+  "password": "Shelf1234",
+  "role": "USER"
 }
 ```
-
-Example login response:
-
+Response:
 ```json
 {
-  "access": "<jwt-access-token>",
-  "refresh": "<jwt-refresh-token>",
+  "access": "...",
+  "refresh": "...",
   "user": {
     "id": "uuid",
     "name": "John Reader",
@@ -43,96 +52,155 @@ Example login response:
 }
 ```
 
-## Response Conventions
+2. POST /auth/login/
+3. POST /auth/token/refresh/
+4. POST /auth/logout/
+5. GET /users/me/
+6. PATCH /users/me/
+7. POST /users/me/change-password/
+8. DELETE /users/me/
 
-Success envelope:
+Admin user management:
+1. GET /admin/users/
+2. GET /admin/users/{id}/
+3. PATCH /admin/users/{id}/
+4. DELETE /admin/users/{id}/
 
+## Books endpoints
+
+1. GET /books/
+Query params:
+1. search
+2. category
+3. availability (in_stock|out_of_stock)
+4. ordering (title, -created_at, -average_rating)
+5. page
+6. page_size
+
+List item response shape:
 ```json
 {
-  "data": {},
-  "meta": {}
+  "id": "uuid",
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "category": "Classic Literature",
+  "rating": 4.8,
+  "cover": "https://...",
+  "availability": "In Stock",
+  "isbn": "978..."
 }
 ```
 
-Error envelope:
+2. GET /books/{id}/
+3. POST /books/ (admin)
+4. PATCH /books/{id}/ (admin)
+5. DELETE /books/{id}/ (admin)
 
+## Borrowing endpoints
+
+1. POST /borrow-requests/
+Request:
 ```json
 {
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Invalid input.",
-    "details": {
-      "field": ["This field is required."]
-    }
-  }
+  "book_id": "uuid"
 }
 ```
 
-## Pagination, Filtering, Sorting
+2. GET /borrow-requests/me/
+3. GET /admin/borrow-requests/
+Query params:
+1. status
+2. ordering
+3. risk_score
+4. page
 
-- Pagination: `page`, `page_size`
-- Common filter: `search`
-- Sorting: `ordering` (example: `-created_at`)
+Admin borrow queue item shape:
+```json
+{
+  "id": "uuid",
+  "user_name": "John Doe",
+  "user_email": "john@example.com",
+  "book_title": "1984",
+  "book_author": "George Orwell",
+  "status": "pending",
+  "requested_date": "2026-04-25T12:00:00Z",
+  "user_loans_count": 2,
+  "review_count": 5,
+  "risk_score": "low"
+}
+```
 
-## Books
+4. POST /borrow-requests/{id}/approve/
+5. POST /borrow-requests/{id}/reject/
+6. GET /loans/me/
+7. POST /loans/{id}/renew/
+8. POST /loans/{id}/return/
 
-- `GET /api/v1/books/`
-- `GET /api/v1/books/{id}/`
-- `POST /api/v1/books/` (admin)
-- `PATCH /api/v1/books/{id}/` (admin)
-- `DELETE /api/v1/books/{id}/` (admin)
+Loan item shape used by frontend:
+```json
+{
+  "id": "uuid",
+  "book_title": "1984",
+  "book_author": "George Orwell",
+  "book_cover": "https://...",
+  "borrowed_date": "2026-04-01T00:00:00Z",
+  "due_date": "2026-05-01T00:00:00Z",
+  "status": "active"
+}
+```
 
-Recommended query params:
+## Reviews endpoints
 
-- `search`
-- `category`
-- `available=true|false`
-- `ordering=title|-published_year`
+1. POST /reviews/
+Request:
+```json
+{
+  "book_id": "uuid",
+  "rating": 5,
+  "headline": "Excellent",
+  "comment": "Loved the writing and characters."
+}
+```
 
-## Borrowing and Loans
+2. GET /books/{id}/reviews/
+3. PATCH /reviews/{id}/
+4. DELETE /reviews/{id}/
+5. GET /admin/reviews/pending/
+6. POST /reviews/{id}/approve/
+7. POST /reviews/{id}/reject/
 
-- `POST /api/v1/borrow-requests/`
-- `GET /api/v1/borrow-requests/me/`
-- `POST /api/v1/borrow-requests/{id}/approve/` (admin)
-- `POST /api/v1/borrow-requests/{id}/reject/` (admin)
-- `GET /api/v1/loans/me/`
-- `POST /api/v1/loans/{id}/renew/`
-- `POST /api/v1/loans/{id}/return/`
+Book review item shape:
+```json
+{
+  "id": "uuid",
+  "user_name": "Alice",
+  "rating": 4,
+  "content": "Great read",
+  "created_at": "2026-04-25T12:00:00Z",
+  "likes": 0,
+  "status": "approved"
+}
+```
 
-## Reviews
+## Dashboard endpoints
 
-- `POST /api/v1/reviews/`
-- `GET /api/v1/books/{id}/reviews/`
-- `PATCH /api/v1/reviews/{id}/` (owner)
-- `POST /api/v1/reviews/{id}/approve/` (admin)
-- `POST /api/v1/reviews/{id}/reject/` (admin)
+1. GET /admin/dashboard/
+Response:
+```json
+{
+  "catalog_size": 12345,
+  "active_users": 3456,
+  "total_reviews": 8123,
+  "borrowed_books": 1021,
+  "retention_rate": 92.5,
+  "average_rating": 4.6,
+  "storage_utilization": 68.0
+}
+```
 
-## User Profile
+2. GET /users/me/dashboard/
 
-- `GET /api/v1/users/me/`
-- `PATCH /api/v1/users/me/`
+## OpenAPI docs
 
-## Admin APIs
-
-- `GET /api/v1/admin/dashboard/`
-- `GET /api/v1/admin/users/`
-- `GET /api/v1/admin/borrow-requests/`
-- `GET /api/v1/admin/reviews/pending/`
-
-## Suggested Status Codes
-
-- `200 OK` read/update success
-- `201 Created` resource created
-- `204 No Content` successful delete
-- `400 Bad Request` validation failure
-- `401 Unauthorized` missing/invalid auth
-- `403 Forbidden` role or permission denied
-- `404 Not Found` resource does not exist
-- `409 Conflict` duplicate or state conflict
-
-## OpenAPI
-
-Expose generated OpenAPI schema and interactive docs after implementation:
-
-- `/api/schema/`
-- `/api/docs/`
+1. GET /api/schema/
+2. GET /api/docs/

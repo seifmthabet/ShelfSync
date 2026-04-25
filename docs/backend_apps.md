@@ -1,102 +1,122 @@
-# Backend Apps
+# Backend Apps - Full Responsibilities and Contracts
 
-This document defines the backend app boundaries for ShelfSync. The current backend scope is small enough that four domain apps are sufficient, with one optional shared app for future cleanup.
+This file defines exactly how many apps to use, their names, ownership boundaries, and implementation responsibilities.
 
-## Required Apps
+## Target app set
 
-### `apps/accounts`
+Implement 5 backend apps:
+1. accounts
+2. books
+3. borrowing
+4. reviews
+5. dashboard
 
-Responsibilities:
+Optional helper app:
+1. common
 
-- User registration and login
-- JWT access and refresh token flow
-- Profile retrieval and updates
-- Role management for `USER` and `ADMIN`
-- Permission checks for protected endpoints
-- Admin-facing user management if needed later
+## apps/accounts
 
-Typical data owned by this app:
+Owns:
+1. User model and account lifecycle.
+2. Authentication and authorization.
+3. Role management.
+4. Profile and preference data.
 
-- User profile fields
-- Role and account status
-- Authentication-related serializers and views
+Endpoints owned:
+1. register/login/refresh/logout
+2. users/me read/update
+3. users/me/change-password
+4. users/me delete/deactivate
+5. admin users list/detail/update/deactivate
 
-### `apps/books`
+Internal modules:
+1. models.py
+2. serializers.py
+3. views.py
+4. permissions.py
+5. authentication.py
+6. services.py
 
-Responsibilities:
+## apps/books
 
-- Book catalog management
-- Book search, filtering, and ordering
-- Book detail endpoints
-- Inventory tracking for total and available copies
-- Book metadata such as ISBN, author, category, and cover image
+Owns:
+1. Book metadata and inventory.
+2. Category taxonomy.
+3. Catalog discoverability fields.
 
-Typical data owned by this app:
-
-- Book model
-- Category and search fields
-- Cover image handling
-
-### `apps/borrowing`
-
-Responsibilities:
-
-- Borrow request creation
-- Admin approval and rejection flows
-- Active loan management
-- Renewals and returns
-- Due date and loan status tracking
-
-Typical data owned by this app:
-
-- Borrow request model
-- Loan model
-- Borrow lifecycle status transitions
-
-### `apps/reviews`
+Endpoints owned:
+1. books list/detail
+2. books create/update/delete (admin)
+3. optional categories list
 
 Responsibilities:
+1. keep available_copies consistent with loan transitions
+2. provide searchable/filterable list with pagination
 
-- Review creation and editing by the owner
-- Review listing by book
-- Rating validation
-- Admin moderation of pending reviews
-- Approve/reject review workflow
+## apps/borrowing
 
-Typical data owned by this app:
+Owns:
+1. BorrowRequest state machine.
+2. Loan state machine.
+3. Renewal and return policies.
 
-- Review model
-- Rating, headline, and content fields
-- Moderation status
+Endpoints owned:
+1. create borrow request
+2. my borrow requests
+3. admin borrow queue
+4. approve/reject request
+5. my loans
+6. renew and return loan
 
-## Optional Future App
+Policy checks:
+1. max active loans per user
+2. overdue restrictions
+3. duplicate pending request prevention
+4. inventory checks
 
-### `apps/common`
+## apps/reviews
 
-Use this only if shared code starts to grow.
+Owns:
+1. Review content and ratings.
+2. Moderation state transitions.
+3. Book-level aggregates.
 
-Responsibilities:
+Endpoints owned:
+1. submit/edit/delete review
+2. list reviews for book
+3. admin pending reviews queue
+4. approve/reject review
 
-- Shared base models
-- Common constants and enums
-- Reusable validators and helpers
-- Shared response or error formatting utilities
-- Generic mixins used across multiple apps
+Rules:
+1. rating must be 1..5
+2. optional single review per user/book
+3. optional only-borrowers-can-review policy
 
-## Why This Split Works
+## apps/dashboard
 
-- It keeps authentication separate from catalog and transaction logic.
-- It keeps book data isolated from borrowing and moderation rules.
-- It makes the API easier to maintain and test.
-- It avoids creating too many apps before the business rules actually require them.
+Owns:
+1. Aggregated admin metrics.
+2. Aggregated user dashboard summary.
+3. Optional trend endpoints for charts.
 
-## Recommended Current Set
+Endpoints owned:
+1. admin dashboard metrics
+2. user dashboard summary
 
-Use these now:
+## apps/common (optional)
 
-1. `apps/accounts`
-2. `apps/books`
-3. `apps/borrowing`
-4. `apps/reviews`
+Use only when repeated patterns appear in 3+ apps.
 
-Add `apps/common` later only if shared logic becomes repetitive.
+Candidates:
+1. base model mixins (timestamps, UUID)
+2. domain enums/constants
+3. common paginations
+4. custom exception and error builders
+
+## Dependency rules
+
+1. books must not import from borrowing domain services.
+2. borrowing can reference books and accounts models.
+3. reviews can reference books and accounts models.
+4. dashboard may query all domain models read-only.
+5. avoid circular imports; move shared constants to common if needed.

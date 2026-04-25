@@ -1,76 +1,98 @@
-# System Architecture
+# ShelfSync Backend Architecture
 
-## High-Level Design
+## Context diagram
 
-ShelfSync is structured as two independent layers:
+1. Browser frontend sends JSON requests to DRF API.
+2. DRF API validates auth and permissions.
+3. Domain services enforce business rules.
+4. PostgreSQL stores canonical state.
+5. Redis is optional for cache and async queue.
 
-1. Frontend application in `frontend/`
-2. Backend API service in `backend/`
+## Logical architecture
 
-The frontend communicates with the backend through HTTP JSON endpoints only.
+1. Presentation layer: DRF views/viewsets, routers, serializers.
+2. Domain layer: services and policy modules per app.
+3. Persistence layer: Django models/repositories (ORM queries).
+4. Infrastructure layer: auth, caching, logging, async tasks.
 
-```text
-Client (frontend)
-    |
-    | HTTPS (JSON)
-    v
-REST API (Django + DRF)
-    |
-    v
-SQLite
-```
+## App boundaries
 
-## Architecture Goals
+1. accounts
+- User model and auth endpoints
+- profile/preferences/password/account operations
+- role and permission utilities
 
-- Clean separation between UI and business logic
-- API versioning for safe evolution
-- Stateless auth with JWT
-- Role-based access for reader/admin features
-- Scalable deployment with independent frontend/backend releases
+2. books
+- catalog model and CRUD
+- search/filter/order endpoints
+- availability and inventory consistency
 
-## Backend Responsibilities
+3. borrowing
+- borrow request and approval workflow
+- loan lifecycle and renew/return actions
+- borrow policy checks (limits, overdue, duplicates)
 
-Suggested app boundaries:
+4. reviews
+- review submission and update
+- moderation queue and decision actions
+- aggregate stats for each book
 
-- `apps/accounts`: registration, login, profile, role checks
-- `apps/books`: catalog, search, inventory
-- `apps/borrowing`: requests, approvals, active loans, renewals, returns
-- `apps/reviews`: create/review/moderate ratings and comments
-- `apps/common`: shared utilities, base models, constants
+5. dashboard
+- admin metrics and user dashboard summary endpoints
 
-## Frontend Responsibilities
+## Data flow for critical operations
 
-- Route-based navigation for all pages
-- API client abstraction (auth header, token refresh, retries)
-- State management (session/profile/catalog)
-- Form validation and client UX feedback
+Borrow request creation:
+1. User submits book_id.
+2. API checks auth, role, account status.
+3. Policy checks copies, active loan limits, pending duplicate.
+4. BorrowRequest created with pending status.
+5. Response returns request data and computed risk_score.
 
-## Request Lifecycle
+Approve request:
+1. Admin action on pending request.
+2. Transaction: lock book row, verify available_copies > 0.
+3. Create Loan and decrement available_copies atomically.
+4. Update request status and processor metadata.
 
-1. User performs an action on a page.
-2. Frontend sends request to `/api/v1/...`.
-3. Backend authenticates and authorizes request.
-4. Backend applies business rules and persists data.
-5. Backend returns normalized JSON response.
-6. Frontend renders result and updates UI state.
+Return loan:
+1. Verify loan belongs to user or admin override.
+2. Transaction: mark returned and increment available_copies.
+3. Recompute status metrics as needed.
 
-## Security and Cross-Origin
+## Security architecture
 
-- JWT access + refresh tokens
-- Role-based permission classes in API views
-- CORS allowlist for frontend origin
-- Rate limiting for auth-sensitive endpoints
-- Input validation at serializer layer
+1. JWT (access + refresh) with rotation and blacklist.
+2. Custom permission classes: IsAdmin, IsOwnerOrAdmin, IsReviewerOwner.
+3. CORS allowlist restricted to frontend origins.
+4. Rate limiting for login/register and moderation actions.
+5. Input validation in serializers and domain policy checks.
 
-## Deployment Model
+## API response conventions
 
-- Frontend: static hosting or SPA hosting
-- Backend: app server behind reverse proxy
-- Database: managed PostgreSQL instance
-- Media/static (if needed): object storage + CDN
+Use consistent payloads:
+1. Success list: count/next/previous/results
+2. Success object: id and canonical fields
+3. Error object:
+   - code
+   - detail
+   - field_errors (optional)
 
-## Current Repository Status
+## Deployment architecture
 
-- Frontend and backend directories already exist.
-- Backend code is currently a baseline Django project and still needs DRF modules and domain apps.
-- API contracts are defined in the documentation and should drive implementation.
+Development:
+1. Django + runserver
+2. SQLite or PostgreSQL local
+
+Production:
+1. Gunicorn/uvicorn behind Nginx
+2. PostgreSQL managed instance
+3. Redis for cache and optional Celery
+4. Static/media storage strategy
+
+## Cross-cutting concerns
+
+1. Observability: request logging, error logging, health endpoint.
+2. Testing: unit tests for policies, API tests for endpoints.
+3. Migrations: strict migration review for schema safety.
+4. Backward compatibility: preserve /api/v1 contracts.
