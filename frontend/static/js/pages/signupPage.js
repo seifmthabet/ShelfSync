@@ -71,7 +71,7 @@ domHelper.ready(() => {
         domHelper.css(signupMessage, { color: 'green' });
 
         const response = await usersService.register({
-          fullName: data.fullName,
+          name: data.fullName,
           email: data.email,
           password: data.password,
           role: selectedRoleInput.value,

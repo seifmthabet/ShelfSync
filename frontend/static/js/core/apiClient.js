@@ -15,7 +15,7 @@ const withTimeout = (promise, timeout) => {
 }
 
 const buildUrl = (path, query) => {
-  const url = new URL(path, config.apiBaseUrl.endsWith('/') ? config.apiBaseUrl : config.apiBaseUrl + '/');
+  const url = new URL(path, config.apiBaseUrl.toString());
   if (query && typeof query === 'object') {
     Object.entries(query).forEach(([key, value]) => {
       if (value !== undefined && value !== null) url.searchParams.set(key, String(value));
