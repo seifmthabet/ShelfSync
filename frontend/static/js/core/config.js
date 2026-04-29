@@ -1,5 +1,5 @@
 export const config = {
-	apiBaseUrl: 'http://localhost:8000/api',
+	apiBaseUrl: 'http://localhost:8000/api/v1/',
 	requestTimeoute: 15000, // 15 seconds
 	tokenRefreshPath: '/auth/token/refresh',
 };

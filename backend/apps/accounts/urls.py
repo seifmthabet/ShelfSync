@@ -4,12 +4,15 @@ from .authentication import CustomTokenObtainPairView
 from . import views
 
 urlpatterns = [
-    path('register/', views.RegisterView.as_view(), name='register'),
-    path('login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
+    path('auth/register/', views.RegisterView.as_view(), name='register'),
+    path('auth/login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
     
     path('users/me/', views.MeView.as_view(), name="me"),
-    path('users/', views.UserListView.as_view(), name="user-list"),
-    path('users/<uuid:id>/', views.UserDetailView.as_view(), name="user-details")
+    path('users/me/change-password/', views.ChangePasswordView.as_view(), name='change-password'),
+    path('users/me/deactivate', views.DeactivateMeView.as_view(), name='deactivate-me'),
+
+    path('admin/users/', views.UserListView.as_view(), name="user-list"),
+    path('admin/users/<uuid:id>/', views.UserDetailView.as_view(), name="user-details"),
 ]
