@@ -1,0 +1,73 @@
+.admin-form-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-surface);
+}
+
+.admin-form-main {
+  flex: 1;
+  padding: 28px 24px 48px;
+  max-width: 720px;
+}
+
+.admin-form-main h1 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+.admin-form-sub {
+  color: var(--color-secondary);
+  margin: 0 0 24px;
+  font-size: 14px;
+}
+
+.book-form {
+  display: grid;
+  gap: 18px;
+}
+
+.book-form label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 6px;
+}
+
+.book-form input,
+.book-form textarea,
+.book-form select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-surface-highest);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  background: var(--color-surface-lowest);
+}
+
+.book-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-actions {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 700px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+}

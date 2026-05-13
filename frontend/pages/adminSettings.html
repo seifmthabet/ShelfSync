@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrator settings | ShelfSync</title>
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/pages/manageBooks.css">
+  <link rel="stylesheet" href="../static/css/pages/adminBookForm.css">
+  <link rel="stylesheet" href="../static/css/pages/adminAccountPages.css">
+</head>
+<body>
+  <div class="admin-form-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div>
+          <h3>ShelfSync</h3>
+          <p class="paragraph">LIBRARY MANAGEMENT</p>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <nav class="sidebar-menu">
+          <a href="adminDashboard.html" class="sidebar-btn">Dashboard</a>
+          <a href="adminBookMangement.html" class="sidebar-btn">My Books</a>
+          <a href="adminReviewManagement.html" class="sidebar-btn">Reviews</a>
+          <a href="adminBorrowRequests.html" class="sidebar-btn">Borrow requests</a>
+          <a href="adminManageUsers.html" class="sidebar-btn">Users</a>
+          <a href="adminProfile.html" class="sidebar-btn">Profile</a>
+          <a href="adminSettings.html" class="sidebar-btn active">Settings</a>
+          <button type="button" class="sidebar-btn" data-admin-logout>Logout</button>
+        </nav>
+      </div>
+    </aside>
+
+    <main class="admin-form-main">
+      <h1>Administrator settings</h1>
+      <p class="admin-form-sub">Session and API configuration resolved for this browser tab (no secrets are shown).</p>
+
+      <section class="admin-account-card">
+        <h2>API</h2>
+        <dl class="admin-account-dl">
+          <div><dt>Base URL</dt><dd><code id="as-api-base">—</code></dd></div>
+          <div><dt>Signed in as</dt><dd id="as-email">—</dd></div>
+        </dl>
+      </section>
+
+      <section class="admin-account-card">
+        <h2>Shortcuts</h2>
+        <div class="admin-account-actions">
+          <a class="btn btn-primary" href="adminBookMangement.html">Manage books</a>
+          <a class="btn btn-ghost" href="adminBorrowRequests.html">Borrow requests</a>
+          <button type="button" class="btn btn-ghost" data-admin-logout>Log out</button>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="../static/js/pages/adminSettings.js"></script>
+</body>
+</html>

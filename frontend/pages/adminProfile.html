@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrator profile | ShelfSync</title>
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/pages/manageBooks.css">
+  <link rel="stylesheet" href="../static/css/pages/adminBookForm.css">
+  <link rel="stylesheet" href="../static/css/pages/adminAccountPages.css">
+</head>
+<body>
+  <div class="admin-form-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div>
+          <h3>ShelfSync</h3>
+          <p class="paragraph">LIBRARY MANAGEMENT</p>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <nav class="sidebar-menu">
+          <a href="adminDashboard.html" class="sidebar-btn">Dashboard</a>
+          <a href="adminBookMangement.html" class="sidebar-btn">My Books</a>
+          <a href="adminReviewManagement.html" class="sidebar-btn">Reviews</a>
+          <a href="adminBorrowRequests.html" class="sidebar-btn">Borrow requests</a>
+          <a href="adminManageUsers.html" class="sidebar-btn">Users</a>
+          <a href="adminProfile.html" class="sidebar-btn active">Profile</a>
+          <a href="adminSettings.html" class="sidebar-btn">Settings</a>
+          <button type="button" class="sidebar-btn" data-admin-logout>Logout</button>
+        </nav>
+      </div>
+    </aside>
+
+    <main class="admin-form-main">
+      <h1>Administrator profile</h1>
+      <p class="admin-form-sub">Details from your ShelfSync account. Edit your name on this page; use Settings for session and API information.</p>
+
+      <section class="admin-account-card">
+        <h2>Account</h2>
+        <dl class="admin-account-dl">
+          <div><dt>Name</dt><dd id="ap-name">Loading…</dd></div>
+          <div><dt>Email</dt><dd id="ap-email">Loading…</dd></div>
+          <div><dt>Role</dt><dd id="ap-role">Loading…</dd></div>
+          <div><dt>Member since</dt><dd id="ap-since">Loading…</dd></div>
+        </dl>
+        <div class="admin-account-actions" style="flex-direction: column; align-items: flex-start;">
+          <label for="ap-name-input" style="font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-secondary);">Display name</label>
+          <input id="ap-name-input" class="input-soft" type="text" maxlength="255" autocomplete="name" placeholder="Your name" style="max-width:360px;width:100%;">
+          <button type="button" class="btn btn-primary" id="ap-save">Save name</button>
+        </div>
+      </section>
+
+      <p class="admin-form-sub" style="margin-top:8px;">
+        <a href="adminSettings.html">Open administrator settings</a>
+        ·
+        <a href="adminDashboard.html">Back to dashboard</a>
+      </p>
+    </main>
+  </div>
+  <script type="module" src="../static/js/pages/adminProfile.js"></script>
+</body>
+</html>

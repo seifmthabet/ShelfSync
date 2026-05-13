@@ -2,17 +2,12 @@ import { domHelper } from "../utils/domHelper.js";
 import { Auth } from "../core/auth.js";
 import { borrowService } from "../services/borrowService.js";
 import { hrefPage } from "../core/config.js";
+import { wireAdminLogout } from "../core/adminNav.js";
 
 // Navigation
 const homeButton = document.getElementById("navbar__brand");
 homeButton?.addEventListener("click", () => {
     window.location.href = "adminDashboard.html";
-});
-
-const logoutButton = document.getElementById("btn-logout");
-logoutButton?.addEventListener("click", () => {
-    Auth.logout({ redirect: false });
-    window.location.href = hrefPage("login");
 });
 
 const state = {
@@ -52,6 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     await loadBorrowRequests();
     setupEventListeners();
+    wireAdminLogout();
 });
 
 // Setup event listeners

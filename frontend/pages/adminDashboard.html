@@ -35,14 +35,14 @@
                 <li><a href="adminDashboard.html"> <img src="../static/images/covers/admin-dashboard-dashboard-icon.png" alt="icon"> Dashboard</a></li>
                 <li><a href="adminBookMangement.html">  <img src="../static/images/covers/admin-dashboard-mybooks-icon.png" alt="icon">My Books</a></li>
                 <li><a href="adminReviewManagement.html"> <img src="../static/images/covers/admin-dashboard-Reviews-icon.png" alt="icon">Reviews</a></li>
-                <li><a href="#">  <img src="../static/images/covers/admin-dashboard-history-icon.png" alt="icon">History</a></li>
-                <li><a href="#">  <img src="../static/images/covers/admin-dashboard-profile-icon.png" alt="icon">Profile</a></li>
+                <li><a href="adminBorrowRequests.html">  <img src="../static/images/covers/admin-dashboard-history-icon.png" alt="icon">Borrow requests</a></li>
+                <li><a href="adminProfile.html">  <img src="../static/images/covers/admin-dashboard-profile-icon.png" alt="icon">Profile</a></li>
             </ul>  
             <div class="Bottom-Menue">
                 
                 <ul class="ul-Foot">
-                    <li><a href="#"><img src="../static/images/covers/admin-dashboard-settings-icon.png" alt="icon"> Settings</a></li>
-                    <li><a href="#"><img src="../static/images/covers/admin-dashboard-help-icon.png" alt="icon"> Help</a></li>
+                    <li><a href="adminSettings.html"><img src="../static/images/covers/admin-dashboard-settings-icon.png" alt="icon"> Settings</a></li>
+                    <li><button type="button" class="admin-logout-btn" data-admin-logout><img src="../static/images/covers/admin-dashboard-help-icon.png" alt=""> Logout</button></li>
                 </ul>
             </div>
         </div>
@@ -51,23 +51,23 @@
                 <div class="catalog-size">
                     <img src="../static/images/covers/admin-dashboard-catalog-size.png" alt="icon">
                     <p class="title">Catalog size</p>
-                    <p class="content">12,480</p>
+                    <p class="content">0</p>
                     <p class="exp"> Total Books In archive</p>
                     <hr>
-                    <p class="comment">+42 this week</p>
+                    <p class="comment" id="catalog-weekly-note" style="display:none;"></p>
                 </div>
 
                 <div class="activ-users">
                     <img src="../static/images/covers/admin-dashboard-ActivUsers.png" alt="icon">
                     <p class="title"> activ users</p>
-                    <p class="content"> 3,204</p>
+                    <p class="content">0</p>
                     <p class="comment"> Register members</p>
                 </div>
 
                 <div class="Reviews">
                     <img src="../static/images/covers/admin-dashboard-Reviews-icon.png" alt="icon">
                     <p class="title">Reviews</p>
-                    <p class="content">8,912</p>
+                    <p class="content">0</p>
                     <p class="comment">User contributions</p>
                 </div>
             </section>
@@ -75,54 +75,11 @@
             <section class="sec-2">
                 <div class="table">
                     <div class="head"> 
-                        <p>Current Circulations</p>
-                        <button> View All Ledger</button>
+                        <p>Recent borrow activity</p>
+                        <a href="adminBorrowRequests.html" style="color:inherit;text-decoration:underline;">View all requests</a>
                     </div>
                     <hr>
-                    <div class="Book-1">
-                        <div>
-                            <img src="../static/images/covers/admin-dashboard-book1.png">
-                            <div class="book-1-info">
-                                <p class="Book-type">Fiction/Classic</p>
-                                <h3  class="Book-title">The Great Gatsby</h3>
-                                <p class ="auther">F.Scott Fitzgerald</p>
-                            </div>
-                        </div>
-                        <div class="Book-1-loan-info">
-                            <p class="due"> Due in 2 days</p>
-                            <p>Borrower:james w.</p>
-                        </div>
-                    </div>
-
-                    <div class="Book-2">
-                        <div>
-                            <img src="../static/images/covers/admin-dashboard-book2.png">
-                            <div class="Book-2-info">
-                                <p class="Book-type">History/Acadimic</p>
-                                <h3 class="Book-title">The Decline and Fall Of rome</h3>
-                                <p  class ="auther">Edward Gibbon</p>
-                            </div>
-                        </div>
-                        <div class="Book-2-loan-info">
-                            <p class="due"> overdue: 1day</p>
-                            <p>Borrower:sarah .l</p>
-                        </div>
-                    </div>
-                    <div class="Book-3">
-                        <div>
-                            <img src="../static/images/covers/admin-dashboard-book3.png">
-                            <div class="Book-3-info">
-                                <p class="Book-type">philosophy</p>
-                                <h3 class="Book-title">Meditations</h3>
-                                <p  class ="auther">Marcus aurelius</p>
-                            </div>
-                        </div>
-
-                        <div class="Book-3-loan-info">
-                            <p class="due"> Due in 12 days</p>
-                            <p>Borrower:michael r.</p>
-                        </div>
-                    </div>
+                    <div id="circulation-root" class="circulation-root"></div>
                 </div>
                 <div class="bacground">
                     <div class="notes-title">
@@ -146,24 +103,24 @@
             <section class="sec-3">
                 <div>
                     <p class="class-name">Borrowed Booke</p>
-                    <p class="class-content" >1,142</p>
+                    <p class="class-content" >0</p>
                 </div>
                 <div>
                     <p class="class-name">Member retration</p>
-                    <p class="class-content">94%</p>
+                    <p class="class-content">0%</p>
                 </div>
                 <div>
                     <p class="class-name">AVG.rating</p>
-                    <p class="class-content">4.8</p>
+                    <p class="class-content">0.0</p>
                 </div>
                 <div>
                     <p class="class-name">storage Usge</p>
-                    <p class="class-content">62%</p>
+                    <p class="class-content">0%</p>
                 </div>
             </section>
         </div>
         <footer>
-            <p>© 2023 BiblioAdmin Library Management System</p>
+            <p>© 2026 ShelfSync Admin</p>
             <div>
                 <button>legal</button>
                 <button>privacy policy</button>

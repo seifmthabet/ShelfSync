@@ -3,9 +3,14 @@ from decimal import Decimal
 from django.db.models import Count, Q
 from rest_framework import serializers
 
-from apps.accounts.models import User
 from apps.books.models import Book, Category
 from apps.reviews.models import Review
+
+
+class CategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ("name", "slug")
 
 
 class BookListSerializer(serializers.ModelSerializer):
@@ -27,7 +32,9 @@ class BookListSerializer(serializers.ModelSerializer):
             "cover",
             "availability",
             "isbn",
+            "created_at",
         )
+        read_only_fields = ("created_at",)
 
     @staticmethod
     def _availability_label(book: Book) -> str:

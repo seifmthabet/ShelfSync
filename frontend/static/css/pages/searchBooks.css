@@ -6,26 +6,26 @@
 
 /* ── Variables ── */
 :root {
-    --bg:           #f2efe8;        /* warm parchment */
-    --bg-alt:       #ece9e1;
-    --surface:      #faf9f5;
-    --surface-card: #f7f5f0;
-    --ink:          #1a1a16;
-    --ink-muted:    #6b6b60;
+    --bg:           var(--color-surface, #fbf9f4);
+    --bg-alt:       var(--color-surface-low, #f5f3ee);
+    --surface:      var(--color-surface-lowest, #faf9f5);
+    --surface-card: var(--color-surface-low, #f7f5f0);
+    --ink:          var(--color-on-surface, #1b1c19);
+    --ink-muted:    var(--color-secondary, #434840);
     --ink-faint:    #a8a89a;
-    --accent:       #2f4a30;        /* deep forest green */
-    --accent-light: #e8efe8;
-    --border:       rgba(30,30,20,0.1);
+    --accent:       var(--color-primary, #334f2b);
+    --accent-light: rgba(51, 79, 43, 0.12);
+    --border:       var(--color-outline-variant, rgba(195, 200, 189, 0.35));
     --star:         #8a7a50;
     --gold:         #c8a84a;
 
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-ui:      'DM Sans', 'Helvetica Neue', sans-serif;
+    --font-display: var(--font-serif, "Newsreader", Georgia, serif);
+    --font-ui:      var(--font-sans, "Inter", system-ui, sans-serif);
 
-    --radius:       4px;
-    --radius-sm:    3px;
-    --shadow-card:  0 2px 20px rgba(30,30,20,0.07);
-    --shadow-hover: 0 8px 40px rgba(30,30,20,0.13);
+    --radius:       var(--radius-md, 6px);
+    --radius-sm:    var(--radius-default, 4px);
+    --shadow-card:  var(--shadow-ambient, 0 2px 20px rgba(30,30,20,0.07));
+    --shadow-hover: 0 8px 40px rgba(30,30,20, 0.13);
 
     --max-w: 1100px;
 }
@@ -157,6 +157,46 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .hero__title em {
     font-style: italic;
     font-weight: 400;
+}
+
+.hero__lead {
+    margin-top: 16px;
+    max-width: 36em;
+    font-family: var(--font-ui);
+    font-size: 16px;
+    color: var(--ink-muted);
+    line-height: 1.55;
+}
+
+.catalog-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--ink-muted);
+    font-family: var(--font-ui);
+}
+
+.catalog-message--error {
+    color: var(--ink);
+}
+
+.catalog-message--error strong {
+    color: #8b2e2e;
+}
+
+.catalog-hint {
+    display: block;
+    margin-top: 12px;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.book-availability {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 6px;
 }
 
 /* ══════════════════════════════════════════

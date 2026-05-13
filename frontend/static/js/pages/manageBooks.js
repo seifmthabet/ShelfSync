@@ -1,7 +1,9 @@
 import { booksService } from "../services/booksService.js";
+import { usersService } from "../services/usersService.js";
 import { domHelper } from "../utils/domHelper.js";
 import { Auth } from "../core/auth.js";
 import { hrefPage } from "../core/config.js";
+import { wireAdminLogout } from "../core/adminNav.js";
 
 function availabilityLabel(book) {
   const a = book?.availability;
@@ -14,85 +16,24 @@ function availabilityLabel(book) {
   return true;
 }
 
-function promptBookPayload() {
-  const title = window.prompt("Title (required)")?.trim();
-  const author = window.prompt("Author (required)")?.trim();
-  if (!title || !author) {
-    alert("Title and author are required.");
-    return null;
+function topCategoryFromList(list) {
+  const counts = {};
+  for (const b of list) {
+    const cat =
+      typeof b.category === "string"
+        ? b.category
+        : b.category?.name || "Uncategorized";
+    counts[cat] = (counts[cat] || 0) + 1;
   }
-  const isbn = window.prompt("ISBN (optional)")?.trim() || "";
-  const description = window.prompt("Description (optional)")?.trim() || "";
-  const yearRaw = window.prompt("Publication year (optional)")?.trim();
-  const publication_year = yearRaw ? parseInt(yearRaw, 10) : null;
-  const cover_url = window.prompt("Cover image URL (optional)")?.trim() || "";
-  const totalRaw = window.prompt("Total copies", "1")?.trim() || "1";
-  const availRaw = window.prompt("Available copies", totalRaw)?.trim() || totalRaw;
-  const total_copies = Math.max(1, parseInt(totalRaw, 10) || 1);
-  let available_copies = Math.max(0, parseInt(availRaw, 10) || 0);
-  if (available_copies > total_copies) available_copies = total_copies;
-  const category_slug = window.prompt("Category slug (optional, e.g. fiction)")?.trim() || null;
-
-  return {
-    title,
-    author,
-    isbn,
-    description,
-    publication_year: Number.isFinite(publication_year) ? publication_year : null,
-    cover_url,
-    total_copies,
-    available_copies,
-    category_slug: category_slug || null,
-  };
-}
-
-function promptEditPayload(book) {
-  const title = window.prompt("Title", book.title || "")?.trim();
-  const author = window.prompt("Author", book.author || "")?.trim();
-  if (!title || !author) return null;
-  const isbn = window.prompt("ISBN", book.isbn ?? "")?.trim() ?? "";
-  const description = window.prompt(
-    "Description",
-    book.summary ?? book.description ?? ""
-  )?.trim() ?? "";
-  const yearRaw = window.prompt(
-    "Publication year",
-    book.year != null ? String(book.year) : ""
-  )?.trim();
-  const publication_year = yearRaw ? parseInt(yearRaw, 10) : null;
-  const cover_url = window.prompt(
-    "Cover URL",
-    book.cover ?? book.cover_url ?? ""
-  )?.trim() ?? "";
-  const total_copies = Math.max(
-    1,
-    parseInt(
-      window.prompt("Total copies", String(book.total_copies ?? 1)) || "1",
-      10
-    ) || 1
-  );
-  let available_copies = Math.max(
-    0,
-    parseInt(
-      window.prompt(
-        "Available copies",
-        String(book.available_copies ?? total_copies)
-      ) || String(total_copies),
-      10
-    ) || 0
-  );
-  if (available_copies > total_copies) available_copies = total_copies;
-
-  return {
-    title,
-    author,
-    isbn,
-    description,
-    publication_year: Number.isFinite(publication_year) ? publication_year : null,
-    cover_url,
-    total_copies,
-    available_copies,
-  };
+  let best = null;
+  let n = 0;
+  Object.entries(counts).forEach(([k, v]) => {
+    if (v > n) {
+      n = v;
+      best = k;
+    }
+  });
+  return best && n > 0 ? { name: best, count: n } : null;
 }
 
 domHelper.ready(async () => {
@@ -105,6 +46,8 @@ domHelper.ready(async () => {
     return;
   }
 
+  wireAdminLogout();
+
   const tableBody = domHelper.query("tbody");
   const searchInput = domHelper.query(".header-search");
   const addBtn = domHelper.query(".btn-add");
@@ -115,6 +58,28 @@ domHelper.ready(async () => {
   if (!tableBody) return;
 
   let tableRows = [];
+
+  async function applyAdminStats(rawList) {
+    const totalEl = document.getElementById("stat-total-books");
+    const loansEl = document.getElementById("stat-active-loans");
+    const catEl = document.getElementById("stat-top-category");
+    const catNote = document.getElementById("stat-top-category-note");
+    try {
+      const d = await usersService.adminDashboard();
+      if (totalEl) totalEl.textContent = Number(d.catalog_size || 0).toLocaleString();
+      if (loansEl) loansEl.textContent = Number(d.borrowed_books || 0).toLocaleString();
+    } catch {
+      if (totalEl) totalEl.textContent = "—";
+      if (loansEl) loansEl.textContent = "—";
+    }
+    const top = topCategoryFromList(rawList);
+    if (catEl) catEl.textContent = top ? top.name : "—";
+    if (catNote) {
+      catNote.textContent = top
+        ? `${top.count} title${top.count === 1 ? "" : "s"} in current page sample`
+        : "Add books to see distribution";
+    }
+  }
 
   async function reloadBooks() {
     try {
@@ -131,6 +96,7 @@ domHelper.ready(async () => {
         raw: b,
       }));
       renderBooks(rows);
+      await applyAdminStats(list);
     } catch (error) {
       console.error(error);
       alert(error?.message || "Could not load books. Check API URL and sign-in.");
@@ -215,30 +181,14 @@ domHelper.ready(async () => {
       }
     }
 
-    if (edit) {
-      try {
-        const full = await booksService.getBookById(id);
-        const b = full?.data ?? full;
-        const payload = promptEditPayload(b);
-        if (!payload) return;
-        await booksService.updateBook(id, payload);
-        await reloadBooks();
-      } catch (err) {
-        alert(err?.message || "Update failed.");
-      }
+    if (edit && id) {
+      window.location.href = `adminBookForm.html?id=${encodeURIComponent(id)}`;
     }
   });
 
   if (addBtn) {
-    domHelper.on(addBtn, "click", async () => {
-      const payload = promptBookPayload();
-      if (!payload) return;
-      try {
-        await booksService.addBook(payload);
-        await reloadBooks();
-      } catch (err) {
-        alert(err?.message || "Could not add book.");
-      }
+    domHelper.on(addBtn, "click", () => {
+      window.location.href = "adminBookForm.html";
     });
   }
 

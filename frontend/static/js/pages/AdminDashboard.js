@@ -1,6 +1,8 @@
 import { Auth } from "../core/auth.js";
 import { usersService } from "../services/usersService.js";
 import { hrefPage } from "../core/config.js";
+import { borrowService } from "../services/borrowService.js";
+import { wireAdminLogout } from "../core/adminNav.js";
 
 const form = document.getElementById("my-form");
 if (form) {
@@ -65,6 +67,63 @@ if (addMemoBtn) {
   });
 }
 
+function escapeHtml(text) {
+  const s = String(text ?? "");
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function formatBorrowDate(iso) {
+  if (!iso) return "—";
+  try {
+    return new Date(iso).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return "—";
+  }
+}
+
+async function loadRecentBorrowActivity() {
+  const root = document.getElementById("circulation-root");
+  if (!root) return;
+  if (!Auth.isAuthenticated() || !Auth.isAdmin()) {
+    return;
+  }
+  try {
+    const data = await borrowService.getAllBorrowRequests();
+    const list = Array.isArray(data) ? data : data?.results ?? [];
+    const slice = list.slice(0, 8);
+    if (!slice.length) {
+      root.innerHTML = `<p class="circ-empty">No borrow requests yet.</p>`;
+      return;
+    }
+    root.innerHTML = slice
+      .map((r) => {
+        const title = escapeHtml(r.book_title || "Untitled");
+        const user = escapeHtml(r.user_name || "Member");
+        const status = escapeHtml(String(r.status || "—").replace(/_/g, " "));
+        const when = formatBorrowDate(r.requested_date || r.requested_at);
+        return `<div class="circ-row">
+          <div>
+            <h4>${title}</h4>
+            <p class="meta">${user} · ${when}</p>
+          </div>
+          <span class="status-pill">${status}</span>
+        </div>`;
+      })
+      .join("");
+  } catch (e) {
+    console.warn("Borrow activity unavailable:", e);
+    root.innerHTML = `<p class="circ-empty">Could not load recent activity.</p>`;
+  }
+}
+
 async function loadDashboardMetrics() {
   if (!Auth.isAuthenticated() || !Auth.isAdmin()) {
     return;
@@ -91,7 +150,7 @@ async function loadDashboardMetrics() {
   }
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
   if (!Auth.isAuthenticated()) {
     window.location.href = hrefPage("login");
     return;
@@ -100,5 +159,7 @@ window.addEventListener("DOMContentLoaded", () => {
     window.location.href = hrefPage("userDashboard");
     return;
   }
-  loadDashboardMetrics();
+  wireAdminLogout();
+  await loadDashboardMetrics();
+  await loadRecentBorrowActivity();
 });

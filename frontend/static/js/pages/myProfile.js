@@ -2,16 +2,17 @@ import { domHelper } from "../utils/domHelper.js";
 import { Auth } from "../core/auth.js";
 import { Storage } from "../core/storage.js";
 import { usersService } from "../services/usersService.js";
+import { hrefPage } from "../core/config.js";
 
 const homeButton = document.getElementById("navbar__brand");
 homeButton?.addEventListener("click", () => {
-  window.location.href = "../index.html";
+  window.location.href = hrefPage("home");
 });
 
 const logoutButton = document.getElementById("btn-logout");
 logoutButton?.addEventListener("click", () => {
-  Auth.logout();
-  window.location.href = "loginPage.html";
+  Auth.logout({ redirect: false });
+  window.location.href = hrefPage("login");
 });
 
 const ui = {
@@ -209,7 +210,7 @@ function setupEventListeners() {
     try {
       await usersService.deleteAccount();
       Auth.logout({ redirect: false });
-      window.location.href = "loginPage.html";
+      window.location.href = hrefPage("login");
     } catch (err) {
       alert(err?.message || "Could not deactivate account.");
     }
@@ -218,11 +219,11 @@ function setupEventListeners() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!Auth.isAuthenticated()) {
-    window.location.href = "loginPage.html";
+    window.location.href = hrefPage("login");
     return;
   }
   if (Auth.isAdmin()) {
-    window.location.href = "adminDashboard.html";
+    window.location.href = hrefPage("adminDashboard");
     return;
   }
   await loadProfileData();

@@ -11,6 +11,9 @@ function requireAdmin() {
 }
 
 export const booksService = {
+  getCategories: () => {
+    return apiClient.get("categories/", {}, { authRequired: false });
+  },
   getAllBooks: (query = {}) => {
     return apiClient.get("books/", query, { authRequired: false });
   },

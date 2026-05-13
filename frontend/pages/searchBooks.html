@@ -3,209 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="api-base-url" content="http://127.0.0.1:8000/api/v1/">
-    <title>Search Library</title>
+    <title>Browse catalog | ShelfSync</title>
+    <link rel="stylesheet" href="../static/css/global.css">
     <link rel="stylesheet" href="../static/css/pages/searchBooks.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- ── NAVBAR ── -->
     <header class="navbar">
         <div class="navbar__inner">
-            <a href="../index.html" id="navbar__brand">Search Library</a>
+            <a href="../index.html" class="navbar__brand" id="navbar__brand">ShelfSync</a>
             <nav class="navbar__links">
+                <a href="../index.html">Home</a>
                 <a href="searchBooks.html" id="browse">Browse</a>
-                <a href="searchBooks.html">Collections</a>
                 <a href="about.html">About</a>
+                <a href="how-it-works.html">How it works</a>
             </nav>
             <div class="navbar__actions">
-                <a href="#" id="btn-login">Login</a>
-                <a href="#" id="btn-nav" class="navbar__avatar-link">Profile</a>
-                <div class="navbar__avatar"></div>
+                <a href="loginPage.html" id="btn-login">Login</a>
+                <a href="loginPage.html" id="btn-nav" class="navbar__avatar-link">Profile</a>
+                <div class="navbar__avatar" aria-hidden="true"></div>
             </div>
         </div>
     </header>
 
-    <!-- ── HERO ── -->
     <section class="hero">
         <div class="container">
             <h1 class="hero__title">
-                Curated Collections<br>
-                for the <em>Discerning</em><br>
-                <em>Mind.</em>
+                Browse the <em>catalog</em>
             </h1>
+            <p class="hero__lead">Search titles and authors, filter by collection and availability.</p>
         </div>
     </section>
 
-    <!-- ── SEARCH & FILTERS ── -->
     <div class="filters">
         <div class="container filters__inner">
             <div class="filter-group">
-                <label class="filter-label">Search the Archive</label>
+                <label class="filter-label" for="catalog-search">Search</label>
                 <div class="search-box">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    <input type="search" placeholder="Title, author, or keyword…">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input id="catalog-search" type="search" placeholder="Title, author, or ISBN…" autocomplete="off">
                 </div>
             </div>
 
             <div class="filter-group">
-                <label class="filter-label">Category</label>
+                <label class="filter-label" for="category-filter">Collection</label>
                 <div class="select-wrap">
-                    <select>
-                        <option>All Collections</option>
-                        <option>Classic Literature</option>
-                        <option>Dystopian Fiction</option>
-                        <option>Fiction</option>
-                        <option>Philosophy</option>
-                        <option>Literature</option>
-                        <option>History</option>
-                        <option>Science</option>
-                        <option>Poetry</option>
-                        <option>Drama</option>
+                    <select id="category-filter">
+                        <option value="">All collections</option>
                     </select>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
             </div>
 
             <div class="filter-group">
-                <label class="filter-label">Availability</label>
+                <label class="filter-label" for="availability-filter">Availability</label>
                 <div class="select-wrap">
-                    <select>
+                    <select id="availability-filter">
                         <option>All</option>
                         <option>In Stock</option>
                         <option>Out of Stock</option>
                     </select>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
             </div>
 
-            <button class="btn-refine">Refine Results &nbsp;↑</button>
+            <button type="button" class="btn-refine">Apply filters</button>
         </div>
     </div>
 
-    <!-- ── BOOK GRID ── -->
-    <main class="container main-grid">
-
-        <!-- Row 1 -->
-        <article class="book-card">
-            <div class="book-card__img book-card__img--light">
-                <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400&q=80" alt="Meditations on First Philosophy">
-            </div>
-            <div class="book-card__meta">
-                <span class="book-genre">Philosophy</span>
-                <div class="book-stars">★★★★★</div>
-            </div>
-            <h3 class="book-title">Meditations on First Philosophy</h3>
-            <p class="book-author">René Descartes</p>
-        </article>
-
-        <article class="book-card">
-            <div class="book-card__img book-card__img--warm">
-                <img src="https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=400&q=80" alt="The Histories">
-            </div>
-            <div class="book-card__meta">
-                <span class="book-genre">History</span>
-                <div class="book-stars">★★★★★</div>
-            </div>
-            <h3 class="book-title">The Histories</h3>
-            <p class="book-author">Herodotus</p>
-        </article>
-
-        <article class="book-card">
-            <div class="book-card__img book-card__img--teal">
-                <img src="https://images.unsplash.com/photo-1495640388908-05fa85288e61?w=400&q=80" alt="Beyond Good and Evil">
-            </div>
-            <div class="book-card__meta">
-                <span class="book-genre">Literature</span>
-                <div class="book-stars">★★★★★</div>
-            </div>
-            <h3 class="book-title">Beyond Good and Evil</h3>
-            <p class="book-author">Friedrich Nietzsche</p>
-        </article>
-
-        <article class="book-card">
-            <div class="book-card__img book-card__img--dark">
-                <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&q=80" alt="Principia Mathematica">
-            </div>
-            <div class="book-card__meta">
-                <span class="book-genre">Science</span>
-                <div class="book-stars">★★★★★</div>
-            </div>
-            <h3 class="book-title">Principia Mathematica</h3>
-            <p class="book-author">Isaac Newton</p>
-        </article>
-
-        <!-- Row 2 -->
-        <article class="book-card">
-            <div class="book-card__img book-card__img--paper">
-                <img src="https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=400&q=80" alt="The Myth of Sisyphus">
-            </div>
-            <div class="book-card__meta">
-                <span class="book-genre">Essays</span>
-                <div class="book-stars">★★★★★</div>
-            </div>
-            <h3 class="book-title">The Myth of Sisyphus</h3>
-            <p class="book-author">Albert Camus</p>
-        </article>
-
-        <article class="book-card">
-            <div class="book-card__img book-card__img--manuscript">
-                <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=400&q=80" alt="The Waste Land">
-            </div>
-            <div class="book-card__meta">
-                <span class="book-genre">Poetry</span>
-                <div class="book-stars">★★★★★</div>
-            </div>
-            <h3 class="book-title">The Waste Land</h3>
-            <p class="book-author">T.S. Eliot</p>
-        </article>
-
-        <article class="book-card">
-            <div class="book-card__img book-card__img--gold">
-                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&q=80" alt="The Republic">
-            </div>
-            <div class="book-card__meta">
-                <span class="book-genre">Digital</span>
-                <div class="book-stars">★★★★★</div>
-            </div>
-            <h3 class="book-title">The Republic</h3>
-            <p class="book-author">Plato</p>
-        </article>
-
-        <article class="book-card">
-            <div class="book-card__img book-card__img--grey">
-                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&q=80" alt="The Alchemist">
-            </div>
-            <div class="book-card__meta">
-                <span class="book-genre">Drama</span>
-                <div class="book-stars">★★★★★</div>
-            </div>
-            <h3 class="book-title">The Alchemist</h3>
-            <p class="book-author">Paulo Coelho</p>
-        </article>
-
+    <main class="container main-grid" aria-live="polite">
     </main>
 
-    <!-- ── PAGINATION ── -->
     <div class="pagination">
         <div class="container pagination__inner">
-            <button class="page-nav" disabled>← Previous</button>
-            <div class="page-numbers">
-                <button class="page-num page-num--active">01</button>
-                <button class="page-num">02</button>
-                <button class="page-num">03</button>
-                <button class="page-num">...</button>
-            </div>
-            <button class="page-nav">Next →</button>
+            <button type="button" class="page-nav" disabled>← Previous</button>
+            <div class="page-numbers"></div>
+            <button type="button" class="page-nav">Next →</button>
         </div>
     </div>
 
-    <!-- ── FOOTER ── -->
     <footer class="footer">
         <div class="container footer__inner">
-            <span class="footer__brand">Search Library</span>
-            <span class="footer__copy">&copy; 2024 Search Library. All rights reserved.</span>
+            <span class="footer__brand">ShelfSync</span>
+            <span class="footer__copy">&copy; 2026 ShelfSync</span>
         </div>
     </footer>
     <script type="module" src="../static/js/pages/searchBooks.js"></script>

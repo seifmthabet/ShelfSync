@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard | Sage Library</title>
+    <title>User Dashboard | ShelfSync</title>
     <link rel="stylesheet" href="../static/css/global.css">
     <link rel="stylesheet" href="../static/css/pages/userDashboard.css">
 </head>
@@ -13,43 +13,43 @@
             <div class="user-profile">
                 <img src="../static/images/covers/Image+Border.png" alt="User Avatar" class="avatar">
                 <div class="user-info">
-                    <h2>Sage Library</h2>
+                    <h2>ShelfSync</h2>
                     <p>Member Portal</p>
                 </div>
             </div>
 
             <ul class="ul-Main">
-                <li class="active"><a href="#">Dashboard</a></li>
-                <li><a href="#">Library</a></li>
-                <li><a href="#">Reviews</a></li>
-                <li><a href="#">History</a></li>
+                <li class="active"><a href="userDashboard.html">Dashboard</a></li>
+                <li><a href="searchBooks.html">Library</a></li>
+                <li><a href="writeReview.html">Reviews</a></li>
+                <li><a href="readingHistory.html">History</a></li>
             </ul>
 
             <div class="scholar-note">
-                <h4>Scholar's Note</h4>
-                <p>You have <span id="due-count">2</span> items due within the next 48 hours.</p>
-                <button id="renew-btn" class="btn btn-ghost note-btn">Renew Now</button>
+                <h4>Due soon</h4>
+                <p>You have <span id="due-count">0</span> items due within the next week.</p>
+                <button type="button" id="renew-btn" class="btn btn-ghost note-btn">Renew Now</button>
             </div>
         </aside>
 
         <main class="subBody">
             <nav class="top-nav">
                 <div class="nav-links">
-                    <strong>Sage Library</strong>
-                    <a href="#">Browse</a>
-                    <a href="#">Categories</a>
-                    <a href="#">About</a>
+                    <strong>ShelfSync</strong>
+                    <a href="searchBooks.html">Browse</a>
+                    <a href="searchBooks.html">Catalog</a>
+                    <a href="about.html">About</a>
                 </div>
                 <div class="nav-auth">
-                    <a href="#">Login</a>
-                    <img src="../static/images/covers/login_Icon.jpg" alt="login icon" class="auth-icon">
+                    <a href="loginPage.html" id="top-auth-link">Logout</a>
+                    <img src="../static/images/covers/login_Icon.jpg" alt="" class="auth-icon" width="24" height="24">
                 </div>
             </nav>
 
             <header class="dashboard-header">
                 <div class="welcome-text">
-                    <p class="label-md">Archivist Dashboard</p>
-                    <h1 class="display-lg welcome-title">Welcome back,<br><em>Arthur.</em></h1>
+                    <p class="label-md">Your dashboard</p>
+                    <h1 class="display-lg welcome-title">Welcome back,<br><em>Reader.</em></h1>
                 </div>
                 <div class="quote">
                     <p>"A room without books is like a body without a soul." — Cicero</p>
@@ -62,93 +62,57 @@
                         <span class="icon">📖</span>
                         <span class="label-md">Active Loans</span>
                     </div>
-                    <h2 class="display-lg stat-number" id="active-loans">08</h2>
-                    <p class="stat-desc">4 books due this week</p>
+                    <h2 class="display-lg stat-number" id="active-loans">00</h2>
+                    <p class="stat-desc">—</p>
                 </div>
                 <div class="stat-card">
                     <div class="stat-header">
                         <span class="icon">✍️</span>
                         <span class="label-md">Reviews Written</span>
                     </div>
-                    <h2 class="display-lg stat-number" id="reviews-written">24</h2>
-                    <p class="stat-desc">Top 5% of contributors</p>
+                    <h2 class="display-lg stat-number" id="reviews-written">00</h2>
+                    <p class="stat-desc">From your account</p>
                 </div>
                 <div class="stat-card">
                     <div class="stat-header">
                         <span class="icon">✨</span>
-                        <span class="label-md">Available Credits</span>
+                        <span class="label-md">Borrowing headroom</span>
                     </div>
-                    <h2 class="display-lg stat-number" id="available-credits">12</h2>
-                    <p class="stat-desc">Valid until end of month</p>
+                    <h2 class="display-lg stat-number" id="available-credits">00</h2>
+                    <p class="stat-desc">Fewer active loans leaves more room to borrow</p>
                 </div>
             </section>
 
             <section class="reading-section">
                 <div class="section-header">
-                    <h3 class="headline-md">Currently Reading</h3>
-                    <a href="#" class="label-md view-link">View Archive</a>
+                    <h3 class="headline-md">Currently reading</h3>
+                    <a href="borrowedBooks.html" class="label-md view-link">My borrowed books</a>
                 </div>
 
-                <div class="books-grid">
-                    <div class="book-card card ghost-border">
-                        <div class="book-cover">
-                            <img src="../static/images/covers/book-cover-1.png" alt="The Architecture of Happiness" class="cover-image">
-                        </div>
-                        <div class="book-info">
-                            <p class="label-md category">Essays & Philosophy</p>
-                            <h4 class="title-lg">The Architecture of Happiness</h4>
-                            <p class="body-lg author">Alain de Botton</p>
-                            <div class="progress-container">
-                                <div class="progress-bar" data-progress="66"></div>
-                            </div>
-                            <div class="progress-text">
-                                <span>Page 142 of 218</span>
-                                <strong>66% Complete</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-card card ghost-border">
-                        <div class="book-cover">
-                            <img src="../static/images/covers/book-cover-2.png" alt="Meditations" class="cover-image">
-                        </div>
-                        <div class="book-info">
-                            <p class="label-md category">Classic Literature</p>
-                            <h4 class="title-lg">Meditations</h4>
-                            <p class="body-lg author">Marcus Aurelius</p>
-                            <div class="progress-container">
-                                <div class="progress-bar" data-progress="20"></div>
-                            </div>
-                            <div class="progress-text">
-                                <span>Book II of XII</span>
-                                <strong>20% Complete</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="books-grid"></div>
             </section>
 
             <section class="curated-section">
-                <h3 class="headline-md">Curated for Your Collection</h3>
-                
+                <h3 class="headline-md">Discover more</h3>
+
                 <div class="curated-grid">
                     <div class="curated-main card">
-                        <p class="label-md">Monthly Focus</p>
-                        <h2 class="display-lg curated-title">The Renaissance of Italian Typographic Design</h2>
-                        <button class="btn btn-primary white-btn">Explore Feature</button>
+                        <p class="label-md">Catalog</p>
+                        <h2 class="display-lg curated-title">Browse the full ShelfSync collection</h2>
+                        <button type="button" class="btn btn-primary white-btn" id="dash-browse-catalog">Browse catalog</button>
                     </div>
 
                     <div class="curated-side">
-                        <div class="side-card card ghost-border surprise-card">
+                        <button type="button" class="side-card card ghost-border surprise-card" id="dash-surprise">
                             <span class="icon">🔍</span>
-                            <h4 class="title-lg">Surprise Me</h4>
-                            <p>Let the algorithm pick your next read</p>
-                        </div>
-                        <div class="side-card card club-card">
+                            <h4 class="title-lg">Pick for me</h4>
+                            <p>Open the catalog and explore</p>
+                        </button>
+                        <a href="myProfile.html" class="side-card card club-card" style="text-decoration:none;color:inherit;">
                             <span class="icon">🎖️</span>
-                            <h4 class="title-lg">Archivist Club</h4>
-                            <p>Exclusive first edition access</p>
-                        </div>
+                            <h4 class="title-lg">Account</h4>
+                            <p>Profile &amp; settings</p>
+                        </a>
                     </div>
                 </div>
             </section>

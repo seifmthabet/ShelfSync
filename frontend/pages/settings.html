@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | ShelfSync</title>
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/pages/myProfile.css">
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="navbar__inner">
+      <span class="navbar__brand" id="navbar__brand">ShelfSync</span>
+      <div class="navbar__links">
+        <a href="../index.html">Home</a>
+        <a href="searchBooks.html">Browse</a>
+        <a href="userDashboard.html">Dashboard</a>
+        <a href="myProfile.html">Profile</a>
+        <a href="settings.html" style="color: var(--ink);">Settings</a>
+      </div>
+      <div class="navbar__actions">
+        <button class="btn-login" type="button" id="btn-logout">Logout</button>
+        <div class="navbar__avatar"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <h1 class="hero__title">Settings</h1>
+      <p class="hero__subtitle">Connection details and account shortcuts</p>
+    </section>
+
+    <div class="profile-layout">
+      <section class="profile-card">
+        <div class="profile-card__header">
+          <h2 class="profile-card__title">Application</h2>
+        </div>
+        <div class="profile-info">
+          <div class="info-row">
+            <span class="info-label">API base URL</span>
+            <span class="info-value"><code id="st-api-base">—</code></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Signed in as</span>
+            <span class="info-value" id="st-email">—</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-card">
+        <div class="profile-card__header">
+          <h2 class="profile-card__title">Account</h2>
+        </div>
+        <p class="hero__subtitle" style="margin:0 0 16px;font-size:14px;">Update your name, password, and preferences from your profile page.</p>
+        <div class="form-actions" style="display:flex;flex-wrap:wrap;gap:12px;">
+          <a class="btn btn-primary" href="myProfile.html">Open profile</a>
+          <a class="btn btn-ghost" href="borrowedBooks.html">Borrowed books</a>
+          <a class="btn btn-ghost" id="st-admin-link" href="adminDashboard.html" style="display:none;">Admin console</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="footer__brand">ShelfSync</span>
+        <p class="footer__copy">&copy; 2026 ShelfSync. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../static/js/pages/settings.js"></script>
+</body>
+
+</html>

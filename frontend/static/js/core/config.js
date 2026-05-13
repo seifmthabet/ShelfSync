@@ -63,6 +63,10 @@ export function hrefPage(name) {
     readingHistory: p("readingHistory.html"),
     about: p("about.html"),
     howItWorks: p("how-it-works.html"),
+    adminBookForm: p("adminBookForm.html"),
+    adminProfile: p("adminProfile.html"),
+    adminSettings: p("adminSettings.html"),
+    settings: p("settings.html"),
   };
   return map[name] ?? "#";
 }

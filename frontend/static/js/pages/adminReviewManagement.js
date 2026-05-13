@@ -3,11 +3,7 @@ import { domHelper } from "../utils/domHelper.js";
 import { formatters } from "../utils/formatters.js";
 import { Auth } from "../core/auth.js";
 import { hrefPage } from "../core/config.js";
-
-const adminDashboardButton = document.getElementById("admin-dashboard");
-adminDashboardButton?.addEventListener("click", () => {
-  window.location.href = "adminDashboard.html";
-});
+import { wireAdminLogout } from "../core/adminNav.js";
 
 // ══════════════════════════════════════════
 //  State
@@ -42,7 +38,14 @@ const THUMB_COLOURS = [
   "#b06a5a","#6a8aaa","#a07060","#608070",
 ];
 function thumbColour(id) {
-  return THUMB_COLOURS[id % THUMB_COLOURS.length];
+  let n = 0;
+  if (typeof id === "number" && !Number.isNaN(id)) {
+    n = Math.abs(id);
+  } else if (id != null) {
+    const s = String(id);
+    for (let i = 0; i < s.length; i++) n += s.charCodeAt(i);
+  }
+  return THUMB_COLOURS[n % THUMB_COLOURS.length];
 }
 
 // ══════════════════════════════════════════
@@ -137,15 +140,15 @@ function renderTable() {
 
   // Attach delete listeners
   tbody.querySelectorAll(".delete-btn[data-id]").forEach((btn) => {
-    btn.addEventListener("click", () => handleDelete(Number(btn.dataset.id)));
+    btn.addEventListener("click", () => handleDelete(btn.dataset.id));
   });
 
   // Attach approve / reject listeners
   tbody.querySelectorAll(".btn-approve[data-id]").forEach((btn) => {
-    btn.addEventListener("click", () => handleApprove(Number(btn.dataset.id)));
+    btn.addEventListener("click", () => handleApprove(btn.dataset.id));
   });
   tbody.querySelectorAll(".btn-reject[data-id]").forEach((btn) => {
-    btn.addEventListener("click", () => handleReject(Number(btn.dataset.id)));
+    btn.addEventListener("click", () => handleReject(btn.dataset.id));
   });
 }
 
@@ -252,7 +255,7 @@ async function handleDelete(reviewId) {
   try {
     // ReviewsService doesn't expose a delete endpoint; we use reject as the closest admin action.
     await ReviewsService.rejectReview(reviewId);
-    state.allReviews = state.allReviews.filter((r) => r.id !== reviewId);
+    state.allReviews = state.allReviews.filter((r) => String(r.id) !== String(reviewId));
     applyFilters();
   } catch (err) {
     console.error("Failed to delete review:", err);
@@ -263,7 +266,7 @@ async function handleDelete(reviewId) {
 async function handleApprove(reviewId) {
   try {
     await ReviewsService.approveReview(reviewId);
-    const review = state.allReviews.find((r) => r.id === reviewId);
+    const review = state.allReviews.find((r) => String(r.id) === String(reviewId));
     if (review) review.status = "approved";
     renderTable();
     updateStats();
@@ -276,7 +279,7 @@ async function handleApprove(reviewId) {
 async function handleReject(reviewId) {
   try {
     await ReviewsService.rejectReview(reviewId);
-    const review = state.allReviews.find((r) => r.id === reviewId);
+    const review = state.allReviews.find((r) => String(r.id) === String(reviewId));
     if (review) review.status = "rejected";
     renderTable();
     updateStats();
@@ -419,5 +422,6 @@ domHelper.ready(() => {
   initFilterTabs();
   initSearch();
   initExport();
+  wireAdminLogout();
   loadReviews();
 });

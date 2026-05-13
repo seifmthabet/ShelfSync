@@ -1,6 +1,7 @@
 import { Auth } from "../core/auth.js";
 import { borrowService } from "../services/borrowService.js";
 import { usersService } from "../services/usersService.js";
+import { hrefPage } from "../core/config.js";
 
 function daysUntil(dateStr) {
   const d = new Date(dateStr);
@@ -35,7 +36,7 @@ function renderActiveLoans(loans) {
   if (!grid) return;
 
   if (!loans.length) {
-    grid.innerHTML = `<p class="body-lg" style="padding:1rem;">No active loans. <a href="searchBooks.html">Browse the catalog</a>.</p>`;
+    grid.innerHTML = `<p class="body-lg" style="padding:1rem;">No active loans. <a href="${hrefPage("searchBooks")}">Browse the catalog</a>.</p>`;
     return;
   }
 
@@ -61,7 +62,7 @@ function renderActiveLoans(loans) {
             </div>
             <div class="progress-text">
               <span>Due ${new Date(loan.due_date).toLocaleDateString()}</span>
-              <strong><a href="borrowedBooks.html">Manage loan</a></strong>
+              <strong><a href="${hrefPage("borrowedBooks")}">Manage loan</a></strong>
             </div>
           </div>
         </div>`;
@@ -84,11 +85,11 @@ async function renewFirstDueLoan(loans) {
 
 async function bootstrap() {
   if (!Auth.isAuthenticated()) {
-    window.location.href = "loginPage.html";
+    window.location.href = hrefPage("login");
     return;
   }
   if (Auth.isAdmin()) {
-    window.location.href = "adminDashboard.html";
+    window.location.href = hrefPage("adminDashboard");
     return;
   }
 
@@ -167,37 +168,45 @@ function bindRenewButtonOnce() {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".top-nav strong")?.addEventListener("click", () => {
-    window.location.href = "../index.html";
+    window.location.href = hrefPage("home");
+  });
+
+  document.getElementById("dash-browse-catalog")?.addEventListener("click", () => {
+    window.location.href = hrefPage("searchBooks");
+  });
+  document.getElementById("dash-surprise")?.addEventListener("click", () => {
+    window.location.href = hrefPage("searchBooks");
   });
 
   const links = document.querySelectorAll(".ul-Main a");
   links.forEach((a) => {
     const t = (a.textContent || "").trim();
-    if (t === "Dashboard") a.href = "userDashboard.html";
-    if (t === "Library" || t.includes("Library")) a.href = "searchBooks.html";
-    if (t === "Reviews") a.href = "writeReview.html";
-    if (t === "History") a.href = "readingHistory.html";
+    if (t === "Dashboard") a.href = hrefPage("userDashboard");
+    if (t === "Library" || t.includes("Library")) a.href = hrefPage("searchBooks");
+    if (t === "Reviews") a.href = hrefPage("writeReview");
+    if (t === "History") a.href = hrefPage("readingHistory");
+  });
+
+  document.querySelectorAll(".top-nav .nav-links a").forEach((a) => {
+    const t = (a.textContent || "").trim();
+    if (t === "Browse" || t === "Catalog") a.href = hrefPage("searchBooks");
+    if (t === "About") a.href = hrefPage("about");
   });
 
   const viewArchive = document.querySelector(".view-link");
   if (viewArchive) {
-    viewArchive.href = "borrowedBooks.html";
+    viewArchive.href = hrefPage("borrowedBooks");
     viewArchive.textContent = "My borrowed books";
   }
 
-  const topBrowse = document.querySelector(".top-nav .nav-links a");
-  if (topBrowse && topBrowse.textContent.includes("Browse")) {
-    topBrowse.href = "searchBooks.html";
-  }
-
-  const topLogin = document.querySelector(".top-nav .nav-auth a");
-  if (topLogin && topLogin.textContent.includes("Login")) {
-    topLogin.textContent = "Logout";
-    topLogin.href = "#";
-    topLogin.addEventListener("click", (e) => {
+  const topAuth = document.getElementById("top-auth-link");
+  if (topAuth) {
+    topAuth.textContent = "Logout";
+    topAuth.href = "#";
+    topAuth.addEventListener("click", (e) => {
       e.preventDefault();
-      Auth.logout();
-      window.location.href = "loginPage.html";
+      Auth.logout({ redirect: false });
+      window.location.href = hrefPage("login");
     });
   }
 

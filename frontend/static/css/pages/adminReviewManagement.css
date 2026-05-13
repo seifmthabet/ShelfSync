@@ -96,6 +96,21 @@ body {
     gap: 1px;
 }
 
+.sidebar__nav ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar__nav a.sidebar__nav-item {
+    text-decoration: none;
+    color: inherit;
+}
+
+.sidebar__nav-btn.sidebar__nav-item {
+    width: 100%;
+}
+
 .sidebar__nav-item {
     display: flex;
     align-items: center;

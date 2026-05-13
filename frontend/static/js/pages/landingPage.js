@@ -4,7 +4,6 @@ import { Auth } from "../core/auth.js";
 
 const loginButton = document.getElementById("login-button");
 const signupButton = document.getElementById("signup-button");
-const exploreAnchors = document.querySelectorAll('a[href*="searchBooks"]');
 
 function wireNavAuth() {
   if (loginButton) {
@@ -36,13 +35,6 @@ function wireNavAuth() {
     }
   }
 }
-
-exploreAnchors.forEach((a) => {
-  a.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.location.href = "pages/searchBooks.html";
-  });
-});
 
 const state = {
   newArrivals: [],

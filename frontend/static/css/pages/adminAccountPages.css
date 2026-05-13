@@ -1,0 +1,57 @@
+.admin-account-card {
+  background: var(--color-surface-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+
+.admin-account-card h2 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  margin: 0 0 14px;
+}
+
+.admin-account-dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.admin-account-dl > div {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.admin-account-dl dt {
+  margin: 0;
+  color: var(--color-secondary);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.admin-account-dl dd {
+  margin: 0;
+  word-break: break-word;
+}
+
+.admin-account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.admin-account-actions a.btn {
+  text-decoration: none;
+  align-self: center;
+}
+
+@media (max-width: 600px) {
+  .admin-account-dl > div {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,10 +1,15 @@
-from rest_framework import filters, permissions, viewsets
+from rest_framework import filters, generics, permissions, viewsets
 from rest_framework.generics import ListAPIView
 
 from apps.accounts.permissions import IsAdmin
 from apps.books.filters import BookFilter
-from apps.books.models import Book
-from apps.books.serializers import BookDetailSerializer, BookListSerializer, BookWriteSerializer
+from apps.books.models import Book, Category
+from apps.books.serializers import (
+    BookDetailSerializer,
+    BookListSerializer,
+    BookWriteSerializer,
+    CategoryListSerializer,
+)
 from apps.reviews.models import Review
 from apps.reviews.serializers import BookReviewPublicSerializer
 from django_filters.rest_framework import DjangoFilterBackend
@@ -39,6 +44,13 @@ class BookViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         instance.is_active = False
         instance.save(update_fields=["is_active"])
+
+
+class CategoryListView(generics.ListAPIView):
+    queryset = Category.objects.all().order_by("name")
+    serializer_class = CategoryListSerializer
+    permission_classes = [permissions.AllowAny]
+    pagination_class = None
 
 
 class BookReviewListView(ListAPIView):

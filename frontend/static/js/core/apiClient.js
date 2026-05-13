@@ -98,7 +98,7 @@ export const request = async (path, { method = "GET", body, query, headers = {},
     if (error?.status === 401 && authRequired) {
       const refreshed = await refreshAccessToken();
       if (!refreshed) {
-        Auth.logout();
+        Auth.logout({ redirect: false });
         throw new Error("Session expired. Please log in again.");
       }
 
