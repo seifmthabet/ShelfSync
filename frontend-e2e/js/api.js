@@ -2,8 +2,18 @@
   var TIMEOUT_MS = 20000;
 
   function joinUrl(path) {
-    var base = S.API_BASE.replace(/\/?$/, "/");
+    var base = String(S.API_BASE || "").trim();
     var p = String(path || "").replace(/^\//, "");
+    if (base.indexOf("://") === -1) {
+      if (typeof window === "undefined" || !window.location) {
+        throw new Error("Relative API_BASE requires a browser (window.location).");
+      }
+      if (!base.startsWith("/")) {
+        base = "/" + base;
+      }
+      base = window.location.origin + base;
+    }
+    base = base.replace(/\/?$/, "/");
     return base + p;
   }
 
@@ -22,6 +32,9 @@
     if (typeof body !== "object" || body === null) return null;
     if (typeof body.detail === "string") return body.detail;
     if (Array.isArray(body.detail)) return body.detail.map(String).join(", ");
+    if (Array.isArray(body.non_field_errors) && body.non_field_errors.length) {
+      return String(body.non_field_errors[0]);
+    }
     var keys = Object.keys(body);
     if (keys.length) {
       var first = keys[0];

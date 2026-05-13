@@ -23,6 +23,19 @@ class BorrowRequestCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = BorrowRequestCreateSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        # Input serializer only exposes book_id; return the saved row so clients get id/status.
+        out = BorrowRequestSerializer(serializer.instance)
+        data = out.data
+        return Response(
+            data,
+            status=status.HTTP_201_CREATED,
+            headers=self.get_success_headers(data),
+        )
+
 
 class MyBorrowRequestsView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]

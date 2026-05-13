@@ -1,10 +1,27 @@
 /**
  * Plain browser JavaScript only — no frameworks, no bundler, no ES modules.
- * Serve this folder over HTTP. Add your origin to Django `CORS_ALLOWED_ORIGINS`.
+ *
+ * API_BASE is chosen automatically when possible:
+ * - Same host as Django (port 8000, or URL under /app/…) → "/api/v1/" (same origin, no CORS).
+ * - Otherwise (e.g. Live Server) → "http://127.0.0.1:8000/api/v1/".
+ * Override after load if needed: window.ShelfSync.API_BASE = "https://your-api.example.com/api/v1/";
  */
 window.ShelfSync = window.ShelfSync || {};
 
-window.ShelfSync.API_BASE = "http://127.0.0.1:8000/api/v1/";
+(function () {
+  var loc = typeof location !== "undefined" ? location : null;
+  if (
+    loc &&
+    loc.protocol !== "file:" &&
+    (loc.port === "8000" ||
+      loc.pathname === "/app" ||
+      (loc.pathname && loc.pathname.indexOf("/app/") === 0))
+  ) {
+    window.ShelfSync.API_BASE = "/api/v1/";
+  } else {
+    window.ShelfSync.API_BASE = "http://127.0.0.1:8000/api/v1/";
+  }
+})();
 
 window.ShelfSync.ROUTES = {
   home: "index.html",

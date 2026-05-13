@@ -19,6 +19,9 @@ from django.utils.log import DEFAULT_LOGGING
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Plain HTML/JS client at repo root (served from Django in DEBUG — see config.urls).
+FRONTEND_E2E_DIR = BASE_DIR.parent / "frontend-e2e"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -29,7 +32,11 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-343vs2d03z$-9abdaov^=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=Csv())
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    default="127.0.0.1,localhost,testserver",
+    cast=Csv(),
+)
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -220,7 +227,13 @@ SPECTACULAR_SETTINGS = {
 
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
-    default="http://127.0.0.1:5500,http://localhost:5500",
+    default=(
+        "http://127.0.0.1:5500,http://localhost:5500,"
+        "http://127.0.0.1:8000,http://localhost:8000,"
+        "http://127.0.0.1:8080,http://localhost:8080,"
+        "http://127.0.0.1:5173,http://localhost:5173,"
+        "http://127.0.0.1:4173,http://localhost:4173"
+    ),
     cast=Csv(),
 )
 
