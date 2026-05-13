@@ -1,179 +1,230 @@
 import { domHelper } from "../utils/domHelper.js";
 import { Auth } from "../core/auth.js";
+import { Storage } from "../core/storage.js";
+import { usersService } from "../services/usersService.js";
 
-// Navigation
 const homeButton = document.getElementById("navbar__brand");
-homeButton.addEventListener("click", () => {
-    window.location.href = "../index.html";
+homeButton?.addEventListener("click", () => {
+  window.location.href = "../index.html";
 });
 
 const logoutButton = document.getElementById("btn-logout");
-logoutButton.addEventListener("click", () => {
-    Auth.logout();
-    window.location.href = "loginPage.html";
+logoutButton?.addEventListener("click", () => {
+  Auth.logout();
+  window.location.href = "loginPage.html";
 });
 
-// UI Elements
 const ui = {
-    userName: domHelper.query("#userName"),
-    userEmail: domHelper.query("#userEmail"),
-    memberSince: domHelper.query("#memberSince"),
-    userRole: domHelper.query("#userRole"),
-    favoriteGenres: domHelper.query("#favoriteGenres"),
-    notifications: domHelper.query("#notifications"),
-    readingGoal: domHelper.query("#readingGoal"),
+  userName: domHelper.query("#userName"),
+  userEmail: domHelper.query("#userEmail"),
+  memberSince: domHelper.query("#memberSince"),
+  userRole: domHelper.query("#userRole"),
+  favoriteGenres: domHelper.query("#favoriteGenres"),
+  notifications: domHelper.query("#notifications"),
+  readingGoal: domHelper.query("#readingGoal"),
 
-    editPersonalBtn: domHelper.query("#editPersonalBtn"),
-    editPersonalForm: domHelper.query("#editPersonalForm"),
-    personalInfo: domHelper.query("#personalInfo"),
-    editNameInput: domHelper.query("#editName"),
-    editEmailInput: domHelper.query("#editEmail"),
-    cancelPersonal: domHelper.query("#cancelPersonal"),
+  editPersonalBtn: domHelper.query("#editPersonalBtn"),
+  editPersonalForm: domHelper.query("#editPersonalForm"),
+  personalInfo: domHelper.query("#personalInfo"),
+  editNameInput: domHelper.query("#editName"),
+  editEmailInput: domHelper.query("#editEmail"),
+  cancelPersonal: domHelper.query("#cancelPersonal"),
 
-    changePasswordBtn: domHelper.query("#changePasswordBtn"),
-    changePasswordForm: domHelper.query("#changePasswordForm"),
-    oldPasswordInput: domHelper.query("#oldPassword"),
-    newPasswordInput: domHelper.query("#newPassword"),
-    confirmPasswordInput: domHelper.query("#confirmPassword"),
-    cancelPassword: domHelper.query("#cancelPassword"),
+  changePasswordBtn: domHelper.query("#changePasswordBtn"),
+  changePasswordForm: domHelper.query("#changePasswordForm"),
+  oldPasswordInput: domHelper.query("#oldPassword"),
+  newPasswordInput: domHelper.query("#newPassword"),
+  confirmPasswordInput: domHelper.query("#confirmPassword"),
+  cancelPassword: domHelper.query("#cancelPassword"),
 
-    editPreferencesBtn: domHelper.query("#editPreferencesBtn"),
-    editPreferencesForm: domHelper.query("#editPreferencesForm"),
-    preferencesInfo: domHelper.query("#preferencesInfo"),
-    genresInput: domHelper.query("#genres"),
-    readingGoalInput: domHelper.query("#readingGoalInput"),
-    emailNotifications: domHelper.query("#emailNotifications"),
-    cancelPreferences: domHelper.query("#cancelPreferences"),
+  editPreferencesBtn: domHelper.query("#editPreferencesBtn"),
+  editPreferencesForm: domHelper.query("#editPreferencesForm"),
+  preferencesInfo: domHelper.query("#preferencesInfo"),
+  genresInput: domHelper.query("#genres"),
+  readingGoalInput: domHelper.query("#readingGoalInput"),
+  emailNotifications: domHelper.query("#emailNotifications"),
+  cancelPreferences: domHelper.query("#cancelPreferences"),
 
-    enable2FABtn: domHelper.query("#enable2FABtn"),
-    deleteAccountBtn: domHelper.query("#deleteAccountBtn"),
+  enable2FABtn: domHelper.query("#enable2FABtn"),
+  deleteAccountBtn: domHelper.query("#deleteAccountBtn"),
 };
 
-// Initialize
-document.addEventListener("DOMContentLoaded", async () => {
-    if (!Auth.isAuthenticated()) {
-        window.location.href = "loginPage.html";
-        return;
-    }
-    loadProfileData();
-    setupEventListeners();
-});
+function formatMemberSince(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+}
 
-// Load profile data
+function genresToDisplay(genres) {
+  if (!genres) return "Not set";
+  if (Array.isArray(genres)) return genres.length ? genres.join(", ") : "Not set";
+  if (typeof genres === "string") return genres.trim() || "Not set";
+  return "Not set";
+}
+
+function applyUserToUI(user) {
+  if (!user) return;
+  if (ui.userName) ui.userName.textContent = user.name || "Not set";
+  if (ui.userEmail) ui.userEmail.textContent = user.email || "Not set";
+  if (ui.memberSince) ui.memberSince.textContent = formatMemberSince(user.date_joined);
+  const role = user.role || "";
+  if (ui.userRole) {
+    ui.userRole.textContent =
+      role === "ADMIN" || role === "admin" ? "Administrator" : "Reader";
+  }
+  if (ui.favoriteGenres) ui.favoriteGenres.textContent = genresToDisplay(user.favorite_genres);
+  if (ui.readingGoal) {
+    ui.readingGoal.textContent = user.reading_goal_per_year
+      ? `${user.reading_goal_per_year} books/year`
+      : "Not set";
+  }
+  if (ui.notifications) {
+    ui.notifications.textContent =
+      user.email_notifications === false ? "Email disabled" : "Email enabled";
+  }
+}
+
 async function loadProfileData() {
-    try {
-        // Mock data for now - replace with API call
-        const userData = Auth.getUser() || {
-            id: "1",
-            name: "John Doe",
-            email: "john@example.com",
-            role: "user",
-        };
-
-        ui.userName.textContent = userData.name || "Not set";
-        ui.userEmail.textContent = userData.email || "Not set";
-        ui.memberSince.textContent = "January 2024";
-        ui.userRole.textContent = userData.role === "admin" ? "Administrator" : "User";
-
-        // Default preferences
-        ui.favoriteGenres.textContent = "Not set";
-        ui.notifications.textContent = "Email enabled";
-        ui.readingGoal.textContent = "12 books/year";
-    } catch (error) {
-        console.error("Error loading profile:", error);
-    }
+  try {
+    const userData = await usersService.getProfile();
+    Storage.setUser(userData);
+    applyUserToUI(userData);
+  } catch (error) {
+    console.error("Error loading profile:", error);
+    applyUserToUI(Auth.getCurrentUser());
+  }
 }
 
-// Setup event listeners
 function setupEventListeners() {
-    // Personal Info
-    ui.editPersonalBtn?.addEventListener("click", () => {
-        ui.personalInfo.style.display = "none";
-        ui.editPersonalForm.style.display = "flex";
-        ui.editNameInput.value = ui.userName.textContent;
-        ui.editEmailInput.value = ui.userEmail.textContent;
-    });
+  ui.editPersonalBtn?.addEventListener("click", () => {
+    ui.personalInfo.style.display = "none";
+    ui.editPersonalForm.style.display = "flex";
+    ui.editNameInput.value = ui.userName.textContent;
+    ui.editEmailInput.value = ui.userEmail.textContent;
+  });
 
-    ui.cancelPersonal?.addEventListener("click", () => {
-        ui.personalInfo.style.display = "block";
-        ui.editPersonalForm.style.display = "none";
-    });
+  ui.cancelPersonal?.addEventListener("click", () => {
+    ui.personalInfo.style.display = "block";
+    ui.editPersonalForm.style.display = "none";
+  });
 
-    ui.editPersonalForm?.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        // TODO: Make API call to update profile
-        ui.userName.textContent = ui.editNameInput.value;
-        ui.userEmail.textContent = ui.editEmailInput.value;
-        ui.personalInfo.style.display = "block";
-        ui.editPersonalForm.style.display = "none";
-        alert("Profile updated successfully!");
-    });
+  ui.editPersonalForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+      const updated = await usersService.updateProfile({
+        name: ui.editNameInput.value.trim(),
+      });
+      Storage.setUser(updated);
+      applyUserToUI(updated);
+      ui.personalInfo.style.display = "block";
+      ui.editPersonalForm.style.display = "none";
+      alert("Profile updated successfully!");
+    } catch (err) {
+      alert(err?.message || "Update failed.");
+    }
+  });
 
-    // Change Password
-    ui.changePasswordBtn?.addEventListener("click", () => {
-        ui.changePasswordForm.style.display = "flex";
-    });
+  ui.changePasswordBtn?.addEventListener("click", () => {
+    ui.changePasswordForm.style.display = "flex";
+  });
 
-    ui.cancelPassword?.addEventListener("click", () => {
-        ui.changePasswordForm.style.display = "none";
-        ui.oldPasswordInput.value = "";
-        ui.newPasswordInput.value = "";
-        ui.confirmPasswordInput.value = "";
-    });
+  ui.cancelPassword?.addEventListener("click", () => {
+    ui.changePasswordForm.style.display = "none";
+    ui.oldPasswordInput.value = "";
+    ui.newPasswordInput.value = "";
+    ui.confirmPasswordInput.value = "";
+  });
 
-    ui.changePasswordForm?.addEventListener("submit", async (e) => {
-        e.preventDefault();
+  ui.changePasswordForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (ui.newPasswordInput.value !== ui.confirmPasswordInput.value) {
+      alert("Passwords do not match!");
+      return;
+    }
+    try {
+      await usersService.changePassword({
+        old_password: ui.oldPasswordInput.value,
+        new_password: ui.newPasswordInput.value,
+      });
+      alert("Password changed successfully!");
+      ui.changePasswordForm.style.display = "none";
+      ui.oldPasswordInput.value = "";
+      ui.newPasswordInput.value = "";
+      ui.confirmPasswordInput.value = "";
+    } catch (err) {
+      alert(err?.message || "Password change failed.");
+    }
+  });
 
-        if (ui.newPasswordInput.value !== ui.confirmPasswordInput.value) {
-            alert("Passwords do not match!");
-            return;
-        }
+  ui.editPreferencesBtn?.addEventListener("click", async () => {
+    let u = Auth.getCurrentUser();
+    try {
+      u = await usersService.getProfile();
+    } catch {
+      /* use cached */
+    }
+    ui.preferencesInfo.style.display = "none";
+    ui.editPreferencesForm.style.display = "flex";
+    ui.genresInput.value = genresToDisplay(u?.favorite_genres);
+    if (u?.reading_goal_per_year) ui.readingGoalInput.value = String(u.reading_goal_per_year);
+    if (ui.emailNotifications) ui.emailNotifications.checked = u?.email_notifications !== false;
+  });
 
-        // TODO: Make API call to change password
-        alert("Password changed successfully!");
-        ui.changePasswordForm.style.display = "none";
-        ui.oldPasswordInput.value = "";
-        ui.newPasswordInput.value = "";
-        ui.confirmPasswordInput.value = "";
-    });
+  ui.cancelPreferences?.addEventListener("click", () => {
+    ui.preferencesInfo.style.display = "block";
+    ui.editPreferencesForm.style.display = "none";
+  });
 
-    // Preferences
-    ui.editPreferencesBtn?.addEventListener("click", () => {
-        ui.preferencesInfo.style.display = "none";
-        ui.editPreferencesForm.style.display = "flex";
-        ui.genresInput.value = "Science Fiction, Mystery";
-        ui.readingGoalInput.value = "12";
-    });
+  ui.editPreferencesForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const raw = ui.genresInput.value.trim();
+    const favorite_genres = raw
+      ? raw.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+    const reading_goal_per_year = parseInt(ui.readingGoalInput.value, 10) || null;
+    const email_notifications = ui.emailNotifications?.checked ?? true;
+    try {
+      const updated = await usersService.updateProfile({
+        favorite_genres,
+        reading_goal_per_year,
+        email_notifications,
+      });
+      Storage.setUser(updated);
+      applyUserToUI(updated);
+      ui.preferencesInfo.style.display = "block";
+      ui.editPreferencesForm.style.display = "none";
+      alert("Preferences saved successfully!");
+    } catch (err) {
+      alert(err?.message || "Save failed.");
+    }
+  });
 
-    ui.cancelPreferences?.addEventListener("click", () => {
-        ui.preferencesInfo.style.display = "block";
-        ui.editPreferencesForm.style.display = "none";
-    });
+  ui.enable2FABtn?.addEventListener("click", () => {
+    alert("Two-factor authentication setup coming soon!");
+  });
 
-    ui.editPreferencesForm?.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        ui.favoriteGenres.textContent = ui.genresInput.value || "Not set";
-        ui.readingGoal.textContent = `${ui.readingGoalInput.value} books/year` || "Not set";
-        ui.notifications.textContent = ui.emailNotifications.checked ? "Email enabled" : "Email disabled";
-        ui.preferencesInfo.style.display = "block";
-        ui.editPreferencesForm.style.display = "none";
-        // TODO: Make API call to save preferences
-        alert("Preferences saved successfully!");
-    });
-
-    // 2FA
-    ui.enable2FABtn?.addEventListener("click", () => {
-        alert("Two-factor authentication setup coming soon!");
-    });
-
-    // Delete Account
-    ui.deleteAccountBtn?.addEventListener("click", () => {
-        if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-            if (confirm("This is your final warning. Your account and all data will be permanently deleted.")) {
-                // TODO: Make API call to delete account
-                Auth.logout();
-                window.location.href = "loginPage.html";
-            }
-        }
-    });
+  ui.deleteAccountBtn?.addEventListener("click", async () => {
+    if (!confirm("Are you sure you want to delete your account? This deactivates your login.")) return;
+    if (!confirm("Final confirmation: deactivate this account?")) return;
+    try {
+      await usersService.deleteAccount();
+      Auth.logout({ redirect: false });
+      window.location.href = "loginPage.html";
+    } catch (err) {
+      alert(err?.message || "Could not deactivate account.");
+    }
+  });
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+  if (!Auth.isAuthenticated()) {
+    window.location.href = "loginPage.html";
+    return;
+  }
+  if (Auth.isAdmin()) {
+    window.location.href = "adminDashboard.html";
+    return;
+  }
+  await loadProfileData();
+  setupEventListeners();
+});

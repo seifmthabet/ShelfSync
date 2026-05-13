@@ -52,12 +52,13 @@ async function loadBook() {
   try {
     if (state.bookId) {
       const bookResponse = await booksService.getBookById(state.bookId);
-      state.book = bookResponse?.data || getMockBook();
+      state.book = bookResponse?.data ?? bookResponse ?? getMockBook();
 
       // Load reviews
       try {
         const reviewsResponse = await ReviewsService.getReviewsForBook(state.bookId);
-        state.reviews = reviewsResponse?.data || [];
+        const raw = reviewsResponse?.data ?? reviewsResponse?.results ?? reviewsResponse ?? [];
+        state.reviews = Array.isArray(raw) ? raw : [];
       } catch (error) {
         console.warn('Could not load reviews:', error);
         state.reviews = [];

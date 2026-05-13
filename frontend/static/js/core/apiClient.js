@@ -15,7 +15,15 @@ const withTimeout = (promise, timeout) => {
 }
 
 const buildUrl = (path, query) => {
-  const url = new URL(path, config.apiBaseUrl.toString());
+  const baseRaw = String(config.apiBaseUrl).trim();
+  const base = baseRaw.endsWith("/") ? baseRaw : `${baseRaw}/`;
+  let rel = path;
+  if (path.startsWith("/api/v1/")) {
+    rel = path.slice("/api/v1/".length);
+  } else if (path.startsWith("/")) {
+    rel = path.slice(1);
+  }
+  const url = new URL(rel, base);
   if (query && typeof query === 'object') {
     Object.entries(query).forEach(([key, value]) => {
       if (value !== undefined && value !== null) url.searchParams.set(key, String(value));
@@ -52,7 +60,7 @@ const refreshAccessToken = async () => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ refreshToken }),
+    body: JSON.stringify({ refresh: refreshToken }),
   });
 
   if (!response.ok) return false;
