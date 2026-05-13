@@ -230,9 +230,9 @@ class AccountsAPITests(APITestCase):
     def test_user_can_deactivate_own_account(self):
         self.authenticate_as_user()
 
-        response = self.client.post(reverse('deactivate-me'))
+        response = self.client.delete(reverse("me"))
 
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         self.user.refresh_from_db()
         self.assertFalse(self.user.is_active)

@@ -1,5 +1,6 @@
 import { usersService } from "../services/usersService.js";
 import { ROUTES } from "../core/config.js";
+import { Auth } from "../core/auth.js";
 
 import { validators } from "../utils/validators.js"
 import { domHelper } from "../utils/domHelper.js"
@@ -40,7 +41,10 @@ domHelper.ready(() => {
         domHelper.setText(loginMessage, 'Login successful! Redirecting...');
         domHelper.css(loginMessage, { color: 'green' });
         setTimeout(() => {
-          window.location.href = ROUTES.home;
+          const user = response.user || Auth.getCurrentUser();
+          const role = user?.role;
+          const isAdmin = role === "ADMIN" || role === "admin";
+          window.location.href = isAdmin ? ROUTES.adminDashboard : ROUTES.userDashboard;
         }, 1500);
       } else {
         domHelper.setText(loginMessage, response.message || 'Login failed. Please check your credentials.');

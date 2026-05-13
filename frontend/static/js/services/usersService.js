@@ -4,11 +4,11 @@ import { Storage } from "../core/storage.js"
 
 export const usersService = {
   register: (payload) => {
-    return apiClient.post("/api/v1/auth/register/", payload, { authRequired: false });
+    return apiClient.post("auth/register/", payload, { authRequired: false });
   },
 
   login: async (payload) => {
-    const data = await apiClient.post("/api/v1/auth/login/", payload, { authRequired: false });
+    const data = await apiClient.post("auth/login/", payload, { authRequired: false });
 
     Auth.saveSession({
       accessToken: data?.access,
@@ -21,7 +21,7 @@ export const usersService = {
   refresh: async () => {
     const refresh = Storage.getRefreshToken();
     const data = await apiClient.post(
-      "/api/v1/auth/token/refresh/",
+      "auth/token/refresh/",
       { refresh },
       { authRequired: false }
     );
@@ -37,25 +37,40 @@ export const usersService = {
     try {
       const refresh = Storage.getRefreshToken();
       if (refresh) {
-        await apiClient.post("/api/v1/auth/logout/", { refresh });
+        await apiClient.post("auth/logout/", { refresh });
       }
     } finally {
       Auth.logout({ redirect: false });
     }
   },
   getProfile: () => {
-    return apiClient.get("/api/v1/users/me/");
+    return apiClient.get("users/me/");
   },
   updateProfile: (payload) => {
-    return apiClient.patch("/api/v1/users/me/", payload);
+    return apiClient.patch("users/me/", payload);
   },
   listAdminUsers: (query = {}) => {
-    return apiClient.get("/api/v1/admin/users/", query);
+    return apiClient.get("admin/users/", query);
   },
   adminDashboard: () => {
-    return apiClient.get("/api/v1/admin/dashboard/")
+    return apiClient.get("admin/dashboard/");
   },
   getAllUsers : () => {
-    return apiClient.get("/api/v1/admin/users/");
-  }
+    return apiClient.get("admin/users/");
+  },
+  userDashboard: () => {
+    return apiClient.get("users/me/dashboard/");
+  },
+
+  changePassword: (payload) => {
+    return apiClient.post("users/me/change-password/", payload, { authRequired: true });
+  },
+
+  deleteAccount: () => {
+    return apiClient.delete("users/me/", {}, { authRequired: true });
+  },
+
+  patchAdminUser: (id, payload) => {
+    return apiClient.patch(`admin/users/${id}/`, payload, { authRequired: true });
+  },
 }

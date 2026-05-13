@@ -1,25 +1,35 @@
 import { booksService } from "../services/booksService.js";
+import { Auth } from "../core/auth.js";
 import { domHelper } from "../utils/domHelper.js";
 
 const homeButton = document.getElementById("navbar__brand");
-homeButton.addEventListener("click", () => {
-    window.location.href = "../index.html";
+homeButton?.addEventListener("click", () => {
+  window.location.href = "../index.html";
 });
 const loginButton = document.getElementById("btn-login");
-loginButton.addEventListener("click", () => {
+loginButton?.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (Auth.isAuthenticated()) {
+    window.location.href = Auth.isAdmin() ? "adminDashboard.html" : "userDashboard.html";
+  } else {
     window.location.href = "loginPage.html";
+  }
 });
 
 const profileButton = document.getElementById("btn-nav");
-if (profileButton) {
-    profileButton.addEventListener("click", () => {
-        window.location.href = "myProfile.html";
-    });
-}
+profileButton?.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (Auth.isAuthenticated()) {
+    window.location.href = "myProfile.html";
+  } else {
+    window.location.href = "loginPage.html";
+  }
+});
 
 const state = {
   books: [],
-  filtered: [],
+  totalCount: 0,
+  totalPages: 1,
   currentPage: 1,
   pageSize: 8,
   searchQuery: "",
@@ -43,22 +53,17 @@ function normalizeBook(book, index) {
   const category = book.category || book.genre || "General";
   const rating = Number(book.rating ?? book.stars ?? 5);
   const cover = book.cover || book.image || book.cover_url || book.img || "";
-  const availability = book.availability || fallbackAvailability(title, author);
+  const availability = book.availability || "In Stock";
 
   return {
     id: book.id ?? index + 1,
     title,
     author,
     category,
-    rating: isNaN(rating) ? 5 : rating,
+    rating: Number.isNaN(rating) ? 5 : rating,
     cover,
     availability,
   };
-}
-
-function fallbackAvailability(title, author) {
-  const hash = [...`${title}-${author}`].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  return hash % 2 === 0 ? "In Stock" : "Out of Stock";
 }
 
 function buildStars(rating) {
@@ -70,7 +75,7 @@ function buildStars(rating) {
 function buildBookCard(book) {
   const cover = book.cover || "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&q=80";
   return `
-    <article class="book-card">
+    <article class="book-card" data-book-id="${book.id}">
       <div class="book-card__img book-card__img--light">
         <img src="${cover}" alt="${book.title}">
       </div>
@@ -87,10 +92,7 @@ function buildBookCard(book) {
 function renderGrid() {
   if (!ui.grid) return;
 
-  const start = (state.currentPage - 1) * state.pageSize;
-  const pageBooks = state.filtered.slice(start, start + state.pageSize);
-
-  if (pageBooks.length === 0) {
+  if (state.books.length === 0) {
     ui.grid.innerHTML = `
       <div class="no-results">
         <p>No books found. Try a different search or filter.</p>
@@ -99,32 +101,14 @@ function renderGrid() {
     return;
   }
 
-  ui.grid.innerHTML = pageBooks.map(buildBookCard).join("");
+  ui.grid.innerHTML = state.books.map(buildBookCard).join("");
   renderPagination();
-}
-
-function applyFilters() {
-  state.filtered = state.books.filter((book) => {
-    const query = state.searchQuery.toLowerCase();
-    const matchesSearch =
-      book.title.toLowerCase().includes(query) ||
-      book.author.toLowerCase().includes(query) ||
-      book.category.toLowerCase().includes(query);
-
-    const matchesCategory = state.category === "All Collections" || book.category === state.category;
-    const matchesAvailability = state.availability === "All" || book.availability === state.availability;
-
-    return matchesSearch && matchesCategory && matchesAvailability;
-  });
-
-  state.currentPage = 1;
-  renderGrid();
 }
 
 function renderPagination() {
   if (!ui.pageNumbers || !ui.prevBtn || !ui.nextBtn) return;
 
-  const totalPages = Math.max(1, Math.ceil(state.filtered.length / state.pageSize));
+  const totalPages = state.totalPages;
   const current = Math.min(state.currentPage, totalPages);
 
   ui.prevBtn.disabled = current === 1;
@@ -138,8 +122,45 @@ function renderPagination() {
   ui.pageNumbers.querySelectorAll(".page-num").forEach((button) => {
     button.addEventListener("click", () => {
       state.currentPage = Number(button.dataset.page);
-      renderGrid();
+      fetchBooks();
     });
+  });
+}
+
+function buildQuery() {
+  const params = { page: state.currentPage, page_size: state.pageSize };
+  if (state.searchQuery) params.search = state.searchQuery;
+  if (state.category && state.category !== "All Collections") {
+    params.category = state.category;
+  }
+  if (state.availability === "In Stock") params.availability = "in_stock";
+  if (state.availability === "Out of Stock") params.availability = "out_of_stock";
+  return params;
+}
+
+async function fetchBooks() {
+  if (!ui.grid) return;
+  try {
+    const result = await booksService.getAllBooks(buildQuery());
+    const rawBooks = Array.isArray(result) ? result : result?.results ?? [];
+    state.books = rawBooks.map(normalizeBook);
+    state.totalCount = result.count ?? rawBooks.length;
+    state.totalPages = Math.max(1, Math.ceil(state.totalCount / state.pageSize));
+  } catch (error) {
+    console.error(error);
+    state.books = [];
+    state.totalCount = 0;
+    state.totalPages = 1;
+  }
+  renderGrid();
+}
+
+function setupGridNavigation() {
+  ui.grid?.addEventListener("click", (e) => {
+    const card = e.target.closest(".book-card[data-book-id]");
+    if (!card) return;
+    const id = card.getAttribute("data-book-id");
+    if (id) window.location.href = `bookDetails.html?id=${encodeURIComponent(id)}`;
   });
 }
 
@@ -150,8 +171,9 @@ function setupEvents() {
       clearTimeout(timer);
       timer = window.setTimeout(() => {
         state.searchQuery = ui.searchInput.value.trim();
-        applyFilters();
-      }, 250);
+        state.currentPage = 1;
+        fetchBooks();
+      }, 400);
     });
   }
 
@@ -159,18 +181,21 @@ function setupEvents() {
     const [categorySelect, availabilitySelect] = ui.selects;
     categorySelect.addEventListener("change", () => {
       state.category = categorySelect.value;
-      applyFilters();
+      state.currentPage = 1;
+      fetchBooks();
     });
     availabilitySelect.addEventListener("change", () => {
       state.availability = availabilitySelect.value;
-      applyFilters();
+      state.currentPage = 1;
+      fetchBooks();
     });
   }
 
   if (ui.refineBtn) {
     ui.refineBtn.addEventListener("click", (event) => {
       event.preventDefault();
-      applyFilters();
+      state.currentPage = 1;
+      fetchBooks();
       ui.searchInput?.focus();
     });
   }
@@ -179,61 +204,26 @@ function setupEvents() {
     ui.prevBtn.addEventListener("click", () => {
       if (state.currentPage > 1) {
         state.currentPage -= 1;
-        renderGrid();
+        fetchBooks();
       }
     });
   }
 
   if (ui.nextBtn) {
     ui.nextBtn.addEventListener("click", () => {
-      const totalPages = Math.max(1, Math.ceil(state.filtered.length / state.pageSize));
-      if (state.currentPage < totalPages) {
+      if (state.currentPage < state.totalPages) {
         state.currentPage += 1;
-        renderGrid();
+        fetchBooks();
       }
     });
   }
 }
 
-function parseStaticCards() {
-  const cards = Array.from(domHelper.queryAll(".main-grid .book-card"));
-  return cards.map((card, index) => {
-    const title = domHelper.query(".book-title", card)?.textContent?.trim() || "Untitled";
-    const author = domHelper.query(".book-author", card)?.textContent?.trim() || "Unknown Author";
-    const category = domHelper.query(".book-genre", card)?.textContent?.trim() || "General";
-    const starText = domHelper.query(".book-stars", card)?.textContent?.trim() || "★★★★★";
-    const rating = starText.replace(/[^0-9]/g, "").length || 5;
-    const img = domHelper.query("img", card)?.src || "";
-
-    return normalizeBook(
-      {
-        title,
-        author,
-        category,
-        rating,
-        cover: img,
-      },
-      index
-    );
-  });
-}
-
-async function loadBooks() {
-  if (!ui.grid) return;
-
-  try {
-    const result = await booksService.getAllBooks();
-    const rawBooks = Array.isArray(result) ? result : result?.results ?? [];
-    state.books = rawBooks.map(normalizeBook);
-  } catch (error) {
-    state.books = parseStaticCards();
-  }
-
-  state.filtered = [...state.books];
-  renderGrid();
-}
-
 domHelper.ready(() => {
+  if (loginButton) {
+    loginButton.textContent = Auth.isAuthenticated() ? (Auth.isAdmin() ? "Admin" : "Dashboard") : "Login";
+  }
   setupEvents();
-  loadBooks();
+  setupGridNavigation();
+  fetchBooks();
 });

@@ -1,5 +1,6 @@
 import { domHelper } from "../utils/domHelper.js";
 import { Auth } from "../core/auth.js";
+import { borrowService } from "../services/borrowService.js";
 
 // Navigation
 const homeButton = document.getElementById("navbar__brand");
@@ -60,59 +61,13 @@ function setupEventListeners() {
 // Load borrow requests
 async function loadBorrowRequests() {
     try {
-        // Mock data for now - replace with API call
-        const mockRequests = [
-            {
-                id: "1",
-                user_name: "John Doe",
-                user_email: "john@example.com",
-                book_title: "The Great Gatsby",
-                book_author: "F. Scott Fitzgerald",
-                status: "pending",
-                requested_date: "2026-04-10",
-                user_loans_count: 2,
-                review_count: 5,
-                risk_score: "low",
-            },
-            {
-                id: "2",
-                user_name: "Jane Smith",
-                user_email: "jane@example.com",
-                book_title: "1984",
-                book_author: "George Orwell",
-                status: "pending",
-                requested_date: "2026-04-08",
-                user_loans_count: 5,
-                review_count: 12,
-                risk_score: "high",
-            },
-            {
-                id: "3",
-                user_name: "Bob Johnson",
-                user_email: "bob@example.com",
-                book_title: "To Kill a Mockingbird",
-                book_author: "Harper Lee",
-                status: "approved",
-                requested_date: "2026-04-05",
-                user_loans_count: 1,
-                review_count: 3,
-                risk_score: "low",
-            },
-            {
-                id: "4",
-                user_name: "Alice Williams",
-                user_email: "alice@example.com",
-                book_title: "Pride and Prejudice",
-                book_author: "Jane Austen",
-                status: "rejected",
-                requested_date: "2026-04-01",
-                user_loans_count: 8,
-                review_count: 15,
-                risk_score: "high",
-            },
-        ];
-
-        state.borrowRequests = mockRequests;
+        const data = await borrowService.getAllBorrowRequests();
+        const list = Array.isArray(data) ? data : data?.results ?? [];
+        state.borrowRequests = list.map((r) => ({
+            ...r,
+            risk_score: r.risk_score || "low",
+            requested_date: r.requested_date || r.requested_at,
+        }));
         calculateStatistics();
         filterAndRender();
     } catch (error) {
@@ -170,7 +125,11 @@ function sortRequests(requests, sortBy) {
             break;
         case "risk-score":
             const riskOrder = { high: 0, medium: 1, low: 2 };
-            sorted.sort((a, b) => riskOrder[a.risk_score] - riskOrder[b.risk_score]);
+            sorted.sort((a, b) => {
+                const ra = riskOrder[a.risk_score] ?? 2;
+                const rb = riskOrder[b.risk_score] ?? 2;
+                return ra - rb;
+            });
             break;
     }
 
@@ -242,18 +201,13 @@ function createRequestCard(request) {
 async function approveRequest(requestId) {
     try {
         if (confirm("Are you sure you want to approve this borrow request?")) {
-            // TODO: Make API call
-            const request = state.borrowRequests.find(r => r.id === requestId);
-            if (request) {
-                request.status = "approved";
-                filterAndRender();
-                calculateStatistics();
-                alert("Request approved successfully!");
-            }
+            await borrowService.approveBorrowRequest(requestId);
+            alert("Request approved successfully!");
+            await loadBorrowRequests();
         }
     } catch (error) {
         console.error("Error approving request:", error);
-        alert("Failed to approve request");
+        alert(error?.message || "Failed to approve request");
     }
 }
 
@@ -261,18 +215,14 @@ async function approveRequest(requestId) {
 async function rejectRequest(requestId) {
     try {
         if (confirm("Are you sure you want to reject this borrow request?")) {
-            // TODO: Make API call
-            const request = state.borrowRequests.find(r => r.id === requestId);
-            if (request) {
-                request.status = "rejected";
-                filterAndRender();
-                calculateStatistics();
-                alert("Request rejected successfully!");
-            }
+            const reason = prompt("Optional rejection reason:", "") || "";
+            await borrowService.rejectBorrowRequest(requestId, { rejection_reason: reason });
+            alert("Request rejected successfully!");
+            await loadBorrowRequests();
         }
     } catch (error) {
         console.error("Error rejecting request:", error);
-        alert("Failed to reject request");
+        alert(error?.message || "Failed to reject request");
     }
 }
 

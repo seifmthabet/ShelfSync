@@ -48,6 +48,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    avatar_url = models.URLField(blank=True, max_length=1024)
+    favorite_genres = models.JSONField(default=list, blank=True)
+    reading_goal_per_year = models.PositiveIntegerField(null=True, blank=True)
+    email_notifications = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']

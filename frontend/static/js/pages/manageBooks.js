@@ -17,15 +17,26 @@ domHelper.ready(async () => {
 
   try {
     const data = await booksService.getAllBooks();
-
-    if (data && data.length) {
-      renderBooks(data);
+    const list = Array.isArray(data) ? data : data?.results ?? [];
+    if (list.length) {
+      const rows = list.map((b) => ({
+        title: b.title,
+        author: b.author,
+        isbn: b.isbn,
+        category: typeof b.category === "string" ? b.category : b.category?.name || "General",
+        rating: b.rating ?? b.average_rating ?? "0.0",
+        available:
+          (typeof b.availability === "string" && b.availability.toLowerCase().includes("in stock")) ||
+          (b.available_copies ?? 0) > 0,
+      }));
+      renderBooks(rows);
     }
 
   } catch (error) {
     console.error("Load failed:", error.message);
   }
 
+  if (searchInput) {
   domHelper.on(searchInput, "input", (e) => {
     const value = e.target.value.toLowerCase();
 
@@ -34,6 +45,7 @@ domHelper.ready(async () => {
       row.style.display = text.includes(value) ? "" : "none";
     });
   });
+  }
 
   domHelper.on(tableBody, "click", (e) => {
 

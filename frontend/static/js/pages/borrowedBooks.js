@@ -54,7 +54,8 @@ function setupEventListeners() {
 async function loadBorrowedBooks() {
     try {
         const data = await borrowService.getBorrowedItems();
-        state.borrowedBooks = data?.data || [];
+        const raw = data?.data ?? data?.results ?? data ?? [];
+        state.borrowedBooks = Array.isArray(raw) ? raw : [];
         filterAndRender();
     } catch (error) {
         console.error("Error loading borrowed books:", error);

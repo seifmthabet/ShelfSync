@@ -13,7 +13,8 @@ export const Auth = {
     return user && user.role ? user.role : null;
   },
   isAdmin: () => {
-    return Auth.getRole() === "admin";
+    const role = Auth.getRole();
+    return role === "ADMIN" || role === "admin";
   },
   saveSession: (payload) => {
     if (!payload) return;
