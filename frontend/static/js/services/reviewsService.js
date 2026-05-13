@@ -1,34 +1,41 @@
 import { apiClient } from "../core/apiClient.js";
-import { Auth } from "../core/auth.js"
+import { Auth } from "../core/auth.js";
+
+function requireAuth() {
+  if (!Auth.isAuthenticated()) {
+    throw new Error("You must be signed in.");
+  }
+}
+
+function requireAdmin() {
+  requireAuth();
+  if (!Auth.isAdmin()) {
+    throw new Error("Administrator access required.");
+  }
+}
 
 export const ReviewsService = {
   submitReview: async (payload) => {
-    if (Auth.isAuthenticated()) {
-      const data = await apiClient.post("reviews/", payload, { authRequired: true });
-      return data;
-    }
+    requireAuth();
+    return apiClient.post("reviews/", payload, { authRequired: true });
   },
   getReviewsForBook: (bookId) => {
-    return apiClient.get(`books/${bookId}/reviews/`);
+    return apiClient.get(`books/${bookId}/reviews/`, {}, { authRequired: false });
   },
   editReview: (reviewId, payload) => {
-    if (Auth.isAuthenticated()) {
-      return apiClient.patch(`reviews/${reviewId}/`, payload, { authRequired: true });
-    }
+    requireAuth();
+    return apiClient.patch(`reviews/${reviewId}/`, payload, { authRequired: true });
   },
   approveReview: (reviewId) => {
-    if (Auth.isAuthenticated() && Auth.isAdmin()) {
-      return apiClient.post(`reviews/${reviewId}/approve/`, {}, { authRequired: true });
-    }
+    requireAdmin();
+    return apiClient.post(`reviews/${reviewId}/approve/`, {}, { authRequired: true });
   },
   rejectReview: (reviewId) => {
-    if (Auth.isAuthenticated() && Auth.isAdmin()) {
-      return apiClient.post(`reviews/${reviewId}/reject/`, {}, { authRequired: true });
-    }
+    requireAdmin();
+    return apiClient.post(`reviews/${reviewId}/reject/`, {}, { authRequired: true });
   },
   getPendingReviews: () => {
-    if (Auth.isAuthenticated() && Auth.isAdmin()) {
-      return apiClient.get("admin/reviews/pending/", {}, { authRequired: true });
-    }
-  }
-}
+    requireAdmin();
+    return apiClient.get("admin/reviews/pending/", {}, { authRequired: true });
+  },
+};

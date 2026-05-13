@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>
-    Management Books
-  </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="api-base-url" content="http://127.0.0.1:8000/api/v1/">
+  <title>Book management | ShelfSync</title>
   <link rel="stylesheet" href="../static/css/global.css">
   <link rel="stylesheet" href="../static/css/pages/manageBooks.css">
 </head>
@@ -11,8 +12,6 @@
  <aside class="sidebar">
 
   <div class="sidebar-logo">
-    <img src="Icon.png" alt="logo">
-
     <div>
       <h3>ShelfSync</h3>
       <p class="paragraph">LIBRARY MANAGEMENT</p>
@@ -24,30 +23,17 @@
 
   <nav class="sidebar-menu">
 
-    <a href="adminDashboard.html" class="sidebar-btn">
-      <img src="Icon 3.png">
-      Dashboard
-    </a>
+    <a href="adminDashboard.html" class="sidebar-btn">Dashboard</a>
 
-    <a href="my-books.html" class="sidebar-btn">
-      <img src="Icon 4.png">
-      My Books
-    </a>
+    <a href="adminBookMangement.html" class="sidebar-btn active">My Books</a>
 
-    <a href="reviews.html" class="sidebar-btn">
-      <img src="Icon 5.png">
-      Reviews
-    </a>
+    <a href="adminReviewManagement.html" class="sidebar-btn">Reviews</a>
 
-    <a href="history.html" class="sidebar-btn">
-      <img src="Icon 6.png">
-      History
-    </a>
+    <a href="adminBorrowRequests.html" class="sidebar-btn">Borrow requests</a>
 
-    <a href="profile.html" class="sidebar-btn">
-      <img src="Icon 7.png">
-      Profile
-    </a>
+    <a href="adminManageUsers.html" class="sidebar-btn">Users</a>
+
+    <a href="myProfile.html" class="sidebar-btn">Profile</a>
 
   </nav>
 
@@ -99,7 +85,6 @@
       <h4>ACTIONS</h4>
       <div class="actions-row">
       <button type="button" class="btn-add">+ ADD NEW VOLUME</button>
-      <img src="icon.png">
       </div>
   </div>
 
@@ -112,15 +97,9 @@
     <h2>Archive Inventory</h2>
 
     <div class="table-actions">
-      <button class="btn-filter">
-        <img src="Icon8.png">
-        FILTER
-      </button>
+      <button type="button" class="btn-filter">FILTER</button>
 
-      <button class="btn-export">
-        <img src="Icon9.png">
-        EXPORT
-      </button>
+      <button type="button" class="btn-export">EXPORT</button>
     </div>
   </div>
 
@@ -138,74 +117,12 @@
         </tr>
       </thead>
 
-      <tbody>
-
-        <tr>
-          <td class="book-cell">
-            <div class="book-info">
-              <img src="Book Cover.png" alt="logo-1">
-              <div>
-                <h4>The Meditations</h4>
-                <p>ISBN: 978-0140449334</p>
-              </div>
-            </div>
-          </td>
-          <td>Marcus Aurelius</td>
-          <td><span class="badge">PHILOSOPHY</span></td>
-          <td><span class="status available">● AVAILABLE</span></td>
-          <td class="rating">★ 4.9</td>
-          <td class="actions">
-            <button>✏️</button>
-            <button>🗑️</button>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="book-cell">
-            <div class="book-info">
-              <img src="Book Cover (1).png" alt="book2">
-              <div>
-                <h4>Beyond Good and Evil</h4>
-                <p>ISBN: 978-0140445138</p>
-              </div>
-            </div>
-          </td>
-          <td>Friedrich Nietzsche</td>
-          <td><span class="badge">PHILOSOPHY</span></td>
-          <td><span class="status loaned">● LOANED</span></td>
-          <td class="rating">★ 4.7</td>
-          <td class="actions">
-            <button>✏️</button>
-            <button>🗑️</button>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="book-cell">
-            <div class="book-info">
-              <img src="Book Cover (2).png" alt="logo-1">ة
-              <div>
-                <h4>The Odyssey</h4>
-                <p>ISBN: 978-0140268867</p>
-              </div>
-            </div>
-          </td>
-          <td>Homer</td>
-          <td><span class="badge">CLASSICS</span></td>
-          <td><span class="status available">● AVAILABLE</span></td>
-          <td class="rating">★ 4.8</td>
-          <td class="actions">
-            <button>✏️</button>
-            <button>🗑️</button>
-          </td>
-        </tr>
-
-      </tbody>
+      <tbody></tbody>
     </table>
 
 
     <div class="table-footer">
-      <p>SHOWING 3 OF 12,482 ENTRIES</p>
+      <p>Loading catalog…</p>
 
       <div class="pagination">
         <button>PREVIOUS</button>
@@ -220,7 +137,7 @@
 
   <footer class="footer">
     <div class="footer-container">
-      <p>© 2024 SHELFSYNC. ALL RIGHTS RESERVED</p>
+      <p>© 2026 ShelfSync. All rights reserved.</p>
 
       <div>
         <a href="#">LEGAL</a>
@@ -232,6 +149,6 @@
   </footer>
 </main>
 
-<script type="module" src="manageBooks"></script>
+<script type="module" src="../static/js/pages/manageBooks.js"></script>
 </body>
 </html>

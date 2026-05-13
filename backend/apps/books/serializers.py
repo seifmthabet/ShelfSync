@@ -63,6 +63,8 @@ class BookDetailSerializer(BookListSerializer):
             "year",
             "total_reviews",
             "rating_breakdown",
+            "total_copies",
+            "available_copies",
         )
 
     def get_availability(self, obj: Book) -> str:

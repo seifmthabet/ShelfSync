@@ -87,7 +87,7 @@ export const request = async (path, { method = "GET", body, query, headers = {},
         body: body ? JSON.stringify(body) : undefined,
         ...option,
       }),
-      config.requestTimeoute
+      config.requestTimeout ?? config.requestTimeoute
     );
   }
 
@@ -112,7 +112,7 @@ export const request = async (path, { method = "GET", body, query, headers = {},
         body: body ? JSON.stringify(body) : undefined,
         ...option,
       }),
-        config.requestTimeoute
+        config.requestTimeout ?? config.requestTimeoute
       );
 
       return await parseResponse(retryResponse);

@@ -1,5 +1,6 @@
 import { Auth } from "../core/auth.js";
 import { usersService } from "../services/usersService.js";
+import { hrefPage } from "../core/config.js";
 
 const form = document.getElementById("my-form");
 if (form) {
@@ -91,5 +92,13 @@ async function loadDashboardMetrics() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  if (!Auth.isAuthenticated()) {
+    window.location.href = hrefPage("login");
+    return;
+  }
+  if (!Auth.isAdmin()) {
+    window.location.href = hrefPage("userDashboard");
+    return;
+  }
   loadDashboardMetrics();
 });

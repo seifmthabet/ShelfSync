@@ -1,6 +1,7 @@
 import { domHelper } from "../utils/domHelper.js";
 import { Auth } from "../core/auth.js";
 import { usersService } from "../services/usersService.js";
+import { hrefPage } from "../core/config.js";
 
 const homeButton = document.getElementById("navbar__brand");
 homeButton?.addEventListener("click", () => {
@@ -9,8 +10,8 @@ homeButton?.addEventListener("click", () => {
 
 const logoutButton = document.getElementById("btn-logout");
 logoutButton?.addEventListener("click", () => {
-  Auth.logout();
-  window.location.href = "loginPage.html";
+  Auth.logout({ redirect: false });
+  window.location.href = hrefPage("login");
 });
 
 const state = {
@@ -56,8 +57,12 @@ function mapApiUser(u) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!Auth.isAuthenticated() || !Auth.isAdmin()) {
-    window.location.href = "loginPage.html";
+  if (!Auth.isAuthenticated()) {
+    window.location.href = hrefPage("login");
+    return;
+  }
+  if (!Auth.isAdmin()) {
+    window.location.href = hrefPage("userDashboard");
     return;
   }
   await loadUsers();

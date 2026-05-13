@@ -1,0 +1,31 @@
+/* Shared static marketing / info pages */
+.public-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+.public-page h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 44px);
+  margin-bottom: var(--space-4);
+}
+
+.public-page h2 {
+  font-family: var(--font-serif);
+  font-size: var(--title-lg);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+}
+
+.public-page p {
+  color: var(--color-secondary);
+  line-height: 1.65;
+}
+
+.public-actions {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}

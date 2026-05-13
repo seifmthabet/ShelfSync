@@ -1,6 +1,7 @@
 import { borrowService } from "../services/borrowService.js";
 import { domHelper } from "../utils/domHelper.js";
 import { Auth } from "../core/auth.js";
+import { hrefPage } from "../core/config.js";
 
 // Navigation
 const homeButton = document.getElementById("navbar__brand");
@@ -33,7 +34,7 @@ const ui = {
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
     if (!Auth.isAuthenticated()) {
-        window.location.href = "loginPage.html";
+        window.location.href = hrefPage("login");
         return;
     }
     await loadBorrowedBooks();

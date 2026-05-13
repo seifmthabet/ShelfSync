@@ -1,4 +1,5 @@
-/* font */
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
 
 /* Global Standards */
@@ -116,7 +117,11 @@ h1, h2, h3 {
 /* Sections */
 
 section {
-  padding: 100px 0;
+  padding: 72px 0;
+}
+
+body.site-root main > section {
+  padding: 56px 0;
 }
 
 .section-alt {

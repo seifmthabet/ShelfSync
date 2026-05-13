@@ -1,9 +1,11 @@
 import { ReviewsService } from "../services/reviewsService.js";
 import { domHelper } from "../utils/domHelper.js";
 import { formatters } from "../utils/formatters.js";
+import { Auth } from "../core/auth.js";
+import { hrefPage } from "../core/config.js";
 
 const adminDashboardButton = document.getElementById("admin-dashboard");
-adminDashboardButton.addEventListener("click", () => {
+adminDashboardButton?.addEventListener("click", () => {
   window.location.href = "adminDashboard.html";
 });
 
@@ -406,6 +408,14 @@ async function loadReviews() {
 }
 
 domHelper.ready(() => {
+  if (!Auth.isAuthenticated()) {
+    window.location.href = hrefPage("login");
+    return;
+  }
+  if (!Auth.isAdmin()) {
+    window.location.href = hrefPage("userDashboard");
+    return;
+  }
   initFilterTabs();
   initSearch();
   initExport();

@@ -57,6 +57,23 @@ document.addEventListener("DOMContentLoaded", () => {
   wireNavAuth();
   initializeUI();
   loadBooks();
+  const newsletterForm = document.getElementById("newsletter-form");
+  newsletterForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fd = new FormData(newsletterForm);
+    const email = String(fd.get("email") || "").trim();
+    if (!email) return;
+    try {
+      let list = JSON.parse(localStorage.getItem("shelfsync_newsletter_signups") || "[]");
+      if (!Array.isArray(list)) list = [];
+      list.push({ email, at: new Date().toISOString() });
+      localStorage.setItem("shelfsync_newsletter_signups", JSON.stringify(list.slice(-200)));
+    } catch {
+      /* ignore */
+    }
+    alert("Thanks — your interest is recorded. We will follow up at " + email + ".");
+    newsletterForm.reset();
+  });
 });
 
 function initializeUI() {

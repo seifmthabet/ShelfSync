@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="api-base-url" content="http://127.0.0.1:8000/api/v1/">
   <link rel="stylesheet" href="./static/css/global.css">
   <link rel="stylesheet" href="./static/css/pages/landing.css">
   <title>ShelfSync</title>
 </head>
 
-<body>
+<body class="site-root">
   <!-- Navigation -->
   <nav>
     <div class="nav">
@@ -20,7 +21,7 @@
         <div class="">
           <ul class=" internal-container nav-links">
             <li><a href="./index.html">Home</a></li>
-            <li><a href="./pages/searchBooks.html">About</a></li>
+            <li><a href="./pages/about.html">About</a></li>
             <li><a href="./pages/searchBooks.html">Browse</a></li>
           </ul>
         </div>
@@ -51,7 +52,7 @@
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="./pages/searchBooks.html">Explore Catalog</a>
-          <a class="btn btn-ghost hero-link" href="#">How it works →</a>
+          <a class="btn btn-ghost hero-link" href="./pages/how-it-works.html">How it works →</a>
         </div>
       </div>
 
@@ -109,7 +110,7 @@
     <!-- End collections Section -->
 
     <!-- Archived Section -->
-    <section class="archived container">
+    <section class="archived container" id="archived">
       <div class="archived-head">
         <h2>Newly Archived</h2>
         <p>The latest additions to our growing digital repository of human knowledge.</p>
@@ -149,10 +150,10 @@
       <div class="container">
         <p>Join the Circle</p>
         <h2>Access the complete Library collection for less than a coffee a month.</h2>
-        <div class="cta-row">
-          <input class="cta-input input-soft" placeholder="Your email address" />
-          <a class="btn btn-primary cta-button" href="#">Subscribe</a>
-        </div>
+        <form id="newsletter-form" class="cta-row" action="#" method="post">
+          <input class="cta-input input-soft" name="email" type="email" required autocomplete="email" placeholder="Your email address" />
+          <button type="submit" class="btn btn-primary cta-button">Subscribe</button>
+        </form>
         <p>New members get first month free. Cancel anytime.</p>
       </div>
     </section>
@@ -172,15 +173,15 @@
       </div>
       <div>
         <p class="footer-kicker">Sections</p>
-        <a href="#">Collections</a>
-        <a href="#">Archives</a>
-        <a href="#">New Arrivals</a>
+        <a href="./pages/searchBooks.html">Catalog</a>
+        <a href="./pages/about.html">About</a>
+        <a href="./index.html#archived">New arrivals</a>
       </div>
       <div>
         <p class="footer-kicker">The Library</p>
-        <a href="#">Calendar</a>
-        <a href="#">Services</a>
-        <a href="#">Membership</a>
+        <a href="./pages/how-it-works.html">How it works</a>
+        <a href="./pages/loginPage.html">Member login</a>
+        <a href="./pages/signUp.html">Join</a>
       </div>
     </div>
     <p class="footer-end">© 2026 ShelfSync. All rights reserved.</p>

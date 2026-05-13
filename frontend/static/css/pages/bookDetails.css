@@ -485,3 +485,31 @@ nav {
     align-items: start;
   }
 }
+
+.shelf-tag__label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.shelf-status {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.shelf-status--ok {
+  color: inherit;
+}
+
+.reviews-empty,
+.reviews-loading {
+  text-align: center;
+  color: var(--color-secondary);
+  padding: var(--space-6);
+  font-family: var(--font-serif);
+}
