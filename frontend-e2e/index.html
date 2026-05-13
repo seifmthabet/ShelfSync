@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ShelfSync — Library at your fingertips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header"><nav id="app-nav" class="nav"></nav></header>
+    <main class="layout">
+      <section class="hero">
+        <h1>Borrow stories. Share opinions. One shelf.</h1>
+        <p>
+          ShelfSync connects readers with your library catalog: search titles, request borrows, renew
+          loans, and leave reviews. This client is plain HTML, CSS, and JavaScript only—no UI framework
+          and no bundler—talking to your Django API.
+        </p>
+        <div class="link-row" style="justify-content: center">
+          <a class="btn" href="./user-books.html">Browse catalog</a>
+          <a class="btn btn--ghost" href="./login.html">Log in</a>
+        </div>
+      </section>
+      <div class="card-grid" style="margin-top: 2rem">
+        <article class="card">
+          <h3>For readers</h3>
+          <p class="muted">Search, borrow, track loans, and write reviews that go through moderation.</p>
+        </article>
+        <article class="card">
+          <h3>For librarians</h3>
+          <p class="muted">Admin dashboard, user management, catalog edits, borrow approvals, and review queue.</p>
+        </article>
+        <article class="card">
+          <h3>API-first</h3>
+          <p class="muted">Point <code>js/config.js</code> at your backend and serve this folder over HTTP (classic scripts only).</p>
+        </article>
+      </div>
+    </main>
+    <footer class="site-footer">ShelfSync · Vanilla frontend</footer>
+    <script src="./js/config.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/toast.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/nav.js"></script>
+    <script src="./js/home.js"></script>
+  </body>
+</html>

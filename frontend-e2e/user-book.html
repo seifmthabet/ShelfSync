@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book — ShelfSync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=Source+Serif+4:opsz,wght@8..60,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header"><nav id="app-nav" class="nav"></nav></header>
+    <main class="layout">
+      <p class="muted" id="load-state">Loading…</p>
+      <div id="book-root" style="display: none">
+        <div class="split split--book card" style="padding: 1.35rem">
+          <div>
+            <div
+              class="book-card__cover"
+              style="margin: 0; max-height: 360px"
+              id="cover-wrap"
+            ></div>
+          </div>
+          <div>
+            <h1 id="b-title"></h1>
+            <p class="muted" id="b-author"></p>
+            <p id="b-meta" class="muted" style="font-size: 0.9rem"></p>
+            <p id="b-summary"></p>
+            <div class="link-row" style="margin-top: 1rem">
+              <button type="button" class="btn" id="btn-borrow">Request borrow</button>
+              <a class="btn btn--ghost" id="link-review" href="#">Write a review</a>
+              <a class="btn btn--secondary" href="./user-books.html">Back to catalog</a>
+            </div>
+            <p class="muted" id="borrow-hint" style="margin-top: 0.75rem"></p>
+          </div>
+        </div>
+        <h2 style="margin-top: 2rem">Reader reviews</h2>
+        <div class="card" id="reviews-box"><p class="muted">No reviews yet.</p></div>
+      </div>
+    </main>
+    <footer class="site-footer">ShelfSync</footer>
+    <script src="./js/config.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/toast.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/nav.js"></script>
+    <script src="./js/user-book.js"></script>
+  </body>
+</html>

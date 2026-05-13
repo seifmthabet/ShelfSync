@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Write review — ShelfSync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=Source+Serif+4:opsz,wght@8..60,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header"><nav id="app-nav" class="nav"></nav></header>
+    <main class="layout">
+      <div class="page-title">
+        <h1>Write a review</h1>
+        <p class="muted" id="book-line">Loading…</p>
+      </div>
+      <div class="card" style="max-width: 520px">
+        <form id="rev-form" class="form" style="max-width: none">
+          <label>
+            Rating
+            <select name="rating" required>
+              <option value="5">5 — Loved it</option>
+              <option value="4">4</option>
+              <option value="3">3</option>
+              <option value="2">2</option>
+              <option value="1">1</option>
+            </select>
+          </label>
+          <label>
+            Headline
+            <input type="text" name="headline" required maxlength="255" />
+          </label>
+          <label>
+            Comment
+            <textarea name="comment" rows="5" required></textarea>
+          </label>
+          <button type="submit" class="btn">Submit review</button>
+        </form>
+      </div>
+    </main>
+    <footer class="site-footer">ShelfSync</footer>
+    <script src="./js/config.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/toast.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/nav.js"></script>
+    <script src="./js/user-review.js"></script>
+  </body>
+</html>

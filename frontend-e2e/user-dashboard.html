@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My shelf — ShelfSync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=Source+Serif+4:opsz,wght@8..60,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header"><nav id="app-nav" class="nav"></nav></header>
+    <main class="layout">
+      <div class="page-title">
+        <h1>My shelf</h1>
+        <p class="muted" id="welcome-line">Loading…</p>
+      </div>
+      <div class="stats" id="quick-stats"></div>
+      <div class="link-row" style="margin-bottom: 1.5rem">
+        <a class="btn" href="./user-books.html">Find a book</a>
+        <a class="btn btn--ghost" href="./user-loans.html">Borrowed</a>
+        <a class="btn btn--ghost" href="./user-borrows.html">Requests</a>
+      </div>
+      <h2>Recent loans</h2>
+      <div id="loans-preview" class="card"><p class="muted">Loading…</p></div>
+    </main>
+    <footer class="site-footer">ShelfSync</footer>
+    <script src="./js/config.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/toast.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/nav.js"></script>
+    <script src="./js/user-dashboard.js"></script>
+  </body>
+</html>
